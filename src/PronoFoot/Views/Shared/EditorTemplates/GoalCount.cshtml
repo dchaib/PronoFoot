@@ -1,0 +1,3 @@
+﻿@model int?
+
+@Html.TextBox(String.Empty, Model.HasValue ? Model.Value.ToString() : String.Empty, new { @class = "goalCount" })

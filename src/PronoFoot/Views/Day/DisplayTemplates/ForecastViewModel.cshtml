@@ -1,0 +1,14 @@
+﻿@model PronoFoot.ViewModels.ForecastViewModel
+           
+<tr>
+    <td>@String.Format("{0:g}", Model.Fixture.Date)
+    </td>
+    <td>@Model.HomeTeam.Name
+    </td>
+    <td>@Model.HomeTeamGoals
+    </td>
+    <td>@Model.AwayTeamGoals
+    </td>
+    <td>@Model.AwayTeam.Name
+    </td>
+</tr>

@@ -1,0 +1,35 @@
+﻿@model DayDetailsViewModel
+@{
+    ViewBag.Title = Model.Day.Name;
+}
+<h2>@Model.Day.Name</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var fixture in Model.Fixtures.OrderBy(x => x.Date))
+    {
+        <tr>
+            <td>@String.Format("{0:g}", fixture.Date)
+            </td>
+            <td>@Model.Teams.First(t => t.TeamId == fixture.HomeTeamId).Name
+            </td>
+            <td>
+                @if (fixture.HomeTeamGoals.HasValue)
+                {@fixture.HomeTeamGoals.Value}
+            </td>
+            <td>
+                @if (fixture.AwayTeamGoals.HasValue)
+                { @fixture.AwayTeamGoals.Value }
+            </td>
+            <td>@Model.Teams.First(t => t.TeamId == fixture.AwayTeamId).Name
+            </td>
+        </tr>
+    }
+</table>
