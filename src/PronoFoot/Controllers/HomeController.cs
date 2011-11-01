@@ -8,6 +8,7 @@ using PronoFoot.Data;
 using PronoFoot.Data.EntityFramework.Repositories;
 using PronoFoot.Data.EntityFramework;
 using PronoFoot.Business.Contracts;
+using PronoFoot.ViewModels;
 
 namespace PronoFoot.Controllers
 {
@@ -16,8 +17,8 @@ namespace PronoFoot.Controllers
         private readonly ICompetitionRepository competitionRepository;
         private readonly IDayRepository dayRepository;
 
-        public HomeController(IUserService userServices, ICompetitionRepository competitionRepository, IDayRepository dayRepository)
-            : base(userServices)
+        public HomeController(IUserService userService, ICompetitionRepository competitionRepository, IDayRepository dayRepository)
+            : base(userService)
         {
             this.competitionRepository = competitionRepository;
             this.dayRepository = dayRepository;
@@ -34,8 +35,25 @@ namespace PronoFoot.Controllers
             }
 
             competition.Days = dayRepository.GetDays(competition.CompetitionId).ToList();
+            var scores = UserService.GetUserScoresForCompetition(competitionId);
+            var users = UserService.GetUsers();
 
-            return View(competition);
+            return View(new HomeViewModel
+            {
+                Competition = competition,
+                Scores = scores.Select(x => new UserScoreViewModel
+                {
+                    UserId = x.UserId,
+                    UserName = users.First(y => y.UserId == x.UserId).Name,
+                    Score = x.Score,
+                    NumberOfExactForecasts = x.NumberOfExactForecasts,
+                    NumberOfCloseForecasts = x.NumberOfCloseForecasts,
+                    NumberOfForecastsWithExactDifference = x.NumberOfForecastsWithExactDifference,
+                    NumberOfCorrect1N2Forecasts = x.NumberOfCorrect1N2Forecasts,
+                    NumberOfWrongForecasts = x.NumberOfWrongForecasts,
+                    PercentageOfScoringForecasts = x.PercentageOfScoringForecasts
+                })
+            });
         }
 
         public ActionResult Rules()

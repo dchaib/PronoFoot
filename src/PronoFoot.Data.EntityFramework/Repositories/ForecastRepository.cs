@@ -33,6 +33,17 @@ namespace PronoFoot.Data.EntityFramework.Repositories
             return this.GetDbSet<Forecast>().Where(x => forecastIds.Contains(x.ForecastId)).ToList();
         }
 
+        public IEnumerable<Forecast> GetForecastsForCompetition(int competitionId)
+        {
+            //TODO Find a better way, not using FixtureDbSet?
+            var q = from day in this.GetDbSet<Day>()
+                    from fixture in day.Fixtures
+                    from forecast in fixture.Forecasts
+                    where day.CompetitionId == competitionId
+                    select forecast;
+            return q.ToList();
+        }
+
         public IEnumerable<Forecast> GetForecastsForDay(int dayId)
         {
             //TODO Find a better way, not using FixtureDbSet?

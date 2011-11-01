@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PronoFoot.Data.Model;
+using PronoFoot.Business.Models;
 
 namespace PronoFoot.Business.Contracts
 {
@@ -11,5 +12,7 @@ namespace PronoFoot.Business.Contracts
         User GetUser(int userId);
         User GetUserByLogin(string login);
         IEnumerable<User> GetUsers();
+
+        IEnumerable<UserScoreModel> GetUserScoresForCompetition(int competitionId);
     }
 }

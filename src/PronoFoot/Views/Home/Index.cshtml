@@ -1,28 +1,34 @@
-﻿@model PronoFoot.Data.Model.Competition
+﻿@model HomeViewModel
 @{
     ViewBag.Title = "Accueil";
 }
-<h2>@Model.Name</h2>
-<table>
-    <thead>
-        <tr>
-            <th>
-                Journée
-            </th>
-            <th>
-                Date
-            </th>
-            <th>
-                Pronostics
-            </th>
-        </tr>
-    </thead>
-    @foreach (var item in Model.Days)
-    {
-        <tr>
-            <td>@Html.ActionLink(item.Name, "Details", "Day", new {id = item.DayId}, null)</td>
-            <td>@item.Date.ToString()</td>
-            <td>@Html.ActionLink("Pronostiquer", "Forecast", "Day", new {id = item.DayId}, null)</td>
-        </tr>
-    }
-</table>
+<h2>@Model.Competition.Name</h2>
+<div id="days">
+    <h5>Journées</h5>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Journée
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Pronostics
+                </th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.Competition.Days)
+        {
+            <tr>
+                <td>@Html.ActionLink(item.Name, "Details", "Day", new {id = item.DayId}, null)</td>
+                <td>@item.Date.ToString("d")</td>
+                <td>@Html.ActionLink("Pronostiquer", "Forecast", "Day", new {id = item.DayId}, null)</td>
+            </tr>
+        }
+    </table>
+</div>
+<div id="classification">
+    @Html.Partial("_Classification", Model.Scores)
+</div>

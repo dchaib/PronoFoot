@@ -43,7 +43,7 @@
                     <td>@userForecast.HomeTeamGoals - @userForecast.AwayTeamGoals</td>
                     if (userForecast.Score.HasValue)
                     {
-                        <td style="width:20px;text-align:right">@String.Format("{0:0.0}", userForecast.Score.Value)</td>
+                        <td style="width:20px;text-align:right">@String.Format("{0:F1}", userForecast.Score.Value)</td>
                     }
                     else
                     {
@@ -62,7 +62,7 @@
         <td colspan="5"></td>
         @foreach (var user in Model.Users)
         {
-            <td colspan="2" style="text-align:right">@String.Format("{0:0.0}", Model.Forecasts.Where(x => x.UserId == user.UserId).Sum(x => x.Score))</td>
+            <td colspan="2" style="text-align:right">@String.Format("{0:F1}", Model.Forecasts.Where(x => x.UserId == user.UserId).Sum(x => x.Score))</td>
         }
     </tr>
 </table>
