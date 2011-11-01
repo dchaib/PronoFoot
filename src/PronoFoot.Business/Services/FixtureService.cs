@@ -41,6 +41,5 @@ namespace PronoFoot.Business.Services
 
             return fixtureModels.ToList();
         }
-
     }
 }

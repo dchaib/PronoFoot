@@ -6,8 +6,9 @@ using PronoFoot.Business.Models;
 
 namespace PronoFoot.Business.Contracts
 {
-    public interface IDayServices
+    public interface IDayService
     {
         DayModel GetDay(int id);
+        void Update(DayModel day, IEnumerable<FixtureModel> fixtures);
     }
 }

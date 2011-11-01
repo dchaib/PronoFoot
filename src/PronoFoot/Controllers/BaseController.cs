@@ -11,13 +11,13 @@ namespace PronoFoot.Controllers
 {
     public class BaseController : Controller
     {
-        protected readonly IUserService UserServices;
+        protected readonly IUserService UserService;
         private User currentUser;
 
-        public BaseController(IUserService userServices)
+        public BaseController(IUserService userService)
         {
-            if (userServices == null) throw new ArgumentNullException("userServices");
-            this.UserServices = userServices;
+            if (userService == null) throw new ArgumentNullException("userService");
+            this.UserService = userService;
         }
 
         protected int CurrentUserId
@@ -30,7 +30,7 @@ namespace PronoFoot.Controllers
             get
             {
                 return currentUser ??
-                    (this.currentUser = this.UserServices.GetUser(this.CurrentUserId));
+                    (this.currentUser = this.UserService.GetUser(this.CurrentUserId));
             }
         }
     }

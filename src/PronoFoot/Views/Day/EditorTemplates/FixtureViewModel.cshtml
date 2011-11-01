@@ -1,0 +1,15 @@
+﻿@model FixtureViewModel
+
+@Html.HiddenFor(x => x.FixtureId)
+<tr>
+    <td>@Html.EditorFor(x => x.Date)
+    </td>
+    <td>@Html.DropDownListFor(x => x.HomeTeamId, new SelectList(Model.Teams, "Value", "Text", Model.HomeTeamId))
+    </td>
+    <td>@Html.EditorFor(x => x.HomeTeamGoals, "GoalCount")
+    </td>
+    <td>@Html.EditorFor(x => x.AwayTeamGoals, "GoalCount")
+    </td>
+    <td>@Html.DropDownListFor(x => x.AwayTeamId, new SelectList(Model.Teams, "Value", "Text", Model.AwayTeamId))
+    </td>
+</tr>

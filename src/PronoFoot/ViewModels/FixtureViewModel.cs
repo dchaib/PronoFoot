@@ -1,36 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using PronoFoot.Data.Model;
+using System.Web;
+using PronoFoot.Business.Models;
+using System.Web.Mvc;
 
-namespace PronoFoot.Business.Models
+namespace PronoFoot.ViewModels
 {
-    public class FixtureModel
+    public class FixtureViewModel
     {
         public int FixtureId { get; set; }
-        public int DayId { get; set; }
         public DateTime Date { get; set; }
         public int HomeTeamId { get; set; }
-        public int? HomeTeamGoals { get; set; }
         public int AwayTeamId { get; set; }
+        public int? HomeTeamGoals { get; set; }
         public int? AwayTeamGoals { get; set; }
+        public IEnumerable<SelectListItem> Teams { get; set; }
 
-        public bool CanBeForecast { get { return this.Date > DateTime.Now; } }
-
-        public FixtureModel()
+        public FixtureViewModel()
         {
         }
 
-        public FixtureModel(Fixture fixture)
+        public FixtureViewModel(FixtureModel fixture, IEnumerable<TeamModel> teams)
         {
             this.FixtureId = fixture.FixtureId;
-            this.DayId = fixture.DayId;
             this.Date = fixture.Date;
             this.HomeTeamId = fixture.HomeTeamId;
-            this.HomeTeamGoals = fixture.HomeTeamGoals;
             this.AwayTeamId = fixture.AwayTeamId;
+            this.HomeTeamGoals = fixture.HomeTeamGoals;
             this.AwayTeamGoals = fixture.AwayTeamGoals;
+
+            this.Teams = teams.OrderBy(x => x.Name).Select(x => new SelectListItem { Value = x.TeamId.ToString(), Text = x.Name });
         }
     }
 }

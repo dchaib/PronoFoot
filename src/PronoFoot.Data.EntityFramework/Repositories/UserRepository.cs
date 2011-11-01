@@ -26,5 +26,11 @@ namespace PronoFoot.Data.EntityFramework.Repositories
                 .Where(x => x.Login == login)
                 .Single();
         }
+
+        public IEnumerable<User> GetUsers()
+        {
+            return this.GetDbSet<User>()
+                .ToList();
+        }
     }
 }

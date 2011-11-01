@@ -8,16 +8,21 @@ namespace PronoFoot.Business.Models
 {
     public class DayModel
     {
-        private Day day;
+        public int DayId { get; set; }
+        public string Name { get; set; }
+        public DateTime Date { get; set; }
+        public int CompetitionId { get; set; }
 
-        public int DayId { get { return this.day.DayId; } }
-        public string Name { get { return this.day.Name; } }
-        public DateTime Date { get { return this.day.Date; } }
-        public int CompetitionId { get { return this.day.CompetitionId; } }
+        public DayModel()
+        {
+        }
 
         public DayModel(Day day)
         {
-            this.day = day;
+            this.DayId = day.DayId;
+            this.CompetitionId = day.CompetitionId;
+            this.Name = day.Name;
+            this.Date = day.Date;
         }
     }
 }

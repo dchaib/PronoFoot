@@ -33,6 +33,17 @@ namespace PronoFoot.Data.EntityFramework.Repositories
             return this.GetDbSet<Forecast>().Where(x => forecastIds.Contains(x.ForecastId)).ToList();
         }
 
+        public IEnumerable<Forecast> GetForecastsForCompetition(int competitionId)
+        {
+            //TODO Find a better way, not using FixtureDbSet?
+            var q = from day in this.GetDbSet<Day>()
+                    from fixture in day.Fixtures
+                    from forecast in fixture.Forecasts
+                    where day.CompetitionId == competitionId
+                    select forecast;
+            return q.ToList();
+        }
+
         public IEnumerable<Forecast> GetForecastsForDay(int dayId)
         {
             //TODO Find a better way, not using FixtureDbSet?
@@ -51,6 +62,11 @@ namespace PronoFoot.Data.EntityFramework.Repositories
                     where fixture.DayId == dayId && forecast.UserId == userId
                     select forecast;
             return q.ToList();
+        }
+
+        public IEnumerable<Forecast> GetForecastsForFixture(int fixtureId)
+        {
+            return this.GetDbSet<Forecast>().Where(x => x.FixtureId == fixtureId).ToList();
         }
 
         public void Save(IEnumerable<Forecast> forecasts)
