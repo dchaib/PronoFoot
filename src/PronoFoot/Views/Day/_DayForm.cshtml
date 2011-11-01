@@ -1,7 +1,7 @@
 ﻿@model PronoFoot.ViewModels.DayFormViewModel
 <fieldset>
     <div class="editor-label">
-        @Html.LabelFor(x => x.Name)
+        @Html.LabelFor(x => x.Name, "Nom")
     </div>
     <div class="editor-field">
         @Html.TextBoxFor(x => x.Name)
@@ -14,32 +14,37 @@
         @Html.EditorFor(x => x.Date, "Date")
         @Html.ValidationMessageFor(x => x.Date)
     </div>
+    <div class="editor-label">
+        Matches
+    </div>
+    <div class="editor-field">
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            @{
+                int i = 0;
+                foreach (var fixture in Model.Fixtures.OrderBy(x => x.Date))
+                {
+                    @Html.EditorFor(x => fixture, null, "Fixtures[" + i + "].");
+                    i++;
+                }
+            }
+        </table>
+    </div>
 </fieldset>
-<table>
-    <thead>
-        <tr>
-            <th>
-                Date
-            </th>
-            <th>
-            </th>
-            <th>
-            </th>
-            <th>
-            </th>
-            <th>
-            </th>
-        </tr>
-    </thead>
-    @{
-        int i = 0;
-        foreach (var fixture in Model.Fixtures.OrderBy(x => x.Date))
-        {
-            @Html.EditorFor(x => fixture, null, "Fixtures[" + i + "].");
-            i++;
-        }
-    }
-</table>
 <p>
-    <input type="submit" value="Sauvegarder" />
+    <input type="submit" value="Enregistrer" />
 </p>

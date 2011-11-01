@@ -10,5 +10,6 @@ namespace PronoFoot.Business.Contracts
     {
         User GetUser(int userId);
         User GetUserByLogin(string login);
+        IEnumerable<User> GetUsers();
     }
 }

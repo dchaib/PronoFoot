@@ -57,6 +57,10 @@ namespace PronoFoot
             RegisterRoutes(RouteTable.Routes);
 
             InitializeDependecyInjection();
+
+            var culture = System.Globalization.CultureInfo.GetCultureInfo("fr-FR");
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
         }
 
         private void InitializeDependecyInjection()
@@ -73,7 +77,7 @@ namespace PronoFoot
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             //Business
             builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
-            builder.RegisterType<DayServices>().As<IDayServices>().InstancePerLifetimeScope();
+            builder.RegisterType<DayService>().As<IDayService>().InstancePerLifetimeScope();
             builder.RegisterType<FixtureService>().As<IFixtureService>().InstancePerLifetimeScope();
             builder.RegisterType<ForecastService>().As<IForecastService>().InstancePerLifetimeScope();
             builder.RegisterType<TeamService>().As<ITeamService>().InstancePerLifetimeScope();

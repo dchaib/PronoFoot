@@ -3,6 +3,7 @@
     ViewBag.Title = Model.Day.Name;
 }
 <h2>@Model.Day.Name</h2>
+<p><em>@String.Format("{0:D}", Model.Day.Date)</em></p>
 <table>
     <thead>
         <tr>
@@ -11,6 +12,10 @@
             <th></th>
             <th></th>
             <th></th>
+            @foreach (var user in Model.Users)
+            {
+                <th colspan="2" style="min-width:70px">@user.Name</th>
+            }
         </tr>
     </thead>
     @foreach (var fixture in Model.Fixtures.OrderBy(x => x.Date))
@@ -30,6 +35,43 @@
             </td>
             <td>@Model.Teams.First(t => t.TeamId == fixture.AwayTeamId).Name
             </td>
+            @foreach (var user in Model.Users)
+            {
+                var userForecast = Model.Forecasts.FirstOrDefault(f => f.UserId == user.UserId && f.FixtureId == fixture.FixtureId);
+                if (!fixture.CanBeForecast && userForecast != null)
+                { 
+                    <td>@userForecast.HomeTeamGoals - @userForecast.AwayTeamGoals</td>
+                    if (userForecast.Score.HasValue)
+                    {
+                        <td style="width:20px;text-align:right">@String.Format("{0:0.0}", userForecast.Score.Value)</td>
+                    }
+                    else
+                    {
+                        <td style="width:20px"></td>
+                    }
+                }
+                else
+                { 
+                    <td></td>
+                    <td style="width:20px"></td>
+                }
+            }
         </tr>
     }
+    <tr>
+        <td colspan="5"></td>
+        @foreach (var user in Model.Users)
+        {
+            <td colspan="2" style="text-align:right">@String.Format("{0:0.0}", Model.Forecasts.Where(x => x.UserId == user.UserId).Sum(x => x.Score))</td>
+        }
+    </tr>
 </table>
+
+@if (Model.Fixtures.Any(x => x.CanBeForecast))
+{ 
+    <p>@Html.ActionLink("Pronostiquer", "Forecast", new { id = Model.Day.DayId })</p>
+}
+@if (Request.IsAuthenticated && User.IsInRole("Administrators"))
+{
+    <p>@Html.ActionLink("Modifier", "Edit", new { id = Model.Day.DayId })</p>
+}

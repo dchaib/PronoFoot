@@ -52,5 +52,10 @@ namespace PronoFoot.Business.Services
                 throw ex;
             }
         }
+
+        public IEnumerable<User> GetUsers()
+        {
+            return this.userRepository.GetUsers();
+        }
     }
 }

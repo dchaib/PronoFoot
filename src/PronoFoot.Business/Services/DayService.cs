@@ -9,14 +9,14 @@ using PronoFoot.Data.Model;
 
 namespace PronoFoot.Business.Services
 {
-    public class DayServices : IDayServices
+    public class DayService : IDayService
     {
         private readonly IDayRepository dayRepository;
         private readonly IFixtureRepository fixtureRepository;
         private readonly IForecastRepository forecastRepository;
         private readonly IScoringService scoringService;
 
-        public DayServices(IDayRepository dayRepository,
+        public DayService(IDayRepository dayRepository,
             IFixtureRepository fixtureRepository,
             IForecastRepository forecastRepository,
             IScoringService scoringService)

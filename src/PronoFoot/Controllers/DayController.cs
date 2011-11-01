@@ -13,22 +13,24 @@ namespace PronoFoot.Controllers
 {
     public class DayController : BaseController
     {
-        private readonly IDayServices dayServices;
+        private readonly IDayService dayServices;
         private readonly IFixtureService fixtureService;
         private readonly IForecastService forecastService;
-        private readonly ITeamService teamServices;
+        private readonly ITeamService teamService;
+        private readonly IUserService userService;
 
-        public DayController(IUserService userService,
-                             IDayServices dayServices,
+        public DayController(IDayService dayServices,
                              IFixtureService fixtureService,
                              IForecastService forecastService,
-                             ITeamService teamServices)
+                             ITeamService teamService,
+                             IUserService userService)
             : base(userService)
         {
             this.dayServices = dayServices;
             this.fixtureService = fixtureService;
             this.forecastService = forecastService;
-            this.teamServices = teamServices;
+            this.teamService = teamService;
+            this.userService = userService;
         }
 
         [Authorize]
@@ -38,13 +40,15 @@ namespace PronoFoot.Controllers
             var day = dayServices.GetDay(id);
             var fixtures = fixtureService.GetFixturesForDay(id);
             var forecasts = forecastService.GetForecastsForDay(id);
-            var teams = teamServices.GetTeamsForCompetition(day.CompetitionId);
+            var teams = teamService.GetTeamsForCompetition(day.CompetitionId);
+            var users = userService.GetUsers();
             return View(new DayDetailsViewModel
             {
                 Day = day,
                 Fixtures = fixtures.ToList(),
                 Teams = teams.ToList(),
-                Forecasts = forecasts.ToList()
+                Forecasts = forecasts.ToList(),
+                Users = users.ToList()
             });
         }
 
@@ -53,7 +57,7 @@ namespace PronoFoot.Controllers
         {
             var day = dayServices.GetDay(id);
             var fixtures = fixtureService.GetFixturesForDay(id);
-            var teams = teamServices.GetTeamsForCompetition(day.CompetitionId);
+            var teams = teamService.GetTeamsForCompetition(day.CompetitionId);
 
             if (day == null)
             {
@@ -111,7 +115,7 @@ namespace PronoFoot.Controllers
             var day = dayServices.GetDay(id);
             var fixtures = fixtureService.GetFixturesForDay(id).ToList();
             var forecasts = forecastService.GetForecastsForDayUser(id, this.CurrentUserId).ToList();
-            var teams = teamServices.GetTeamsForCompetition(day.CompetitionId).ToList();
+            var teams = teamService.GetTeamsForCompetition(day.CompetitionId).ToList();
 
             var forecastViewModels = new List<ForecastViewModel>();
             foreach (var fixture in fixtures)
