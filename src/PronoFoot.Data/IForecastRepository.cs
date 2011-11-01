@@ -13,6 +13,7 @@ namespace PronoFoot.Data
         IEnumerable<Forecast> GetForecasts(IEnumerable<int> forecastIds);
         IEnumerable<Forecast> GetForecastsForDay(int dayId);
         IEnumerable<Forecast> GetForecastsForDayUser(int dayId, int userId);
+        IEnumerable<Forecast> GetForecastsForFixture(int fixtureId);
 
         void Save(IEnumerable<Forecast> forecasts);
 

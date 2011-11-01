@@ -53,6 +53,11 @@ namespace PronoFoot.Data.EntityFramework.Repositories
             return q.ToList();
         }
 
+        public IEnumerable<Forecast> GetForecastsForFixture(int fixtureId)
+        {
+            return this.GetDbSet<Forecast>().Where(x => x.FixtureId == fixtureId).ToList();
+        }
+
         public void Save(IEnumerable<Forecast> forecasts)
         {
             var dbSet = this.GetDbSet<Forecast>();

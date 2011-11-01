@@ -13,11 +13,18 @@ namespace PronoFoot.Business.Services
     {
         private readonly IDayRepository dayRepository;
         private readonly IFixtureRepository fixtureRepository;
+        private readonly IForecastRepository forecastRepository;
+        private readonly IScoringService scoringService;
 
-        public DayServices(IDayRepository dayRepository, IFixtureRepository fixtureRepository)
+        public DayServices(IDayRepository dayRepository,
+            IFixtureRepository fixtureRepository,
+            IForecastRepository forecastRepository,
+            IScoringService scoringService)
         {
             this.dayRepository = dayRepository;
             this.fixtureRepository = fixtureRepository;
+            this.forecastRepository = forecastRepository;
+            this.scoringService = scoringService;
         }
 
         public DayModel GetDay(int id)
@@ -51,7 +58,30 @@ namespace PronoFoot.Business.Services
                 dbFixture.HomeTeamGoals = fixture.HomeTeamGoals;
                 dbFixture.AwayTeamGoals = fixture.AwayTeamGoals;
 
-                fixtureRepository.Save(dbFixture);                
+                fixtureRepository.Save(dbFixture);
+
+                if (fixture.FixtureId > 0)
+                {
+                    var forecasts = forecastRepository.GetForecastsForFixture(fixture.FixtureId);
+                    if (forecasts.Count() > 0)
+                    {
+                        if (fixture.HomeTeamGoals.HasValue && fixture.AwayTeamGoals.HasValue)
+                        {
+                            foreach (var forecast in forecasts)
+                            {
+                                forecast.Score = scoringService.GetScore(fixture.HomeTeamGoals.Value, fixture.AwayTeamGoals.Value, forecast.HomeTeamGoals, forecast.AwayTeamGoals);
+                            }
+                        }
+                        else
+                        {
+                            foreach (var forecast in forecasts)
+                            {
+                                forecast.Score = null;
+                            }
+                        }
+                        forecastRepository.Save(forecasts);
+                    }
+                }
             }
         }
     }

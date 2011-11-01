@@ -72,11 +72,12 @@ namespace PronoFoot
             builder.RegisterType<ForecastRepository>().As<IForecastRepository>();
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             //Business
-            builder.RegisterType<UserService>().As<IUserService>();
-            builder.RegisterType<DayServices>().As<IDayServices>();
-            builder.RegisterType<FixtureService>().As<IFixtureService>();
-            builder.RegisterType<ForecastService>().As<IForecastService>();
-            builder.RegisterType<TeamService>().As<ITeamService>();
+            builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
+            builder.RegisterType<DayServices>().As<IDayServices>().InstancePerLifetimeScope();
+            builder.RegisterType<FixtureService>().As<IFixtureService>().InstancePerLifetimeScope();
+            builder.RegisterType<ForecastService>().As<IForecastService>().InstancePerLifetimeScope();
+            builder.RegisterType<TeamService>().As<ITeamService>().InstancePerLifetimeScope();
+            builder.RegisterType<ScoringService>().As<IScoringService>().InstancePerLifetimeScope();
             //Web
             builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>();
             container = builder.Build();

@@ -43,6 +43,7 @@
     <Compile Include="Contracts\IForecastService.cs" />
     <Compile Include="Contracts\IDayServices.cs" />
     <Compile Include="Contracts\IFixtureService.cs" />
+    <Compile Include="Contracts\IScoringService.cs" />
     <Compile Include="Contracts\ITeamService.cs" />
     <Compile Include="Contracts\IUserService.cs" />
     <Compile Include="Models\DayModel.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Services\DayServices.cs" />
     <Compile Include="Services\FixtureService.cs" />
     <Compile Include="Services\ForecastService.cs" />
+    <Compile Include="Services\ScoringService.cs" />
     <Compile Include="Services\TeamService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
