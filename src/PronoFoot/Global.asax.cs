@@ -57,10 +57,6 @@ namespace PronoFoot
             RegisterRoutes(RouteTable.Routes);
 
             InitializeDependecyInjection();
-
-            var culture = System.Globalization.CultureInfo.GetCultureInfo("fr-FR");
-            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
-            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
         }
 
         private void InitializeDependecyInjection()
