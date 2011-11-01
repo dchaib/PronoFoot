@@ -35,25 +35,36 @@
             </td>
             <td>@Model.Teams.First(t => t.TeamId == fixture.AwayTeamId).Name
             </td>
-            @foreach (var user in Model.Users)
-            {
-                var userForecast = Model.Forecasts.FirstOrDefault(f => f.UserId == user.UserId && f.FixtureId == fixture.FixtureId);
-                if (!fixture.CanBeForecast && userForecast != null)
-                { 
-                    <td>@userForecast.HomeTeamGoals - @userForecast.AwayTeamGoals</td>
-                    if (userForecast.Score.HasValue)
+            @{
+                int currentUserId = Request.IsAuthenticated ? ((PronoFoot.Models.PronoFootIdentity)User.Identity).UserId : 0;
+    
+                foreach (var user in Model.Users)
+                {
+                    var userForecast = Model.Forecasts.FirstOrDefault(f => f.UserId == user.UserId && f.FixtureId == fixture.FixtureId);
+                    if (userForecast != null)
                     {
-                        <td style="width:20px;text-align:right">@String.Format("{0:F1}", userForecast.Score.Value)</td>
+                        if (user.UserId == currentUserId || !fixture.CanBeForecast)
+                        { 
+                            <td>@userForecast.HomeTeamGoals - @userForecast.AwayTeamGoals</td>
+                        }
+                        else
+                        { 
+                            <td>? - ?</td>
+                        }
+                        if (userForecast.Score.HasValue)
+                        {
+                            <td style="width:20px;text-align:right">@String.Format("{0:F1}", userForecast.Score.Value)</td>
+                        }
+                        else
+                        {
+                            <td style="width:20px"></td>
+                        }
                     }
                     else
-                    {
+                    { 
+                        <td></td>
                         <td style="width:20px"></td>
                     }
-                }
-                else
-                { 
-                    <td></td>
-                    <td style="width:20px"></td>
                 }
             }
         </tr>
