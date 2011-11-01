@@ -48,6 +48,62 @@ namespace PronoFoot.Controllers
             });
         }
 
+        [Authorize(Roles = "Administrators")]
+        public ActionResult Edit(int id)
+        {
+            var day = dayServices.GetDay(id);
+            var fixtures = fixtureService.GetFixturesForDay(id);
+            var teams = teamServices.GetTeamsForCompetition(day.CompetitionId);
+
+            if (day == null)
+            {
+                return new HttpNotFoundResult("Il n'y a pas de journée correspondant à cet identifiant");
+            }
+
+            return View(new DayEditViewModel
+                {
+                    DayName = day.Name,
+                    Day = new DayFormViewModel
+                    {
+                        DayId = day.DayId,
+                        Date = day.Date,
+                        Name = day.Name,
+                        Fixtures = fixtures.Select(x => new FixtureViewModel(x, teams)).ToList()
+                    }
+                });
+        }
+
+        [Authorize(Roles = "Administrators")]
+        [HttpPost]
+        public ActionResult Edit(int id, DayFormViewModel dayForm)
+        {
+            var day = new DayModel
+            {
+                DayId = id,
+                Date = dayForm.Date,
+                Name = dayForm.Name
+            };
+            
+            var fixtures = new List<FixtureModel>();
+            foreach (var fixture in dayForm.Fixtures)
+            {
+                fixtures.Add(new FixtureModel
+                {
+                    DayId = id,
+                    FixtureId = fixture.FixtureId,
+                    Date = fixture.Date,
+                    HomeTeamId = fixture.HomeTeamId,
+                    AwayTeamId = fixture.AwayTeamId,
+                    HomeTeamGoals = fixture.HomeTeamGoals,
+                    AwayTeamGoals = fixture.AwayTeamGoals
+                });
+            }
+
+            dayServices.Update(day, fixtures);
+
+            return RedirectToAction("Details", new { id = id });
+        }
+
         [Authorize]
         public ActionResult Forecast(int id)
         {

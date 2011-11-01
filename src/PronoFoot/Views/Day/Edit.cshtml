@@ -1,0 +1,15 @@
+﻿@model PronoFoot.ViewModels.DayEditViewModel
+
+@{
+    ViewBag.Title = "Modifier";
+}
+
+<h2>Modifier @Model.DayName</h2>
+
+@using (Html.BeginForm()) {
+    @Html.Partial("_DayForm", Model.Day);
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

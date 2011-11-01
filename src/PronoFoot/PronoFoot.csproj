@@ -87,7 +87,10 @@
     <Compile Include="Models\PronoFootIdentity.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DayEditViewModel.cs" />
     <Compile Include="ViewModels\DayForecastViewModel.cs" />
+    <Compile Include="ViewModels\DayFormViewModel.cs" />
+    <Compile Include="ViewModels\FixtureViewModel.cs" />
     <Compile Include="ViewModels\ForecastViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +228,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Day\EditorTemplates\ForecastViewModel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Day\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Day\_DayForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Day\EditorTemplates\FixtureViewModel.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
