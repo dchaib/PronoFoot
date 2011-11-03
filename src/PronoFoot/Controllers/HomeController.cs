@@ -14,14 +14,18 @@ namespace PronoFoot.Controllers
 {
     public class HomeController : BaseController
     {
+        private readonly IDayService dayService;
+        private readonly IFixtureService fixtureService;
+        private readonly IForecastService forecastService;
         private readonly ICompetitionRepository competitionRepository;
-        private readonly IDayRepository dayRepository;
 
-        public HomeController(IUserService userService, ICompetitionRepository competitionRepository, IDayRepository dayRepository)
+        public HomeController(IUserService userService, IFixtureService fixtureService, IDayService dayService, IForecastService forecastService, ICompetitionRepository competitionRepository)
             : base(userService)
         {
+            this.dayService = dayService;
+            this.fixtureService = fixtureService;
+            this.forecastService = forecastService;
             this.competitionRepository = competitionRepository;
-            this.dayRepository = dayRepository;
         }
 
         public ActionResult Index()
@@ -34,13 +38,28 @@ namespace PronoFoot.Controllers
                 return HttpNotFound("Il n'y a pas de compétition correspondant à cet identifiant");
             }
 
-            competition.Days = dayRepository.GetDays(competition.CompetitionId).ToList();
+            IDictionary<int, int> forecastCounts;
+            if (Request.IsAuthenticated)
+                forecastCounts = forecastService.GetForecastCountByDayForCompetitionUser(competitionId, this.CurrentUserId);
+            else
+                forecastCounts = new Dictionary<int, int>();
+
+            var days = dayService.GetDaysForCompetition(competitionId);
+            var fixtures = fixtureService.GetFixturesForCompetition(competitionId);
             var scores = UserService.GetUserScoresForCompetition(competitionId);
             var users = UserService.GetUsers();
 
             return View(new HomeViewModel
             {
                 Competition = competition,
+                Days = days.Select(x => new DayViewModel
+                {
+                    DayId = x.DayId,
+                    Name = x.Name,
+                    Date = x.Date,
+                    ForecastMadeByCurrentUser = (fixtures.Count(y => y.DayId == x.DayId) == (forecastCounts.ContainsKey(x.DayId) ? forecastCounts[x.DayId] : 0)),
+                    CanBeForecast = fixtures.Any(y => y.DayId == x.DayId && y.CanBeForecast)
+                }),
                 Scores = scores.Select(x => new UserScoreViewModel
                 {
                     UserId = x.UserId,

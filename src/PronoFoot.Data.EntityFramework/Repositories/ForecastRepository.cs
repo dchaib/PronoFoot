@@ -35,7 +35,7 @@ namespace PronoFoot.Data.EntityFramework.Repositories
 
         public IEnumerable<Forecast> GetForecastsForCompetition(int competitionId)
         {
-            //TODO Find a better way, not using FixtureDbSet?
+            //TODO Find a better way, not using DayDbSet?
             var q = from day in this.GetDbSet<Day>()
                     from fixture in day.Fixtures
                     from forecast in fixture.Forecasts
@@ -67,6 +67,18 @@ namespace PronoFoot.Data.EntityFramework.Repositories
         public IEnumerable<Forecast> GetForecastsForFixture(int fixtureId)
         {
             return this.GetDbSet<Forecast>().Where(x => x.FixtureId == fixtureId).ToList();
+        }
+
+        public IDictionary<int, int> GetForecastCountByDayForCompetitionUser(int competitionId, int userId)
+        {
+            //TODO Find a better way, not using DayDbSet?
+            var q = from day in this.GetDbSet<Day>()
+                    from fixture in day.Fixtures
+                    from forecast in fixture.Forecasts
+                    where day.CompetitionId == competitionId && forecast.UserId == userId
+                    group forecast by fixture.DayId into g
+                    select new { DayId = g.Key, ForecastCount = g.Count() };
+            return q.ToDictionary(x => x.DayId, x => x.ForecastCount);
         }
 
         public void Save(IEnumerable<Forecast> forecasts)

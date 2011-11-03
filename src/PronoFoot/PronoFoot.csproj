@@ -90,12 +90,14 @@
     <Compile Include="ViewModels\DayEditViewModel.cs" />
     <Compile Include="ViewModels\DayForecastViewModel.cs" />
     <Compile Include="ViewModels\DayFormViewModel.cs" />
+    <Compile Include="ViewModels\DayViewModel.cs" />
     <Compile Include="ViewModels\FixtureViewModel.cs" />
     <Compile Include="ViewModels\ForecastViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\UserScoreViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\ok.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />

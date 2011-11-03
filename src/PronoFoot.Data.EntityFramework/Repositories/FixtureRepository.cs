@@ -42,6 +42,15 @@ namespace PronoFoot.Data.EntityFramework.Repositories
                             .ToList();
         }
 
+        public IEnumerable<Fixture> GetFixturesForCompetition(int competitionId)
+        {
+            //TODO Find a better way, not using DayDbSet?
+            var q = from day in this.GetDbSet<Day>()
+                    from fixture in day.Fixtures
+                    select fixture;
+            return q.ToList();
+        }
+
         public void Save(Fixture fixture)
         {
             if (fixture == null)

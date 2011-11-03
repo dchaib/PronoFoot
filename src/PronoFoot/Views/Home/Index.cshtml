@@ -14,17 +14,22 @@
                 <th>
                     Date
                 </th>
-                <th>
+                <th colspan="2">
                     Pronostics
                 </th>
             </tr>
         </thead>
-        @foreach (var item in Model.Competition.Days)
+        @foreach (var item in Model.Days)
         {
             <tr>
                 <td>@Html.ActionLink(item.Name, "Details", "Day", new {id = item.DayId}, null)</td>
                 <td>@item.Date.ToString("d")</td>
-                <td>@Html.ActionLink("Pronostiquer", "Forecast", "Day", new {id = item.DayId}, null)</td>
+                <td>@if(item.ForecastMadeByCurrentUser)
+                    {<img alt="OK" src="@Url.Content("~/Content/ok.png")" />}
+                </td>
+                <td>@if(item.CanBeForecast)
+                    {@Html.ActionLink("Pronostiquer", "Forecast", "Day", new {id = item.DayId}, null)}
+                </td>
             </tr>
         }
     </table>

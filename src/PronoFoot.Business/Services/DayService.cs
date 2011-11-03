@@ -36,6 +36,13 @@ namespace PronoFoot.Business.Services
             return dayModel;
         }
 
+        public IEnumerable<DayModel> GetDaysForCompetition(int competitionId)
+        {
+            var q = from day in dayRepository.GetDays(competitionId)
+                    select new DayModel(day);
+            return q.ToList();
+        }
+
         public void Update(DayModel day, IEnumerable<FixtureModel> fixtures)
         {
             var dbDay = dayRepository.GetDay(day.DayId);
