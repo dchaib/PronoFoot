@@ -3,11 +3,6 @@
     ViewBag.Title = Model.Day.Name;
 }
 <h2>@Model.Day.Name</h2>
-Now: @DateTime.Now.ToString()<br />
-UtcNow: @DateTime.UtcNow.ToString()<br />
-Utc time for 06/11/2011 17:54 (French time): @TimeZoneInfo.ConvertTimeToUtc(new DateTime(2011, 11, 6, 17, 54, 0), TimeZoneInfo.FindSystemTimeZoneById("Romance Standard Time")).ToString()<br />
-Time for 1st fixture: @Model.Forecasts.First().Fixture.Date.ToString();
-UtcTime for 1st fixture: @Model.Forecasts.First().Fixture.Date.ToUniversalTime().ToString();
 
 @using (Html.BeginForm())
 { 
