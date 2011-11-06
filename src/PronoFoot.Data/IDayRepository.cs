@@ -8,7 +8,7 @@ namespace PronoFoot.Data
 {
     public interface IDayRepository
     {
-        void Create(int competitionId, Day day);
+        int Create(int competitionId, Day day);
 
         Day GetDay(int dayId);
         IEnumerable<Day> GetDays(int competitionId);

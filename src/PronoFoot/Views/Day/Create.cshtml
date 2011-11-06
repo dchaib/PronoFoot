@@ -1,0 +1,11 @@
+﻿@model PronoFoot.ViewModels.DayEditViewModel
+
+@{
+    ViewBag.Title = "Modifier";
+}
+
+<h2>Créer</h2>
+
+@using (Html.BeginForm()) {
+    @Html.Partial("_DayForm", Model.Day);
+}

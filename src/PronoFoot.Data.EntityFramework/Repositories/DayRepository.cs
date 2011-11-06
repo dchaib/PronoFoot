@@ -14,11 +14,12 @@ namespace PronoFoot.Data.EntityFramework.Repositories
         {
         }
 
-        public void Create(int competitionId, Day day)
+        public int Create(int competitionId, Day day)
         {
             day.CompetitionId = competitionId;
             this.GetDbSet<Day>().Add(day);
             this.UnitOfWork.SaveChanges();
+            return day.DayId;
         }
 
         public Day GetDay(int dayId)

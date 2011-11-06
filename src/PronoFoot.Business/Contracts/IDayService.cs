@@ -10,6 +10,7 @@ namespace PronoFoot.Business.Contracts
     {
         DayModel GetDay(int id);
         IEnumerable<DayModel> GetDaysForCompetition(int competitionId);
+        int Create(DayModel day, IEnumerable<FixtureModel> fixtures);
         void Update(DayModel day, IEnumerable<FixtureModel> fixtures);
     }
 }
