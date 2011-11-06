@@ -20,7 +20,7 @@ namespace PronoFoot.Business.Services
         public FixtureModel GetFixture(int fixtureId)
         {
             var fixture = fixtureRepository.GetFixture(fixtureId);
-            
+
             return new FixtureModel(fixture);
         }
 
@@ -36,6 +36,15 @@ namespace PronoFoot.Business.Services
         public IEnumerable<FixtureModel> GetFixturesForDay(int dayId)
         {
             var fixtures = fixtureRepository.GetFixturesForDay(dayId);
+
+            var fixtureModels = fixtures.Select(x => new FixtureModel(x));
+
+            return fixtureModels.ToList();
+        }
+
+        public IEnumerable<FixtureModel> GetFixturesForCompetition(int competitionId)
+        {
+            var fixtures = fixtureRepository.GetFixturesForCompetition(competitionId);
 
             var fixtureModels = fixtures.Select(x => new FixtureModel(x));
 

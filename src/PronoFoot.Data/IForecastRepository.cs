@@ -15,6 +15,7 @@ namespace PronoFoot.Data
         IEnumerable<Forecast> GetForecastsForDay(int dayId);
         IEnumerable<Forecast> GetForecastsForDayUser(int dayId, int userId);
         IEnumerable<Forecast> GetForecastsForFixture(int fixtureId);
+        IDictionary<int, int> GetForecastCountByDayForCompetitionUser(int competitionId, int userId);
 
         void Save(IEnumerable<Forecast> forecasts);
 

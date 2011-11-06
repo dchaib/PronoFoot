@@ -11,5 +11,6 @@ namespace PronoFoot.Business.Contracts
         FixtureModel GetFixture(int fixtureId);
         IEnumerable<FixtureModel> GetFixtures(IEnumerable<int> fixtureIds);
         IEnumerable<FixtureModel> GetFixturesForDay(int dayId);
+        IEnumerable<FixtureModel> GetFixturesForCompetition(int competitionId);
     }
 }

@@ -38,6 +38,11 @@ namespace PronoFoot.Business.Services
             return forecastModels.ToList();
         }
 
+        public IDictionary<int, int> GetForecastCountByDayForCompetitionUser(int competitionId, int userId)
+        {
+            return forecastRepository.GetForecastCountByDayForCompetitionUser(competitionId, userId);
+        }
+
         public void SaveForecasts(IEnumerable<ForecastModel> forecasts)
         {
             var forecastsToSave = new List<Forecast>();

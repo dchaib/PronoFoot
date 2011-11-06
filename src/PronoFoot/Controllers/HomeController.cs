@@ -14,14 +14,25 @@ namespace PronoFoot.Controllers
 {
     public class HomeController : BaseController
     {
+        private readonly IDayService dayService;
+        private readonly IFixtureService fixtureService;
+        private readonly IForecastService forecastService;
+        private readonly IScoringService scoringService;
         private readonly ICompetitionRepository competitionRepository;
-        private readonly IDayRepository dayRepository;
 
-        public HomeController(IUserService userService, ICompetitionRepository competitionRepository, IDayRepository dayRepository)
+        public HomeController(IUserService userService,
+            IFixtureService fixtureService,
+            IDayService dayService,
+            IForecastService forecastService,
+            IScoringService scoringService,
+            ICompetitionRepository competitionRepository)
             : base(userService)
         {
+            this.dayService = dayService;
+            this.fixtureService = fixtureService;
+            this.forecastService = forecastService;
+            this.scoringService = scoringService;
             this.competitionRepository = competitionRepository;
-            this.dayRepository = dayRepository;
         }
 
         public ActionResult Index()
@@ -34,13 +45,28 @@ namespace PronoFoot.Controllers
                 return HttpNotFound("Il n'y a pas de compétition correspondant à cet identifiant");
             }
 
-            competition.Days = dayRepository.GetDays(competition.CompetitionId).ToList();
+            IDictionary<int, int> forecastCounts;
+            if (Request.IsAuthenticated)
+                forecastCounts = forecastService.GetForecastCountByDayForCompetitionUser(competitionId, this.CurrentUserId);
+            else
+                forecastCounts = new Dictionary<int, int>();
+
+            var days = dayService.GetDaysForCompetition(competitionId);
+            var fixtures = fixtureService.GetFixturesForCompetition(competitionId);
             var scores = UserService.GetUserScoresForCompetition(competitionId);
             var users = UserService.GetUsers();
 
             return View(new HomeViewModel
             {
                 Competition = competition,
+                Days = days.Select(x => new DayViewModel
+                {
+                    DayId = x.DayId,
+                    Name = x.Name,
+                    Date = x.Date,
+                    ForecastMadeByCurrentUser = (fixtures.Count(y => y.DayId == x.DayId) == (forecastCounts.ContainsKey(x.DayId) ? forecastCounts[x.DayId] : 0)),
+                    CanBeForecast = fixtures.Any(y => y.DayId == x.DayId && y.CanBeForecast)
+                }),
                 Scores = scores.Select(x => new UserScoreViewModel
                 {
                     UserId = x.UserId,
@@ -58,7 +84,39 @@ namespace PronoFoot.Controllers
 
         public ActionResult Rules()
         {
-            return View();
+            var examples = new List<ScoringExample>();
+            examples.Add(new ScoringExample { ScoreHomeGoals = 2, ScoreAwayGoals = 1, ForecastHomeGoals = 2, ForecastAwayGoals = 1 });
+            examples.Add(new ScoringExample { ScoreHomeGoals = 2, ScoreAwayGoals = 1, ForecastHomeGoals = 2, ForecastAwayGoals = 0 });
+            examples.Add(new ScoringExample { ScoreHomeGoals = 2, ScoreAwayGoals = 1, ForecastHomeGoals = 3, ForecastAwayGoals = 1 });
+            examples.Add(new ScoringExample { ScoreHomeGoals = 2, ScoreAwayGoals = 1, ForecastHomeGoals = 1, ForecastAwayGoals = 0 });
+            examples.Add(new ScoringExample { ScoreHomeGoals = 2, ScoreAwayGoals = 1, ForecastHomeGoals = 3, ForecastAwayGoals = 2 });
+            examples.Add(new ScoringExample { ScoreHomeGoals = 2, ScoreAwayGoals = 1, ForecastHomeGoals = 4, ForecastAwayGoals = 1 });
+            examples.Add(new ScoringExample { ScoreHomeGoals = 2, ScoreAwayGoals = 1, ForecastHomeGoals = 4, ForecastAwayGoals = 3 });
+            examples.Add(new ScoringExample { ScoreHomeGoals = 2, ScoreAwayGoals = 1, ForecastHomeGoals = 1, ForecastAwayGoals = 1 });
+            examples.Add(new ScoringExample { ScoreHomeGoals = 2, ScoreAwayGoals = 1, ForecastHomeGoals = 1, ForecastAwayGoals = 2 });
+            examples.Add(new ScoringExample { ScoreHomeGoals = 1, ScoreAwayGoals = 1, ForecastHomeGoals = 1, ForecastAwayGoals = 1 });
+            examples.Add(new ScoringExample { ScoreHomeGoals = 1, ScoreAwayGoals = 1, ForecastHomeGoals = 0, ForecastAwayGoals = 0 });
+            examples.Add(new ScoringExample { ScoreHomeGoals = 1, ScoreAwayGoals = 1, ForecastHomeGoals = 2, ForecastAwayGoals = 2 });
+            examples.Add(new ScoringExample { ScoreHomeGoals = 1, ScoreAwayGoals = 1, ForecastHomeGoals = 3, ForecastAwayGoals = 3 });
+            examples.Add(new ScoringExample { ScoreHomeGoals = 1, ScoreAwayGoals = 1, ForecastHomeGoals = 1, ForecastAwayGoals = 0 });
+            examples.Add(new ScoringExample { ScoreHomeGoals = 1, ScoreAwayGoals = 1, ForecastHomeGoals = 1, ForecastAwayGoals = 2 });
+
+            return View(examples.Select(x => new HomeRulesExampleViewModel
+            {
+                ScoreHomeGoals = x.ScoreHomeGoals,
+                ScoreAwayGoals = x.ScoreAwayGoals,
+                ForecastHomeGoals = x.ForecastHomeGoals,
+                ForecastAwayGoals = x.ForecastAwayGoals,
+                Score = scoringService.GetScore(x.ScoreHomeGoals, x.ScoreAwayGoals, x.ForecastHomeGoals, x.ForecastAwayGoals)
+            }));
+        }
+
+        private class ScoringExample
+        {
+            public int ScoreHomeGoals { get; set; }
+            public int ScoreAwayGoals { get; set; }
+            public int ForecastHomeGoals { get; set; }
+            public int ForecastAwayGoals { get; set; }
         }
     }
 }

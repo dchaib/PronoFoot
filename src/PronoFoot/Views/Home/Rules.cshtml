@@ -1,201 +1,37 @@
-﻿@{
+﻿@model IEnumerable<HomeRulesExampleViewModel>
+@{
     ViewBag.Title = "Règles";
 }
 
-   <h2>
-        Règles des pronostics</h2>
-    <p>
-        Voici le barème de points :
-        <ul>
-            <li>Score exact : 3 points</li>
-            <li>Bon 1N2 avec un but d’écart : 2 points</li>
-            <li>Bon 1N2 et bon écart à un but près : 1.5 points</li>
-            <li>Bon 1N2 : 1 point</li>
-            <li>Autre : 0 point</li>
-        </ul>
-    </p>
-    <p>
-        <strong>Exemples :</strong>
-    </p>
+<h2>Règles des pronostics</h2>
+<div>Voici le barème de points :
+<ul>
+    <li>Score exact : 3 points</li>
+    <li>Bon 1N2 avec un but d’écart : 2 points</li>
+    <li>Bon 1N2 et bon écart à un but près : 1.5 points</li>
+    <li>Bon 1N2 : 1 point</li>
+    <li>Autre : 0 point</li>
+</ul>
+</div>
+<div>
+    <p><strong>Exemples :</strong></p>
     <table>
         <thead>
             <tr>
-                <td>
-                    Score
-                </td>
-                <td>
-                    Pronostic
-                </td>
-                <td>
-                    Note
-                </td>
+                <th>Score</th>
+                <th>Pronostic</th>
+                <th>Note</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                    2-1
-                </td>
-                <td>
-                    2-1
-                </td>
-                <td>
-                    3
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    2-1
-                </td>
-                <td>
-                    2-0
-                </td>
-                <td>
-                    2
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    2-1
-                </td>
-                <td>
-                    3-1
-                </td>
-                <td>
-                    2
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    2-1
-                </td>
-                <td>
-                    1-0
-                </td>
-                <td>
-                    1.5
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    2-1
-                </td>
-                <td>
-                    3-2
-                </td>
-                <td>
-                    1.5
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    2-1
-                </td>
-                <td>
-                    4-1
-                </td>
-                <td>
-                    1
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    2-1
-                </td>
-                <td>
-                    4-3
-                </td>
-                <td>
-                    1
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    2-1
-                </td>
-                <td>
-                    1-1
-                </td>
-                <td>
-                    0
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    2-1
-                </td>
-                <td>
-                    1-2
-                </td>
-                <td>
-                    0
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    1-1
-                </td>
-                <td>
-                    1-1
-                </td>
-                <td>
-                    3
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    1-1
-                </td>
-                <td>
-                    0-0
-                </td>
-                <td>
-                    2
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    1-1
-                </td>
-                <td>
-                    2-2
-                </td>
-                <td>
-                    2
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    1-1
-                </td>
-                <td>
-                    3-3
-                </td>
-                <td>
-                    1
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    1-1
-                </td>
-                <td>
-                    1-0
-                </td>
-                <td>
-                    0
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    1-1
-                </td>
-                <td>
-                    1-2
-                </td>
-                <td>
-                    0
-                </td>
-            </tr>
+        @foreach (var example in Model)
+        {
+           <tr>
+                <td>@example.ScoreHomeGoals-@example.ScoreAwayGoals</td>                
+                <td>@example.ForecastHomeGoals-@example.ForecastAwayGoals</td>
+                <td>@example.Score</td>
+            </tr> 
+        }
         </tbody>
     </table>
+</div>

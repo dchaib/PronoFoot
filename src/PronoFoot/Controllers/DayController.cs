@@ -53,6 +53,53 @@ namespace PronoFoot.Controllers
         }
 
         [Authorize(Roles = "Administrators")]
+        public ActionResult Create(int competitionId)
+        {
+            var teams = teamService.GetTeamsForCompetition(competitionId);
+
+            return View(new DayEditViewModel
+            {
+                DayName = string.Empty,
+                Day = new DayFormViewModel
+                {
+                    Date = DateTime.Today,
+                    Name = string.Empty,
+                    Fixtures = Enumerable.Repeat(new FixtureViewModel(teams), teams.Count() / 2).ToList()
+                }
+            });
+        }
+
+        [Authorize(Roles = "Administrators")]
+        [HttpPost]
+        public ActionResult Create(int competitionId, DayFormViewModel dayForm)
+        {
+            var day = new DayModel
+            {
+                CompetitionId = competitionId,
+                Date = dayForm.Date,
+                Name = dayForm.Name
+            };
+
+            var fixtures = new List<FixtureModel>();
+            foreach (var fixture in dayForm.Fixtures)
+            {
+                fixtures.Add(new FixtureModel
+                {
+                    FixtureId = fixture.FixtureId,
+                    Date = fixture.Date,
+                    HomeTeamId = fixture.HomeTeamId,
+                    AwayTeamId = fixture.AwayTeamId,
+                    HomeTeamGoals = fixture.HomeTeamGoals,
+                    AwayTeamGoals = fixture.AwayTeamGoals
+                });
+            }
+
+            int dayId = dayServices.Create(day, fixtures);
+
+            return RedirectToAction("Details", new { id = dayId });
+        }
+
+        [Authorize(Roles = "Administrators")]
         public ActionResult Edit(int id)
         {
             var day = dayServices.GetDay(id);

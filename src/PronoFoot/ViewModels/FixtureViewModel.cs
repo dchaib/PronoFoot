@@ -21,7 +21,13 @@ namespace PronoFoot.ViewModels
         {
         }
 
+        public FixtureViewModel(IEnumerable<TeamModel> teams)
+        {
+            this.Teams = teams.OrderBy(x => x.Name).Select(x => new SelectListItem { Value = x.TeamId.ToString(), Text = x.Name });
+        }
+
         public FixtureViewModel(FixtureModel fixture, IEnumerable<TeamModel> teams)
+            : this(teams)
         {
             this.FixtureId = fixture.FixtureId;
             this.Date = fixture.Date;
@@ -29,8 +35,6 @@ namespace PronoFoot.ViewModels
             this.AwayTeamId = fixture.AwayTeamId;
             this.HomeTeamGoals = fixture.HomeTeamGoals;
             this.AwayTeamGoals = fixture.AwayTeamGoals;
-
-            this.Teams = teams.OrderBy(x => x.Name).Select(x => new SelectListItem { Value = x.TeamId.ToString(), Text = x.Name });
         }
     }
 }

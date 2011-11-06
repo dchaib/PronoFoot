@@ -10,6 +10,7 @@ namespace PronoFoot.Business.Contracts
     {
         IEnumerable<ForecastModel> GetForecastsForDay(int dayId);
         IEnumerable<ForecastModel> GetForecastsForDayUser(int dayId, int userId);
+        IDictionary<int, int> GetForecastCountByDayForCompetitionUser(int competitionId, int userId);
 
         void SaveForecasts(IEnumerable<ForecastModel> forecasts);
 

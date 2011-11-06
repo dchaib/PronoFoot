@@ -16,7 +16,10 @@ namespace PronoFoot.Business.Models
         public int AwayTeamId { get; set; }
         public int? AwayTeamGoals { get; set; }
 
-        public bool CanBeForecast { get { return this.Date > DateTime.Now; } }
+        public bool CanBeForecast
+        {
+            get { return TimeZoneInfo.ConvertTimeToUtc(this.Date, TimeZoneInfo.FindSystemTimeZoneById("Romance Standard Time")) > DateTime.UtcNow; }
+        }
 
         public FixtureModel()
         {
