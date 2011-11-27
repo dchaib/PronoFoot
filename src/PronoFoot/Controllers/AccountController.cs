@@ -77,38 +77,39 @@ namespace PronoFoot.Controllers
         //
         // GET: /Account/Register
 
-        //public ActionResult Register()
-        //{
-        //    return View();
-        //}
+        public ActionResult Register()
+        {
+            return View();
+        }
 
         ////
         //// POST: /Account/Register
 
-        //[HttpPost]
-        //public ActionResult Register(RegisterModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // Attempt to register the user
-        //        MembershipCreateStatus createStatus;
-        //        Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
+        [HttpPost]
+        public ActionResult Register(RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Attempt to register the user
+                MembershipCreateStatus createStatus;
+                Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
 
-        //        if (createStatus == MembershipCreateStatus.Success)
-        //        {
-        //            var user = userServices.CreateUser(new User {Login = model.UserName, Name = model.UserName, Email = Model.Email });
-        //            formsAuthenticationService.SetAuthCookie(this.HttpContext, AuthenticationTicketBuilder.CreateTicket(user, false /* createPersistentCookie */));
-        //            return RedirectToAction("Index", "Home");
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("", ErrorCodeToString(createStatus));
-        //        }
-        //    }
+                if (createStatus == MembershipCreateStatus.Success)
+                {
+                    var userId = userServices.Create(new User { Login = model.UserName, Name = model.UserName, Email = model.Email });
+                    var user = userServices.GetUserByLogin(model.UserName);
+                    formsAuthenticationService.SetAuthCookie(this.HttpContext, AuthenticationTicketBuilder.CreateTicket(user, false /* createPersistentCookie */));
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                }
+            }
 
-        //    // If we got this far, something failed, redisplay form
-        //    return View(model);
-        //}
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
 
         //
         // GET: /Account/ChangePassword

@@ -13,6 +13,8 @@ namespace PronoFoot.Business.Contracts
         User GetUserByLogin(string login);
         IEnumerable<User> GetUsers();
 
+        int Create(User user);
+
         IEnumerable<UserScoreModel> GetUserScoresForCompetition(int competitionId);
     }
 }

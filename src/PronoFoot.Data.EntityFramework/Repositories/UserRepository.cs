@@ -32,5 +32,12 @@ namespace PronoFoot.Data.EntityFramework.Repositories
             return this.GetDbSet<User>()
                 .ToList();
         }
+
+        public int Create(User user)
+        {
+            this.GetDbSet<User>().Add(user);
+            this.UnitOfWork.SaveChanges();
+            return user.UserId;
+        }
     }
 }

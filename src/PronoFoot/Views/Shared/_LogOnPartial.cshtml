@@ -1,7 +1,7 @@
 ﻿@using PronoFoot.Authentication;
 
 @if(Request.IsAuthenticated) {
-    <text>Bienvenue <strong>@User.GetPronoFootIdentity().DisplayName</strong>!
+    <text>Bienvenue <strong>@Html.ActionLink(@User.GetPronoFootIdentity().DisplayName, "Index", "User")</strong> !
     [ @Html.ActionLink("Se déconnecter", "LogOff", "Account") ]</text>
 }
 else {
