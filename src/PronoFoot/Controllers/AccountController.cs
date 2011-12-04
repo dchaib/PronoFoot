@@ -6,21 +6,19 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using PronoFoot.Models;
-using PronoFoot.Authentication;
 using PronoFoot.Business.Contracts;
 using PronoFoot.Data.Model;
 
 namespace PronoFoot.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
-        private readonly IFormsAuthenticationService formsAuthenticationService;
-        private readonly IUserService userServices;
+        private readonly Security.IAuthenticationService authenticationService;
 
-        public AccountController(IFormsAuthenticationService formsAuthenticationService, IUserService userServices)
+        public AccountController(IUserService userService, Security.IAuthenticationService authenticationService)
+            :base (userService, authenticationService)
         {
-            this.formsAuthenticationService = formsAuthenticationService;
-            this.userServices = userServices;
+            this.authenticationService = authenticationService;
         }
 
         //
@@ -42,8 +40,8 @@ namespace PronoFoot.Controllers
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
                     //formsAuthenticationService.SetAuthCookie(model.UserName, model.RememberMe);
-                    var user = userServices.GetUserByLogin(model.UserName);
-                    formsAuthenticationService.SetAuthCookie(this.HttpContext, AuthenticationTicketBuilder.CreateTicket(user, model.RememberMe));
+                    var user = userService.GetUserByLogin(model.UserName);
+                    authenticationService.SignIn(this.HttpContext, new Security.User { Id = user.UserId, Name = user.Login }, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
@@ -69,7 +67,7 @@ namespace PronoFoot.Controllers
 
         public ActionResult LogOff()
         {
-            formsAuthenticationService.SignOut();
+            authenticationService.SignOut();
 
             return RedirectToAction("Index", "Home");
         }
@@ -96,9 +94,9 @@ namespace PronoFoot.Controllers
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
-                    var userId = userServices.Create(new User { Login = model.UserName, Name = model.UserName, Email = model.Email });
-                    var user = userServices.GetUserByLogin(model.UserName);
-                    formsAuthenticationService.SetAuthCookie(this.HttpContext, AuthenticationTicketBuilder.CreateTicket(user, false /* createPersistentCookie */));
+                    var userId = userService.Create(new User { Login = model.UserName, Name = model.UserName, Email = model.Email });
+                    var user = userService.GetUserByLogin(model.UserName);
+                    authenticationService.SignIn(this.HttpContext, new Security.User { Id = user.UserId, Name = user.Login }, false /* createPersistentCookie */);
                     return RedirectToAction("Index", "Home");
                 }
                 else

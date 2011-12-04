@@ -13,5 +13,6 @@ namespace PronoFoot.Data
         IEnumerable<User> GetUsers();
 
         int Create(User user);
+        void Update(User user);
     }
 }

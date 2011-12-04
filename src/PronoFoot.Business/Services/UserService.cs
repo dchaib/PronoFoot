@@ -66,6 +66,11 @@ namespace PronoFoot.Business.Services
             return this.userRepository.Create(user);
         }
 
+        public void Update(User user)
+        {
+            this.userRepository.Update(user);
+        }
+
         public IEnumerable<UserScoreModel> GetUserScoresForCompetition(int competitionId)
         {
             var forecasts = forecastRepository.GetForecastsForCompetition(competitionId);

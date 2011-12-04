@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using PronoFoot.Business.Contracts;
+using PronoFoot.ViewModels;
 
 namespace PronoFoot.Controllers
 {
     public class UserController : BaseController
     {
-        public UserController(IUserService userService)
-            : base(userService)
+        public UserController(IUserService userService, Security.IAuthenticationService authenticationService)
+            : base(userService, authenticationService)
         {
         }
 
@@ -24,89 +26,39 @@ namespace PronoFoot.Controllers
         }
 
         //
-        // GET: /User/Details/5
-
-        public ActionResult Details(int id)
+        // GET: /User/Edit
+        [Authorize]
+        public ActionResult Edit()
         {
-            return View();
+            var currentUser = this.CurrentUser;
+            var viewModel = new UserEditViewModel
+            {
+                Name = currentUser.Name,
+                Email = currentUser.Email
+            };
+            return View(viewModel);
         }
 
         //
-        // GET: /User/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        } 
-
-        //
-        // POST: /User/Create
-
+        // POST: /User/Edit
+        [Authorize]
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Edit(UserEditViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                var user = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
+                user.Email = model.Email;
+                Membership.UpdateUser(user);
+
+                var currentUser = this.CurrentUser;
+                currentUser.Name = model.Name;
+                currentUser.Email = model.Email;
+                userService.Update(currentUser);
 
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
-        }
-        
-        //
-        // GET: /User/Edit/5
- 
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /User/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /User/Delete/5
- 
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /User/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
     }
 }

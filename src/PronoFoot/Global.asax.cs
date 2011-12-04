@@ -14,7 +14,7 @@ using System.Security.Principal;
 using PronoFoot.Business.Contracts;
 using PronoFoot.Business.Services;
 using PronoFoot.Models;
-using PronoFoot.Authentication;
+using PronoFoot.Security;
 
 namespace PronoFoot
 {
@@ -40,13 +40,6 @@ namespace PronoFoot
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
 
-        }
-
-        public override void Init()
-        {
-            this.PostAuthenticateRequest += this.PostAuthenticateRequestHandler;
-
-            base.Init();
         }
 
         protected void Application_Start()
@@ -79,26 +72,9 @@ namespace PronoFoot
             builder.RegisterType<TeamService>().As<ITeamService>().InstancePerLifetimeScope();
             builder.RegisterType<ScoringService>().As<IScoringService>().InstancePerLifetimeScope();
             //Web
-            builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>();
+            builder.RegisterType<FormsAuthenticationService>().As<IAuthenticationService>();
             container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-        }
-
-        private void PostAuthenticateRequestHandler(object sender, EventArgs e)
-        {
-            HttpCookie authCookie = this.Context.Request.Cookies[FormsAuthentication.FormsCookieName];
-            if (IsValidAuthCookie(authCookie))
-            {
-                var formsAuthenticationService = container.Resolve<IFormsAuthenticationService>();
-                var ticket = formsAuthenticationService.Decrypt(authCookie.Value);
-                var pronoFootIdentity = new PronoFootIdentity(ticket);
-                this.Context.User = new GenericPrincipal(pronoFootIdentity, Roles.GetRolesForUser(pronoFootIdentity.Name));
-            }
-        }
-
-        private static bool IsValidAuthCookie(HttpCookie authCookie)
-        {
-            return authCookie != null && !String.IsNullOrEmpty(authCookie.Value);
         }
     }
 }

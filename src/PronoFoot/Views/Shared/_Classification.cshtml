@@ -30,7 +30,6 @@
 
 @{
     int rank = 1;
-    int currentUserId = Request.IsAuthenticated ? ((PronoFoot.Models.PronoFootIdentity)User.Identity).UserId : 0;
     foreach (var userScore in Model.OrderByDescending(x => x.Score).ThenByDescending(x => x.NumberOfExactForecasts).ThenByDescending(x => x.NumberOfCloseForecasts))
     {
         <tr>

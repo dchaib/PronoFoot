@@ -1,9 +1,9 @@
-﻿@using PronoFoot.Authentication;
-
-@if(Request.IsAuthenticated) {
-    <text>Bienvenue <strong>@Html.ActionLink(@User.GetPronoFootIdentity().DisplayName, "Index", "User")</strong> !
+﻿@if (ViewBag.UserName != null)
+{
+    <text>Bienvenue <strong>@Html.ActionLink((string)ViewBag.UserName, "Index", "User")</strong> !
     [ @Html.ActionLink("Se déconnecter", "LogOff", "Account") ]</text>
 }
-else {
+else
+{
     @:[ @Html.ActionLink("Se connecter", "LogOn", "Account") ]
 }
