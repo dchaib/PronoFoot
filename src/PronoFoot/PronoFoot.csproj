@@ -71,6 +71,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Security\DefaultMembershipService.cs" />
     <Compile Include="Security\FormsAuthenticationService.cs" />
     <Compile Include="Security\IAuthenticationService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -82,6 +83,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Security\IMembershipService.cs" />
     <Compile Include="Security\User.cs" />
     <Compile Include="ViewModels\DayDetailsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

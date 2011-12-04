@@ -73,6 +73,7 @@ namespace PronoFoot
             builder.RegisterType<ScoringService>().As<IScoringService>().InstancePerLifetimeScope();
             //Web
             builder.RegisterType<FormsAuthenticationService>().As<IAuthenticationService>();
+            builder.RegisterType<DefaultMembershipService>().As<IMembershipService>();
             container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }

@@ -14,11 +14,13 @@ namespace PronoFoot.Controllers
     public class AccountController : BaseController
     {
         private readonly Security.IAuthenticationService authenticationService;
+        private readonly Security.IMembershipService membershipService;
 
-        public AccountController(IUserService userService, Security.IAuthenticationService authenticationService)
-            :base (userService, authenticationService)
+        public AccountController(IUserService userService, Security.IAuthenticationService authenticationService, Security.IMembershipService membershipService)
+            : base(userService, authenticationService)
         {
             this.authenticationService = authenticationService;
+            this.membershipService = membershipService;
         }
 
         //
@@ -37,9 +39,8 @@ namespace PronoFoot.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.UserName, model.Password))
+                if (membershipService.ValidateUser(model.UserName, model.Password))
                 {
-                    //formsAuthenticationService.SetAuthCookie(model.UserName, model.RememberMe);
                     var user = userService.GetUserByLogin(model.UserName);
                     authenticationService.SignIn(this.HttpContext, new Security.User { Id = user.UserId, Name = user.Login }, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
@@ -89,14 +90,12 @@ namespace PronoFoot.Controllers
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
-                MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
+                MembershipCreateStatus createStatus = membershipService.CreateUser(model.UserName, model.Password, model.Email);
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     var userId = userService.Create(new User { Login = model.UserName, Name = model.UserName, Email = model.Email });
-                    var user = userService.GetUserByLogin(model.UserName);
-                    authenticationService.SignIn(this.HttpContext, new Security.User { Id = user.UserId, Name = user.Login }, false /* createPersistentCookie */);
+                    authenticationService.SignIn(this.HttpContext, new Security.User { Id = userId, Name = model.UserName }, false /* createPersistentCookie */);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -133,8 +132,7 @@ namespace PronoFoot.Controllers
                 bool changePasswordSucceeded;
                 try
                 {
-                    MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
-                    changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                    changePasswordSucceeded = membershipService.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
                 }
                 catch (Exception)
                 {
