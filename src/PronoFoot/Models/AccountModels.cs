@@ -7,14 +7,8 @@ using System.Web.Security;
 
 namespace PronoFoot.Models
 {
-
-    public class ChangePasswordModel
+    public abstract class PasswordModel
     {
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "Mot de passe actuel")]
-        public string OldPassword { get; set; }
-
         [Required]
         [StringLength(100, ErrorMessage = "Le {0} doit contenir au moins {2} caractères.", MinimumLength = 6)]
         [DataType(DataType.Password)]
@@ -25,6 +19,18 @@ namespace PronoFoot.Models
         [Display(Name = "Confirmation du nouveau mot de passe")]
         [Compare("NewPassword", ErrorMessage = "Le nouveau mot de passe et sa confirmation ne correspondent pas.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class ChangePasswordModel : PasswordModel
+    {
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Mot de passe actuel")]
+        public string OldPassword { get; set; }
+    }
+
+    public class ResetPasswordModel : PasswordModel
+    {
     }
 
     public class LogOnModel

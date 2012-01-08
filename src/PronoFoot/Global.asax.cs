@@ -15,6 +15,7 @@ using PronoFoot.Business.Contracts;
 using PronoFoot.Business.Services;
 using PronoFoot.Models;
 using PronoFoot.Security;
+using PronoFoot.Messaging;
 
 namespace PronoFoot
 {
@@ -71,7 +72,9 @@ namespace PronoFoot
             builder.RegisterType<ForecastService>().As<IForecastService>().InstancePerLifetimeScope();
             builder.RegisterType<TeamService>().As<ITeamService>().InstancePerLifetimeScope();
             builder.RegisterType<ScoringService>().As<IScoringService>().InstancePerLifetimeScope();
-            //Web
+            //Framework
+            builder.RegisterType<DefaultEncryptionService>().As<IEncryptionService>().SingleInstance();
+            builder.RegisterType<EmailMessagingService>().As<IMessagingService>().InstancePerLifetimeScope();
             builder.RegisterType<FormsAuthenticationService>().As<IAuthenticationService>();
             builder.RegisterType<DefaultMembershipService>().As<IMembershipService>();
             container = builder.Build();
