@@ -16,6 +16,8 @@ using PronoFoot.Business.Services;
 using PronoFoot.Models;
 using PronoFoot.Security;
 using PronoFoot.Messaging;
+using PronoFoot.Logging;
+using PronoFoot.Configuration;
 
 namespace PronoFoot
 {
@@ -73,6 +75,8 @@ namespace PronoFoot
             builder.RegisterType<TeamService>().As<ITeamService>().InstancePerLifetimeScope();
             builder.RegisterType<ScoringService>().As<IScoringService>().InstancePerLifetimeScope();
             //Framework
+            builder.RegisterType<NLogLoggerFactory>().As<ILoggerFactory>().SingleInstance();
+            builder.RegisterModule(new LoggerInjectionModule());
             builder.RegisterType<DefaultEncryptionService>().As<IEncryptionService>().SingleInstance();
             builder.RegisterType<EmailMessagingService>().As<IMessagingService>().InstancePerLifetimeScope();
             builder.RegisterType<FormsAuthenticationService>().As<IAuthenticationService>();
@@ -80,5 +84,6 @@ namespace PronoFoot
             container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
+
     }
 }
