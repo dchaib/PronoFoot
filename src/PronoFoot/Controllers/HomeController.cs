@@ -9,6 +9,7 @@ using PronoFoot.Data.EntityFramework.Repositories;
 using PronoFoot.Data.EntityFramework;
 using PronoFoot.Business.Contracts;
 using PronoFoot.ViewModels;
+using PronoFoot.Security;
 
 namespace PronoFoot.Controllers
 {
@@ -25,8 +26,9 @@ namespace PronoFoot.Controllers
             IDayService dayService,
             IForecastService forecastService,
             IScoringService scoringService,
-            ICompetitionRepository competitionRepository)
-            : base(userService)
+            ICompetitionRepository competitionRepository,
+            IAuthenticationService authenticationService)
+            : base(userService, authenticationService)
         {
             this.dayService = dayService;
             this.fixtureService = fixtureService;
@@ -47,14 +49,14 @@ namespace PronoFoot.Controllers
 
             IDictionary<int, int> forecastCounts;
             if (Request.IsAuthenticated)
-                forecastCounts = forecastService.GetForecastCountByDayForCompetitionUser(competitionId, this.CurrentUserId);
+                forecastCounts = forecastService.GetForecastCountByDayForCompetitionUser(competitionId, this.CurrentUser.UserId);
             else
                 forecastCounts = new Dictionary<int, int>();
 
             var days = dayService.GetDaysForCompetition(competitionId);
             var fixtures = fixtureService.GetFixturesForCompetition(competitionId);
-            var scores = UserService.GetUserScoresForCompetition(competitionId);
-            var users = UserService.GetUsers();
+            var scores = userService.GetUserScoresForCompetition(competitionId);
+            var users = userService.GetUsers();
 
             return View(new HomeViewModel
             {

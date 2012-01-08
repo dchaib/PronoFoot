@@ -1,0 +1,9 @@
+﻿@model PronoFoot.Data.Model.User
+@{
+    ViewBag.Title = @Model.Name;
+}
+
+<h2>@ViewBag.Title</h2>
+<h3>Mon compte</h3>
+<p>@Html.ActionLink("Modifier mon profil", "Edit", "User")</p>
+<p>@Html.ActionLink("Changer mon mot de passe", "ChangePassword", "Account")</p>

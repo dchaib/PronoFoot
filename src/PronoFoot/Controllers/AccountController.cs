@@ -6,21 +6,22 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using PronoFoot.Models;
-using PronoFoot.Authentication;
 using PronoFoot.Business.Contracts;
 using PronoFoot.Data.Model;
+using PronoFoot.Mvc.Extensions;
 
 namespace PronoFoot.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
-        private readonly IFormsAuthenticationService formsAuthenticationService;
-        private readonly IUserService userServices;
+        private readonly Security.IAuthenticationService authenticationService;
+        private readonly Security.IMembershipService membershipService;
 
-        public AccountController(IFormsAuthenticationService formsAuthenticationService, IUserService userServices)
+        public AccountController(IUserService userService, Security.IAuthenticationService authenticationService, Security.IMembershipService membershipService)
+            : base(userService, authenticationService)
         {
-            this.formsAuthenticationService = formsAuthenticationService;
-            this.userServices = userServices;
+            this.authenticationService = authenticationService;
+            this.membershipService = membershipService;
         }
 
         //
@@ -39,11 +40,10 @@ namespace PronoFoot.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.UserName, model.Password))
+                if (membershipService.ValidateUser(model.UserName, model.Password))
                 {
-                    //formsAuthenticationService.SetAuthCookie(model.UserName, model.RememberMe);
-                    var user = userServices.GetUserByLogin(model.UserName);
-                    formsAuthenticationService.SetAuthCookie(this.HttpContext, AuthenticationTicketBuilder.CreateTicket(user, model.RememberMe));
+                    var user = userService.GetUserByLogin(model.UserName);
+                    authenticationService.SignIn(this.HttpContext, new Security.User { Id = user.UserId, Name = user.Login }, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
@@ -69,7 +69,7 @@ namespace PronoFoot.Controllers
 
         public ActionResult LogOff()
         {
-            formsAuthenticationService.SignOut();
+            authenticationService.SignOut();
 
             return RedirectToAction("Index", "Home");
         }
@@ -77,38 +77,37 @@ namespace PronoFoot.Controllers
         //
         // GET: /Account/Register
 
-        //public ActionResult Register()
-        //{
-        //    return View();
-        //}
+        public ActionResult Register()
+        {
+            return View();
+        }
 
         ////
         //// POST: /Account/Register
 
-        //[HttpPost]
-        //public ActionResult Register(RegisterModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // Attempt to register the user
-        //        MembershipCreateStatus createStatus;
-        //        Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
+        [HttpPost]
+        public ActionResult Register(RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Attempt to register the user
+                MembershipCreateStatus createStatus = membershipService.CreateUser(model.UserName, model.Password, model.Email);
 
-        //        if (createStatus == MembershipCreateStatus.Success)
-        //        {
-        //            var user = userServices.CreateUser(new User {Login = model.UserName, Name = model.UserName, Email = Model.Email });
-        //            formsAuthenticationService.SetAuthCookie(this.HttpContext, AuthenticationTicketBuilder.CreateTicket(user, false /* createPersistentCookie */));
-        //            return RedirectToAction("Index", "Home");
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("", ErrorCodeToString(createStatus));
-        //        }
-        //    }
+                if (createStatus == MembershipCreateStatus.Success)
+                {
+                    var userId = userService.Create(new User { Login = model.UserName, Name = model.UserName, Email = model.Email });
+                    authenticationService.SignIn(this.HttpContext, new Security.User { Id = userId, Name = model.UserName }, false /* createPersistentCookie */);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                }
+            }
 
-        //    // If we got this far, something failed, redisplay form
-        //    return View(model);
-        //}
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
 
         //
         // GET: /Account/ChangePassword
@@ -128,14 +127,12 @@ namespace PronoFoot.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 // ChangePassword will throw an exception rather
                 // than return false in certain failure scenarios.
                 bool changePasswordSucceeded;
                 try
                 {
-                    MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
-                    changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                    changePasswordSucceeded = membershipService.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
                 }
                 catch (Exception)
                 {
@@ -162,6 +159,84 @@ namespace PronoFoot.Controllers
         public ActionResult ChangePasswordSuccess()
         {
             return View();
+        }
+
+        public ActionResult RequestPasswordReset()
+        {
+            if (!membershipService.PasswordResetEnabled)
+                return new HttpNotFoundResult();
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult RequestPasswordReset(string username)
+        {
+            if (!membershipService.PasswordResetEnabled)
+                return new HttpNotFoundResult();
+
+            if (String.IsNullOrWhiteSpace(username))
+            {
+                //_orchardServices.Notifier.Error(T("Invalid username or E-mail"));
+                return View();
+            }
+
+            membershipService.SendRequestResetPasswordEmail(username, nonce => Url.AbsoluteAction("ResetPassword", "Account", new { nonce = nonce }));
+
+            //_orchardServices.Notifier.Information(T("Check your e-mail for the confirmation link."));
+
+            return RedirectToAction("RequestPasswordResetSuccess");
+        }
+
+        public ActionResult RequestPasswordResetSuccess()
+        {
+            return View();
+        }
+
+        public ActionResult ResetPassword(string nonce)
+        {
+            if (membershipService.ValidateResetPassword(nonce) == null)
+            {
+                return RedirectToAction("LogOn");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(string nonce, ResetPasswordModel model)
+        {
+            string userName = membershipService.ValidateResetPassword(nonce);
+            if (userName == null)
+            {
+                return RedirectToAction("LogOn");
+            }
+
+            if (ModelState.IsValid)
+            {
+                // ChangePassword will throw an exception rather
+                // than return false in certain failure scenarios.
+                bool resetPasswordSucceeded;
+                try
+                {
+                    resetPasswordSucceeded = membershipService.ResetPassword(userName, model.NewPassword);
+                }
+                catch (Exception)
+                {
+                    resetPasswordSucceeded = false;
+                }
+
+                if (resetPasswordSucceeded)
+                {
+                    return RedirectToAction("ChangePasswordSuccess");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Le nouveau mot de passe n'est pas valide.");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
 
         #region Status Codes

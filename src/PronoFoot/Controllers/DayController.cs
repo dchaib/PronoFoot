@@ -17,20 +17,19 @@ namespace PronoFoot.Controllers
         private readonly IFixtureService fixtureService;
         private readonly IForecastService forecastService;
         private readonly ITeamService teamService;
-        private readonly IUserService userService;
 
         public DayController(IDayService dayServices,
                              IFixtureService fixtureService,
                              IForecastService forecastService,
                              ITeamService teamService,
-                             IUserService userService)
-            : base(userService)
+                             IUserService userService,
+                             Security.IAuthenticationService authenticationService)
+            : base(userService, authenticationService)
         {
             this.dayServices = dayServices;
             this.fixtureService = fixtureService;
             this.forecastService = forecastService;
             this.teamService = teamService;
-            this.userService = userService;
         }
 
         [Authorize]
@@ -48,7 +47,8 @@ namespace PronoFoot.Controllers
                 Fixtures = fixtures.ToList(),
                 Teams = teams.ToList(),
                 Forecasts = forecasts.ToList(),
-                Users = users.ToList()
+                Users = users.ToList(),
+                CurrentUserId = this.CurrentUser.UserId
             });
         }
 
@@ -161,7 +161,7 @@ namespace PronoFoot.Controllers
             var currentUser = this.CurrentUser;
             var day = dayServices.GetDay(id);
             var fixtures = fixtureService.GetFixturesForDay(id).ToList();
-            var forecasts = forecastService.GetForecastsForDayUser(id, this.CurrentUserId).ToList();
+            var forecasts = forecastService.GetForecastsForDayUser(id, this.CurrentUser.UserId).ToList();
             var teams = teamService.GetTeamsForCompetition(day.CompetitionId).ToList();
 
             var forecastViewModels = new List<ForecastViewModel>();
@@ -195,7 +195,7 @@ namespace PronoFoot.Controllers
                     models.Add(new ForecastModel
                     {
                         FixtureId = forecast.FixtureId,
-                        UserId = this.CurrentUserId,
+                        UserId = this.CurrentUser.UserId,
                         HomeTeamGoals = forecast.HomeTeamGoals.Value,
                         AwayTeamGoals = forecast.AwayTeamGoals.Value
                     });

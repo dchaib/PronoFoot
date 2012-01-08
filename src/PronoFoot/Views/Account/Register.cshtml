@@ -1,25 +1,22 @@
 ﻿@model PronoFoot.Models.RegisterModel
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Inscription";
 }
 
-<h2>Create a New Account</h2>
+<h2>@ViewBag.Title</h2>
 <p>
-    Use the form below to create a new account. 
-</p>
-<p>
-    Passwords are required to be a minimum of @Membership.MinRequiredPasswordLength characters in length.
+    Le mot de passe doit contenir au moins @Membership.MinRequiredPasswordLength caractères.
 </p>
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
 @using (Html.BeginForm()) {
-    @Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.")
+    @Html.ValidationSummary(true, "La création du compte a échoué. Veuillez corriger les erreurs et recommencer.")
     <div>
         <fieldset>
-            <legend>Account Information</legend>
+            <legend>Informations</legend>
 
             <div class="editor-label">
                 @Html.LabelFor(m => m.UserName)
@@ -54,7 +51,7 @@
             </div>
 
             <p>
-                <input type="submit" value="Register" />
+                <input type="submit" value="S'inscrire" />
             </p>
         </fieldset>
     </div>

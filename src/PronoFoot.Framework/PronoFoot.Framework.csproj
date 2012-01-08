@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3D224517-F89B-4F42-8539-02E8107B89DC}</ProjectGuid>
+    <ProjectGuid>{9C51D67D-C6CC-4FD7-938E-5EFF40ACBA81}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PronoFoot.Data.EntityFramework</RootNamespace>
-    <AssemblyName>PronoFoot.Data.EntityFramework</AssemblyName>
+    <RootNamespace>PronoFoot</RootNamespace>
+    <AssemblyName>PronoFoot.Framework</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\src\</SolutionDir>
@@ -33,13 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,29 +45,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PronoFootDbContext.cs" />
+    <Compile Include="Messaging\EmailMessagingService.cs" />
+    <Compile Include="Messaging\IMessagingService.cs" />
+    <Compile Include="Mvc\Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\BaseRepository.cs" />
-    <Compile Include="Repositories\CompetitionRepository.cs" />
-    <Compile Include="Repositories\DayRepository.cs" />
-    <Compile Include="Repositories\FixtureRepository.cs" />
-    <Compile Include="Repositories\ForecastRepository.cs" />
-    <Compile Include="Repositories\TeamRepository.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Security\Default\DefaultEncryptionService.cs" />
+    <Compile Include="Security\Default\DefaultMembershipService.cs" />
+    <Compile Include="Security\Default\FormsAuthenticationService.cs" />
+    <Compile Include="Security\IAuthenticationService.cs" />
+    <Compile Include="Security\IEncryptionService.cs" />
+    <Compile Include="Security\IMembershipService.cs" />
+    <Compile Include="Security\User.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PronoFoot.Data.Model\PronoFoot.Data.Model.csproj">
-      <Project>{222A4238-3DA1-49D5-872F-41AF3235D9EC}</Project>
-      <Name>PronoFoot.Data.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PronoFoot.Data\PronoFoot.Data.csproj">
-      <Project>{505AC388-FAB6-4D52-8308-39A04CE91054}</Project>
-      <Name>PronoFoot.Data</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
