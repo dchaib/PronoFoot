@@ -1,4 +1,5 @@
 syntax: glob
+/packages
 *.obj
 *.exe
 *.pdb
