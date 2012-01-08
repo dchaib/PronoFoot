@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net.Mail;
+using PronoFoot.Logging;
 
 namespace PronoFoot.Messaging
 {
     public class EmailMessagingService : IMessagingService
     {
+        private readonly ILogger logger;
+
+        public EmailMessagingService(ILogger logger)
+        {
+            this.logger = logger;
+        }
 
         public void SendMessage(MailMessage message)
         {
@@ -15,21 +22,18 @@ namespace PronoFoot.Messaging
             {
                 if (message.To.Count == 0)
                 {
-                    //Logger.Error("Recipient is missing an email address");
+                    logger.Error("Recipient is missing an email address");
                     return;
                 }
-
-                //message.From = new MailAddress(smtpClient.Address);
-                //context.MailMessage.IsBodyHtml = context.MailMessage.Body != null && context.MailMessage.Body.Contains("<") && context.MailMessage.Body.Contains(">");
 
                 try
                 {
                     smtpClient.Send(message);
-                    //Logger.Debug("Message sent to {0}: {1}", context.MailMessage.To[0].Address, context.Type);
+                    logger.Debug("Message sent to {0}: \"{1}\"", message.To[0].Address, message.Subject);
                 }
                 catch (Exception ex)
                 {
-                    //Logger.Error(e, "An unexpected error while sending a message to {0}: {1}", context.MailMessage.To[0].Address, context.Type);
+                    logger.Error(ex, "An unexpected error while sending a message to {0}: \"{1}\"", message.To[0].Address, message.Subject);
                 }
             }
         }
