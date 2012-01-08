@@ -14,5 +14,6 @@ namespace PronoFoot.ViewModels
         public IList<TeamModel> Teams { get; set; }
         public IEnumerable<ForecastModel> Forecasts { get; set; }
         public IList<User> Users { get; set; }
+        public int CurrentUserId { get; set; }
     }
 }

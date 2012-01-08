@@ -11,5 +11,8 @@ namespace PronoFoot.Data
         User GetUser(int userId);
         User GetUserByLogin(string login);
         IEnumerable<User> GetUsers();
+
+        int Create(User user);
+        void Update(User user);
     }
 }
