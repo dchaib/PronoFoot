@@ -8,17 +8,25 @@ namespace PronoFoot.Mvc.Extensions
 {
     public static class UrlHelperExtensions
     {
-        public static string AbsoluteAction(this UrlHelper urlHelper, string action, string controllerName, object routeValues)
+        public static string ToPublicUrl(this UrlHelper urlHelper, string relativeUri)
         {
-            string url = urlHelper.Action(action, controllerName, routeValues,
-                urlHelper.RequestContext.HttpContext.Request.Url.Scheme);
-            return url;
-        }
+            var httpContext = urlHelper.RequestContext.HttpContext;
 
-        //private static string MakeAbsolute(this UrlHelper urlHelper, string relativeUrl)
-        //{
-        //    string t = urlHelper.RequestContext.HttpContext.
-        //    return relativeUrl;
-        //}
+            //HACK port is forced to 80 (because of AppHarbour)
+            var uriBuilder = new UriBuilder
+            {
+                Host = httpContext.Request.Url.Host,
+                Path = "/",
+                Port = 80,
+                Scheme = "http",
+            };
+
+            if (httpContext.Request.IsLocal)
+            {
+                uriBuilder.Port = httpContext.Request.Url.Port;
+            }
+
+            return new Uri(uriBuilder.Uri, relativeUri).AbsoluteUri;
+        }
     }
 }

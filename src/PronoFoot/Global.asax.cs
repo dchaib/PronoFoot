@@ -18,6 +18,7 @@ using PronoFoot.Security;
 using PronoFoot.Messaging;
 using PronoFoot.Logging;
 using PronoFoot.Configuration;
+using System.Configuration;
 
 namespace PronoFoot
 {
@@ -78,7 +79,7 @@ namespace PronoFoot
             builder.RegisterType<NLogLoggerFactory>().As<ILoggerFactory>().SingleInstance();
             builder.RegisterModule(new LoggerInjectionModule());
             builder.RegisterType<DefaultEncryptionService>().As<IEncryptionService>().SingleInstance();
-            builder.RegisterType<EmailMessagingService>().As<IMessagingService>().InstancePerLifetimeScope();
+            builder.RegisterType<EmailMessagingService>().As<IMessagingService>().WithParameter(new NamedParameter("fromAddress", ConfigurationManager.AppSettings["emailAddress"].ToString()));
             builder.RegisterType<FormsAuthenticationService>().As<IAuthenticationService>();
             builder.RegisterType<DefaultMembershipService>().As<IMembershipService>();
             container = builder.Build();

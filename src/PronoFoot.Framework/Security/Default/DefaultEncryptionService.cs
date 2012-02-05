@@ -4,19 +4,26 @@ using System.Linq;
 using System.Web;
 using System.IO;
 using System.Security.Cryptography;
+using PronoFoot.Logging;
 
 namespace PronoFoot.Security
 {
     public class DefaultEncryptionService : IEncryptionService
     {
+        private readonly ILogger logger;
+
         private string encryptionAlgorithm;
         private string encryptionKey;
 
         private string hashAlgorithm;
         private string hashKey;
 
-        public DefaultEncryptionService()
+        public DefaultEncryptionService(ILogger logger)
         {
+            this.logger = logger;
+
+            logger.Debug("Init encryption keys");
+
             encryptionAlgorithm = "AES";
             // randomly generated key
             encryptionKey = SymmetricAlgorithm.Create(encryptionAlgorithm).Key.ToHexString();
