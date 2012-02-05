@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Text;
 using PronoFoot.Messaging;
 using System.Net.Mail;
+using PronoFoot.Logging;
 
 namespace PronoFoot.Security
 {
@@ -17,13 +18,15 @@ namespace PronoFoot.Security
 
         private readonly IEncryptionService encryptionService;
         private readonly IMessagingService messagingService;
+        private readonly ILogger logger;
 
         public bool PasswordResetEnabled { get { return Membership.EnablePasswordReset; } }
 
-        public DefaultMembershipService(IEncryptionService encryptionService, IMessagingService messagingService)
+        public DefaultMembershipService(IEncryptionService encryptionService, IMessagingService messagingService, ILogger logger)
         {
             this.encryptionService = encryptionService;
             this.messagingService = messagingService;
+            this.logger = logger;
         }
 
         public MembershipCreateStatus CreateUser(string userName, string password, string email)
@@ -125,8 +128,9 @@ namespace PronoFoot.Security
                 validateByUtc = DateTime.Parse(element.Attribute("utc").Value, CultureInfo.InvariantCulture);
                 return DateTime.UtcNow <= validateByUtc;
             }
-            catch
+            catch (Exception ex)
             {
+                logger.Error(ex, "Error when decrypting nonce");
                 return false;
             }
         }
