@@ -176,14 +176,9 @@ namespace PronoFoot.Controllers
                 return new HttpNotFoundResult();
 
             if (String.IsNullOrWhiteSpace(username))
-            {
-                //_orchardServices.Notifier.Error(T("Invalid username or E-mail"));
                 return View();
-            }
 
-            membershipService.SendRequestResetPasswordEmail(username, nonce => Url.AbsoluteAction("ResetPassword", "Account", new { nonce = nonce }));
-
-            //_orchardServices.Notifier.Information(T("Check your e-mail for the confirmation link."));
+            membershipService.SendRequestResetPasswordEmail(username, nonce => Url.ToPublicUrl(Url.Action("ResetPassword", "Account", new { nonce = nonce })));
 
             return RedirectToAction("RequestPasswordResetSuccess");
         }

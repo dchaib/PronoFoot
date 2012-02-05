@@ -10,10 +10,12 @@ namespace PronoFoot.Messaging
     public class EmailMessagingService : IMessagingService
     {
         private readonly ILogger logger;
+        private readonly string fromAddress;
 
-        public EmailMessagingService(ILogger logger)
+        public EmailMessagingService(ILogger logger, string fromAddress)
         {
             this.logger = logger;
+            this.fromAddress = fromAddress;
         }
 
         public void SendMessage(MailMessage message)
@@ -25,6 +27,9 @@ namespace PronoFoot.Messaging
                     logger.Error("Recipient is missing an email address");
                     return;
                 }
+
+                if (message.From == null || string.IsNullOrWhiteSpace(message.From.Address))
+                    message.From = new MailAddress(fromAddress);
 
                 try
                 {
