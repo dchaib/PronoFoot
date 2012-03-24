@@ -2,9 +2,9 @@
 @{
     ViewBag.Title = "Accueil";
 }
-<h2>@Model.Competition.Name</h2>
+<h1>@Model.Competition.Name</h1>
 <div id="days">
-    <h5>Journées</h5>
+    <h2>Journées</h2>
     <table>
         <thead>
             <tr>
@@ -39,5 +39,6 @@
     }
 </div>
 <div id="classification">
+    <h2>Classement</h2>
     @Html.Partial("_Classification", Model.Scores)
 </div>

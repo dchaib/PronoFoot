@@ -5,28 +5,34 @@
     <title>@ViewBag.Title - PronoFoot</title>
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
     <!--<script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"></script>-->
+    <meta name="viewport" content="width=device-width" />
 </head>
 <body>
-    <div class="page">
-        <header>
-            <div id="title">
-                <h1>PronoFoot</h1>
-            </div>
-            <div id="logindisplay">
+    <header>
+        <div class="content-wrapper" id="header-content">
+            <section id="login">
                 @Html.Partial("_LogOnPartial")
+            </section>
+            <div id="title">
+                <p class="site-title">@Html.ActionLink("PronoFoot", "Index", "Home")</p>
             </div>
             <nav>
                 <ul id="menu">
                     <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Règles", "Rules", "Home")</li>
+                    <li>@Html.ActionLink("Ligue 1", "Details", "Competition", new { id = 2 }, null)</li>
+                    <li>@Html.ActionLink("Règlement", "Rules", "Home")</li>
                 </ul>
             </nav>
-        </header>
-        <section id="main">
+        </div>
+    </header>
+    <div id="content">
+        <section class="content-wrapper main-content">
             @RenderBody()
         </section>
-        <footer>
-        </footer>
     </div>
+    @*<footer>
+        <div class="content-wrapper">
+        </div>
+    </footer>*@
 </body>
 </html>
