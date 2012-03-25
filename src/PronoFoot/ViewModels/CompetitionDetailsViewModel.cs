@@ -5,10 +5,11 @@ using System.Web;
 
 namespace PronoFoot.ViewModels
 {
-    public class HomeViewModel
+    public class CompetitionDetailsViewModel
     {
         public CompetitionViewModel Competition { get; set; }
-        public IEnumerable<DayViewModel> Days { get; set; }
+        public IEnumerable<DayViewModel> PreviousDays { get; set; }
+        public IEnumerable<DayViewModel> NextDays { get; set; }
         public IEnumerable<UserScoreViewModel> Scores { get; set; }
     }
 }

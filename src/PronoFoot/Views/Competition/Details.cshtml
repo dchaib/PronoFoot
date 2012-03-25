@@ -1,0 +1,71 @@
+﻿@model CompetitionDetailsViewModel
+
+@{
+    ViewBag.Title = Model.Competition.Name;
+}
+<h1>@Model.Competition.Name</h1>
+<div id="days">
+    <h2>Prochaines journées</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Journée
+                </th>
+                <th>
+                    Date
+                </th>
+                <th colspan="2">
+                    Pronostics
+                </th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.NextDays.OrderBy(x => x.Date))
+        {
+            <tr>
+                <td>@Html.ActionLink(item.Name, "Details", "Day", new {id = item.DayId}, null)</td>
+                <td>@item.Date.ToString("d")</td>
+                <td>@if(item.ForecastMadeByCurrentUser)
+                    {<img alt="OK" src="@Url.Content("~/Content/ok.png")" />}
+                </td>
+                <td>@if(item.CanBeForecast)
+                    {@Html.ActionLink("Pronostiquer", "Forecast", "Day", new {id = item.DayId}, null)}
+                </td>
+            </tr>
+        }
+    </table>
+
+    <h2>Précédentes journées</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Journée
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Score
+                </th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.PreviousDays.OrderByDescending(x => x.Date))
+        {
+            <tr>
+                <td>@Html.ActionLink(item.Name, "Details", "Day", new {id = item.DayId}, null)</td>
+                <td>@item.Date.ToString("d")</td>
+                <td></td>
+            </tr>
+        }
+    </table>
+
+    @if (Request.IsAuthenticated && User.IsInRole("Administrators"))
+    {
+        <p>@Html.ActionLink("Ajouter une journée...", "Create", "Day", new { competitionId = Model.Competition.CompetitionId }, null)</p>
+    }
+</div>
+<div id="classification">
+    <h2>Classement</h2>
+    @Html.Partial("_Classification", Model.Scores)
+</div>

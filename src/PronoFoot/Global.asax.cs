@@ -70,6 +70,7 @@ namespace PronoFoot
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             //Business
             builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
+            builder.RegisterType<CompetitionService>().As<ICompetitionService>().InstancePerLifetimeScope();
             builder.RegisterType<DayService>().As<IDayService>().InstancePerLifetimeScope();
             builder.RegisterType<FixtureService>().As<IFixtureService>().InstancePerLifetimeScope();
             builder.RegisterType<ForecastService>().As<IForecastService>().InstancePerLifetimeScope();

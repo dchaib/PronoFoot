@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PronoFoot.Data.Model;
-using PronoFoot.Data;
-using PronoFoot.Data.EntityFramework.Repositories;
-using PronoFoot.Data.EntityFramework;
 using PronoFoot.Business.Contracts;
 using PronoFoot.ViewModels;
 using PronoFoot.Security;
+using PronoFoot.Business.Models;
 
 namespace PronoFoot.Controllers
 {
@@ -19,14 +16,14 @@ namespace PronoFoot.Controllers
         private readonly IFixtureService fixtureService;
         private readonly IForecastService forecastService;
         private readonly IScoringService scoringService;
-        private readonly ICompetitionRepository competitionRepository;
+        private readonly ICompetitionService competitionService;
 
         public HomeController(IUserService userService,
             IFixtureService fixtureService,
             IDayService dayService,
             IForecastService forecastService,
             IScoringService scoringService,
-            ICompetitionRepository competitionRepository,
+            ICompetitionService competitionService,
             IAuthenticationService authenticationService)
             : base(userService, authenticationService)
         {
@@ -34,13 +31,13 @@ namespace PronoFoot.Controllers
             this.fixtureService = fixtureService;
             this.forecastService = forecastService;
             this.scoringService = scoringService;
-            this.competitionRepository = competitionRepository;
+            this.competitionService = competitionService;
         }
 
         public ActionResult Index()
         {
             int competitionId = 2;
-            Competition competition = competitionRepository.GetCompetition(competitionId);
+            CompetitionModel competition = competitionService.GetCompetition(competitionId);
 
             if (competition == null)
             {
@@ -60,7 +57,7 @@ namespace PronoFoot.Controllers
 
             return View(new HomeViewModel
             {
-                Competition = competition,
+                Competition = new CompetitionViewModel { CompetitionId = competition.CompetitionId, Name = competition.Name },
                 Days = days.Select(x => new DayViewModel
                 {
                     DayId = x.DayId,
