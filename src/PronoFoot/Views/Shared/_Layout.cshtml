@@ -10,12 +10,12 @@
 <body>
     <header>
         <div class="content-wrapper" id="header-content">
-            <section id="login">
-                @Html.Partial("_LogOnPartial")
-            </section>
             <div id="title">
                 <p class="site-title">@Html.ActionLink("PronoFoot", "Index", "Home")</p>
             </div>
+            <section id="login">
+                @Html.Partial("_LogOnPartial")
+            </section>
             <nav>
                 <ul id="menu">
                     <li>@Html.ActionLink("Accueil", "Index", "Home")</li>

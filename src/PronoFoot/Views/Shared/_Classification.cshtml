@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<UserScoreViewModel>
 
 <table>
-    <tr>
+ @*      <tr>
         <th></th>
         <th></th>
         <th>
             Score
         </th>
-        <th>
+     <th>
             3 pts
         </th>
         <th>
@@ -25,11 +25,11 @@
         <th>
             % >= 1 pt
         </th>
-    </tr>
+    </tr>*@
 
 @{
     int rank = 1;
-    foreach (var userScore in Model.OrderByDescending(x => x.Score).ThenByDescending(x => x.NumberOfExactForecasts).ThenByDescending(x => x.NumberOfCloseForecasts))
+    foreach (var userScore in Model.OrderByDescending(x => x.Score).ThenByDescending(x => x.NumberOfExactForecasts).ThenByDescending(x => x.NumberOfCloseForecasts).Take(3))
     {
         <tr>
             <td>@rank
@@ -40,7 +40,7 @@
             <td>
                 @String.Format("{0:F1}", userScore.Score)
             </td>
-            <td>
+@*            <td>
                 @String.Format("{0:N0}", userScore.NumberOfExactForecasts)
             </td>
             <td>
@@ -57,7 +57,7 @@
             </td>
             <td>
                 @String.Format("{0:P2}", userScore.PercentageOfScoringForecasts)
-            </td>
+            </td>*@
         </tr>
         rank++;
     }

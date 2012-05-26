@@ -36,49 +36,7 @@ namespace PronoFoot.Controllers
 
         public ActionResult Index()
         {
-            int competitionId = 2;
-            CompetitionModel competition = competitionService.GetCompetition(competitionId);
-
-            if (competition == null)
-            {
-                return HttpNotFound("Il n'y a pas de compétition correspondant à cet identifiant");
-            }
-
-            IDictionary<int, int> forecastCounts;
-            if (Request.IsAuthenticated)
-                forecastCounts = forecastService.GetForecastCountByDayForCompetitionUser(competitionId, this.CurrentUser.UserId);
-            else
-                forecastCounts = new Dictionary<int, int>();
-
-            var days = dayService.GetDaysForCompetition(competitionId);
-            var fixtures = fixtureService.GetFixturesForCompetition(competitionId);
-            var scores = userService.GetUserScoresForCompetition(competitionId);
-            var users = userService.GetUsers();
-
-            return View(new HomeViewModel
-            {
-                Competition = new CompetitionViewModel { CompetitionId = competition.CompetitionId, Name = competition.Name },
-                Days = days.Select(x => new DayViewModel
-                {
-                    DayId = x.DayId,
-                    Name = x.Name,
-                    Date = x.Date,
-                    ForecastMadeByCurrentUser = (fixtures.Count(y => y.DayId == x.DayId) == (forecastCounts.ContainsKey(x.DayId) ? forecastCounts[x.DayId] : 0)),
-                    CanBeForecast = fixtures.Any(y => y.DayId == x.DayId && y.CanBeForecast)
-                }),
-                Scores = scores.Select(x => new UserScoreViewModel
-                {
-                    UserId = x.UserId,
-                    UserName = users.First(y => y.UserId == x.UserId).Name,
-                    Score = x.Score,
-                    NumberOfExactForecasts = x.NumberOfExactForecasts,
-                    NumberOfCloseForecasts = x.NumberOfCloseForecasts,
-                    NumberOfForecastsWithExactDifference = x.NumberOfForecastsWithExactDifference,
-                    NumberOfCorrect1N2Forecasts = x.NumberOfCorrect1N2Forecasts,
-                    NumberOfWrongForecasts = x.NumberOfWrongForecasts,
-                    PercentageOfScoringForecasts = x.PercentageOfScoringForecasts
-                })
-            });
+            return View();
         }
 
         public ActionResult Rules()

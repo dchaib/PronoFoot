@@ -7,6 +7,7 @@ using PronoFoot.Business.Contracts;
 using PronoFoot.Security;
 using PronoFoot.Business.Models;
 using PronoFoot.ViewModels;
+using PronoFoot.Models.Competition;
 
 namespace PronoFoot.Controllers
 {
@@ -34,7 +35,7 @@ namespace PronoFoot.Controllers
             this.competitionService = competitionService;
         }
 
-        public ActionResult Details (int id)
+        public ActionResult Details(int id)
         {
             CompetitionModel competition = competitionService.GetCompetition(id);
 
@@ -80,6 +81,45 @@ namespace PronoFoot.Controllers
                     PercentageOfScoringForecasts = x.PercentageOfScoringForecasts
                 })
             });
+        }
+
+        [ChildActionOnly]
+        public ActionResult CurrentCompetitions()
+        {
+            var competitions = competitionService.GetCurrentCompetitions();
+            var users = userService.GetUsers();
+
+            var viewModels = new List<CompetitionOverviewModel>();
+            foreach (var competition in competitions)
+            {
+                var viewModel = new CompetitionOverviewModel
+                {
+                    Id = competition.CompetitionId,
+                    Name = competition.Name
+                };
+
+                var nextFixture = fixtureService.GetNextFixture(competition.CompetitionId);
+                if (nextFixture != null)
+                    viewModel.NextFixture = new CompetitionOverviewModel.FixtureOverviewModel() { DateTime = nextFixture.Date, DayId = nextFixture.DayId };
+
+                var scores = userService.GetUserScoresForCompetition(competition.CompetitionId);
+                viewModel.Scores = scores.Select(x => new UserScoreViewModel
+                {
+                    UserId = x.UserId,
+                    UserName = users.First(y => y.UserId == x.UserId).Name,
+                    Score = x.Score,
+                    NumberOfExactForecasts = x.NumberOfExactForecasts,
+                    NumberOfCloseForecasts = x.NumberOfCloseForecasts,
+                    NumberOfForecastsWithExactDifference = x.NumberOfForecastsWithExactDifference,
+                    NumberOfCorrect1N2Forecasts = x.NumberOfCorrect1N2Forecasts,
+                    NumberOfWrongForecasts = x.NumberOfWrongForecasts,
+                    PercentageOfScoringForecasts = x.PercentageOfScoringForecasts
+                });
+
+                viewModels.Add(viewModel);
+            }
+
+            return PartialView(viewModels);
         }
     }
 }

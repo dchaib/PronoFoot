@@ -1,15 +1,15 @@
 ﻿html
 {
-    background-color: #4D8640;
+    /*background-color: #4D8640;*/
     margin: 0;
     padding: 0;
 }
 
 body
 {
-    background-color: #4D8640;
+    background-color: #f2faf0; /*#4D8640;*/
     font-size: .85em;
-    font-family: "Trebuchet MS" , Verdana, Helvetica, Sans-Serif;
+    font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
     color: #696969;
@@ -59,7 +59,7 @@ header, footer, nav, section
 
 .main-content
 {
-    background: #f8fbf8;
+    /*background: #f8fbf8;*/
     text-align: left;
     padding: 30px 30px 15px 30px; /*padding: 0 20px;*/
     -moz-border-radius: 4px 0 0 0;
@@ -67,8 +67,14 @@ header, footer, nav, section
     border-radius: 4px 0 0 0;
 }
 
-#header-content 
+header
 {
+    background-color: #1A7306; /*#4D8640;*/
+}
+
+#header-content
+{
+    background-color: #1A7306; /*#4D8640;*/
     padding: 10px 1% 0.8em;
 }
 
@@ -76,7 +82,7 @@ header, footer, nav, section
 ----------------------------------------------------------*/
 #title
 {
-    /*float: left;*/
+    float: left;
 }
 
 .site-title
@@ -88,13 +94,13 @@ header, footer, nav, section
     text-shadow: 1px 1px 2px #444;
 }
 
-.site-title a
-{
-    color: #dfefdf;
-    background: none;
-    outline: none;
-    text-decoration: none;
-}
+    .site-title a
+    {
+        color: #dfefdf;
+        background: none;
+        outline: none;
+        text-decoration: none;
+    }
 
 /* login
 ----------------------------------------------------------*/
@@ -103,41 +109,43 @@ header, footer, nav, section
     display: block;
     float: right;
     color: White;
-    margin: 10px 0 5px;
-    padding: 10px 0;
+    margin: 20px 0 12px;
+    /*padding: 10px 0;*/
     text-align: right;
 }
 
-#login p 
-{
-    margin :0px
-}
+    #login p
+    {
+        margin: 0px;
+    }
 
-#login a
-{
-    color: White;
-}
+    #login a
+    {
+        color: White;
+    }
 
-#login ul
-{
-    margin: 0;
-}
+    #login ul
+    {
+        margin: 0;
+    }
 
-#login li
-{
-    display: inline;
-    list-style: none;
-    margin-left: 10px;
-    margin-right: 3px;
-    padding: 2px 3px;
-}
+    #login li
+    {
+        display: inline;
+        list-style: none;
+        /*margin-left: 10px;
+        margin-right: 3px;
+        padding: 2px 3px;*/
+    }
 
 /* menu
 ----------------------------------------------------------*/
-nav 
+nav
 {
-    padding: 5 0 5 0;   
+    clear: both;
+    padding: 5px 0 5px 0;
 }
+
 ul#menu
 {
     font-size: 1.2em;
@@ -148,25 +156,25 @@ ul#menu
     padding-left: 0px;
 }
 
-ul#menu li
-{
-    display: inline;
-    list-style: none;
-    padding-right: 25px;
-}
+    ul#menu li
+    {
+        display: inline;
+        list-style: none;
+        padding-right: 25px;
+    }
 
-ul#menu li a
-{
-    background: none; /*color: #999;*/
-    color: #dff6df;
-    text-decoration: none;
-}
+        ul#menu li a
+        {
+            background: none; /*color: #999;*/
+            color: #dff6df;
+            text-decoration: none;
+        }
 
-ul#menu li a:hover
-{
-    color: #999;
-    text-decoration: none;
-}
+            ul#menu li a:hover
+            {
+                color: #999;
+                text-decoration: none;
+            }
 
 /* TAB MENU   
 ----------------------------------------------------------*/
@@ -224,10 +232,86 @@ ul#menu li.selected a {
     color: #000;
 }*/
 
+.intro
+{
+    padding: 1em 3em 1em 3em;
+    margin: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+}
+
+.current-competitions ol
+{
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.current-competition
+{
+    background-color: white; /*#f8fcf8;*/
+    padding: 1.25em 1.45em 1.25em 1.55em;
+    margin: 0.5em 0 3em 0;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+    border-radius: 1em;
+    opacity: 0.9;
+    -moz-box-shadow: 0 0 1.1em #666;
+    -webkit-box-shadow: 0 0 1.1em #666;
+    box-shadow: 0 0 1.1em #666;
+}
+
+.current-competition-heading
+{
+    background-color: #498C3A; /*#549945 #638763 #4D8640*/
+    height: 1.3em;
+    margin: -2em -1.45em 1.25em -1.55em;
+    padding: 0.7em 1em 1.1em 1.75em;
+    -moz-border-radius-topright: 1em;
+    -moz-border-radius-topleft: 1em;
+    -webkit-border-top-right-radius: 1em;
+    -webkit-border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    border-top-left-radius: 1em;
+}
+
+.current-competition-content
+{
+}
+
+.current-competition h3
+{
+    color: #ffffff; /*#f1cdc8;*/
+    margin: 0.2em 0 0.2em 0;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+    .current-competition h3 a
+    {
+        color: #d9f7d2;
+    }
+
+.current-competition .classification
+{
+}
+
+    .current-competition .classification table
+    {
+        border: 0;
+    }
+
+        .current-competition .classification table td
+        {
+            border: 0;
+        }
+
+
+
 /* FORM LAYOUT ELEMENTS   
 ----------------------------------------------------------*/
 
-fieldset
+/*fieldset
 {
     border: 1px solid #ddd;
     padding: 0 1.4em 1.4em 1.4em;
@@ -266,7 +350,7 @@ input[type="submit"]
 {
     font-size: 1.2em;
     padding: 5px;
-}
+}*/
 
 /* TABLE
 ----------------------------------------------------------*/
@@ -277,19 +361,19 @@ table
     border-collapse: collapse;
 }
 
-table td
-{
-    padding: 5px;
-    border: solid 1px #e8eef4;
-}
+    table td
+    {
+        padding: 5px;
+        border: solid 1px #e8eef4;
+    }
 
-table th
-{
-    padding: 6px 5px;
-    text-align: left;
-    background-color: #e8eef4;
-    border: solid 1px #e8eef4;
-}
+    table th
+    {
+        padding: 6px 5px;
+        text-align: left;
+        background-color: #e8eef4;
+        border: solid 1px #e8eef4;
+    }
 
 /* MISC  
 ----------------------------------------------------------*/
@@ -334,7 +418,7 @@ table th
 
 /* Styles for editor and display helpers
 ----------------------------------------------------------*/
-.display-label, .editor-label
+/*.display-label, .editor-label
 {
     margin: 1em 0 0 0;
 }
@@ -349,18 +433,32 @@ table th
     width: 30em;
 }
 
-.text-box.multi-line
-{
-    height: 6.5em;
-}
+    .text-box.multi-line
+    {
+        height: 6.5em;
+    }
 
 .tri-state
 {
     width: 6em;
-}
+}*/
 
 /* PronoFoot */
 input.goalCount
 {
     width: 2em;
+}
+
+@media only screen and (max-width: 850px)
+{
+    #title
+    {
+        float: none;
+    }
+    #login
+    {
+        float: none;
+        margin: 0 0 12px;
+        text-align: center;
+    }
 }
