@@ -321,7 +321,7 @@ ul#menu li.selected a {
 
 #days
 {
-    width:  50%;
+    width: 50%;
 }
 
 /* FORM LAYOUT ELEMENTS   
@@ -381,6 +381,7 @@ table
     {
         padding: 5px;
         border: solid 1px #e8eef4;
+        background-color: white;
     }
 
     table th

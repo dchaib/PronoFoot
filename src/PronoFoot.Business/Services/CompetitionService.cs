@@ -28,7 +28,7 @@ namespace PronoFoot.Business.Services
         {
             //TODO Add a parameter to know current competitions
             var competitions = competitionRepository.GetCompetitions();            
-            var competitionModels = competitions.Where(x => x.CompetitionId == 2).Select(x => new CompetitionModel(x));
+            var competitionModels = competitions.Select(x => new CompetitionModel(x));
             return competitionModels.ToList();
         }
 
