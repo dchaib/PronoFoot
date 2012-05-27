@@ -19,11 +19,7 @@
                 </section>
             </div class="clear-fix">
             <nav>
-                <ul id="menu">
-                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Ligue 1", "Details", "Competition", new { id = 2 }, null)</li>
-                    <li>@Html.ActionLink("Règlement", "Rules", "Home")</li>
-                </ul>
+                @Html.Action("Menu", "Common")
             </nav>
         </div>
     </header>
