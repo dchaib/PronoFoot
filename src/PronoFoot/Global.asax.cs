@@ -70,11 +70,13 @@ namespace PronoFoot
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             //Business
             builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
+            builder.RegisterType<CompetitionService>().As<ICompetitionService>().InstancePerLifetimeScope();
             builder.RegisterType<DayService>().As<IDayService>().InstancePerLifetimeScope();
             builder.RegisterType<FixtureService>().As<IFixtureService>().InstancePerLifetimeScope();
             builder.RegisterType<ForecastService>().As<IForecastService>().InstancePerLifetimeScope();
             builder.RegisterType<TeamService>().As<ITeamService>().InstancePerLifetimeScope();
             builder.RegisterType<ScoringService>().As<IScoringService>().InstancePerLifetimeScope();
+            builder.RegisterType<ClassificationService>().As<IClassificationService>().InstancePerLifetimeScope();
             //Framework
             builder.RegisterType<NLogLoggerFactory>().As<ILoggerFactory>().SingleInstance();
             builder.RegisterModule(new LoggerInjectionModule());

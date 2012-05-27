@@ -36,6 +36,13 @@ namespace PronoFoot.Data.EntityFramework.Repositories
                             .ToList();
         }
 
+        public IEnumerable<Day> GetDays(int[] competitionIds)
+        {
+            return this.GetDbSet<Day>()
+                            .Where(x => competitionIds.Contains(x.CompetitionId))
+                            .ToList();
+        }
+
         public void Update(Day day)
         {
             Day dayToUpdate =

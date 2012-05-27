@@ -36,11 +36,36 @@ namespace PronoFoot.Business.Services
             return dayModel;
         }
 
-        public IEnumerable<DayModel> GetDaysForCompetition(int competitionId)
+        public IList<DayModel> GetDaysForCompetition(int competitionId)
         {
             var q = from day in dayRepository.GetDays(competitionId)
                     select new DayModel(day);
             return q.ToList();
+        }
+
+        public IList<DayModel> GetDaysForCompetitions(int[] competitionIds)
+        {
+            var q = from day in dayRepository.GetDays(competitionIds)
+                    select new DayModel(day);
+            return q.ToList();
+        }
+
+        public DayModel GetPreviousDay(int competitionId)
+        {
+            var q = from day in dayRepository.GetDays(competitionId)
+                    where day.Date < DateTime.Today
+                    orderby day.Date descending
+                    select new DayModel(day);
+            return q.FirstOrDefault();
+        }
+
+        public DayModel GetNextDay(int competitionId)
+        {
+            var q = from day in dayRepository.GetDays(competitionId)
+                    where day.Date >= DateTime.Today
+                    orderby day.Date
+                    select new DayModel(day);
+            return q.FirstOrDefault();
         }
 
         public int Create(DayModel day, IEnumerable<FixtureModel> fixtures)
@@ -52,7 +77,7 @@ namespace PronoFoot.Business.Services
             dbDay.Name = day.Name;
 
             int dayId = dayRepository.Create(day.CompetitionId, dbDay);
-            
+
             foreach (var fixture in fixtures)
             {
                 var dbFixture = new Fixture();
