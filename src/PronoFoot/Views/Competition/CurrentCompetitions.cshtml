@@ -18,7 +18,25 @@
                     }
                         <div class="classification">
                             @*<h4>Classement</h4>*@
-                            @Html.Partial("_Classification", competition.Scores)
+                            <table>
+                                @{
+                        int rank = 1;
+                        foreach (var userScore in competition.Scores.OrderByDescending(x => x.Score).ThenByDescending(x => x.NumberOfExactForecasts).ThenByDescending(x => x.NumberOfCloseForecasts).Take(3))
+                        {
+                                    <tr>
+                                        <td>@rank
+                                        </td>
+                                        <td>
+                                            @userScore.UserName
+                                        </td>
+                                        <td>
+                                            @String.Format("{0:F1}", userScore.Score)
+                                        </td>
+                                    </tr>
+                            rank++;
+                        }
+                                }
+                            </table>
                         </div>
                     </div>
                 </li>

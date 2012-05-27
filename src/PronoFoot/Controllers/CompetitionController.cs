@@ -18,6 +18,7 @@ namespace PronoFoot.Controllers
         private readonly IForecastService forecastService;
         private readonly IScoringService scoringService;
         private readonly ICompetitionService competitionService;
+        private readonly IClassificationService classificationService;
 
         public CompetitionController(IUserService userService,
             IFixtureService fixtureService,
@@ -25,7 +26,8 @@ namespace PronoFoot.Controllers
             IForecastService forecastService,
             IScoringService scoringService,
             ICompetitionService competitionService,
-            IAuthenticationService authenticationService)
+            IAuthenticationService authenticationService,
+            IClassificationService classificationService)
             : base(userService, authenticationService)
         {
             this.dayService = dayService;
@@ -33,6 +35,7 @@ namespace PronoFoot.Controllers
             this.forecastService = forecastService;
             this.scoringService = scoringService;
             this.competitionService = competitionService;
+            this.classificationService = classificationService;
         }
 
         public ActionResult Details(int id)
@@ -52,7 +55,7 @@ namespace PronoFoot.Controllers
 
             var days = dayService.GetDaysForCompetition(id);
             var fixtures = fixtureService.GetFixturesForCompetition(id);
-            var scores = userService.GetUserScoresForCompetition(id);
+            var scores = classificationService.GetUserScoresForCompetition(id);
             var users = userService.GetUsers();
             var dayViewModels = days.Select(x => new DayViewModel
                 {
@@ -102,7 +105,7 @@ namespace PronoFoot.Controllers
                 if (nextFixture != null)
                     viewModel.NextFixture = new CompetitionOverviewModel.FixtureOverviewModel() { DateTime = nextFixture.Date, DayId = nextFixture.DayId };
 
-                var scores = userService.GetUserScoresForCompetition(competition.CompetitionId);
+                var scores = classificationService.GetUserScoresForCompetition(competition.CompetitionId);
                 viewModel.Scores = scores.Select(x => new UserScoreViewModel
                 {
                     UserId = x.UserId,

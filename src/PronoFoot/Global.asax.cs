@@ -76,6 +76,7 @@ namespace PronoFoot
             builder.RegisterType<ForecastService>().As<IForecastService>().InstancePerLifetimeScope();
             builder.RegisterType<TeamService>().As<ITeamService>().InstancePerLifetimeScope();
             builder.RegisterType<ScoringService>().As<IScoringService>().InstancePerLifetimeScope();
+            builder.RegisterType<ClassificationService>().As<IClassificationService>().InstancePerLifetimeScope();
             //Framework
             builder.RegisterType<NLogLoggerFactory>().As<ILoggerFactory>().SingleInstance();
             builder.RegisterModule(new LoggerInjectionModule());
