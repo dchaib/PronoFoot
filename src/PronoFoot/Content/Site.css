@@ -45,6 +45,26 @@ header, footer, nav, section
     display: block;
 }
 
+.float-left
+{
+    float: left;
+}
+
+.float-right
+{
+    float: right;
+}
+
+.clear-fix:after
+{
+    content: ".";
+    clear: both;
+    display: block;
+    background-color: Red;
+    height: 10px;
+    visibility: hidden;
+}
+
 /* PRIMARY LAYOUT ELEMENTS   
 ----------------------------------------------------------*/
 .content-wrapper
@@ -80,11 +100,6 @@ header
 
 /* Title
 ----------------------------------------------------------*/
-#title
-{
-    float: left;
-}
-
 .site-title
 {
     font-size: 2.3em;
@@ -107,7 +122,6 @@ header
 #login
 {
     display: block;
-    float: right;
     color: White;
     margin: 20px 0 12px;
     /*padding: 10px 0;*/
@@ -142,7 +156,6 @@ header
 ----------------------------------------------------------*/
 nav
 {
-    clear: both;
     padding: 5px 0 5px 0;
 }
 
@@ -306,7 +319,10 @@ ul#menu li.selected a {
             border: 0;
         }
 
-
+#days
+{
+    width:  50%;
+}
 
 /* FORM LAYOUT ELEMENTS   
 ----------------------------------------------------------*/
@@ -451,13 +467,13 @@ input.goalCount
 
 @media only screen and (max-width: 850px)
 {
-    #title
+    .float-left, .float-right
     {
         float: none;
     }
+
     #login
     {
-        float: none;
         margin: 0 0 12px;
         text-align: center;
     }

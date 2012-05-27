@@ -4,7 +4,7 @@
     ViewBag.Title = Model.Competition.Name;
 }
 <h1>@Model.Competition.Name</h1>
-<div id="days">
+<div id="days" class="float-left">
     <h2>Prochaines journées</h2>
     <table>
         <thead>
@@ -65,7 +65,7 @@
         <p>@Html.ActionLink("Ajouter une journée...", "Create", "Day", new { competitionId = Model.Competition.CompetitionId }, null)</p>
     }
 </div>
-<div id="classification">
+<div id="classification" class="float-left">
     <h2>Classement</h2>
     @Html.Partial("_Classification", Model.Scores)
 </div>

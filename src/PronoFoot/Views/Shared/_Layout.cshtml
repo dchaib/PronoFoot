@@ -10,12 +10,14 @@
 <body>
     <header>
         <div class="content-wrapper" id="header-content">
-            <div id="title">
-                <p class="site-title">@Html.ActionLink("PronoFoot", "Index", "Home")</p>
-            </div>
-            <section id="login">
-                @Html.Partial("_LogOnPartial")
-            </section>
+            <div class="clear-fix">
+                <div id="title" class="float-left">
+                    <p class="site-title">@Html.ActionLink("PronoFoot", "Index", "Home")</p>
+                </div>
+                <section id="login" class="float-right">
+                    @Html.Partial("_LogOnPartial")
+                </section>
+            </div class="clear-fix">
             <nav>
                 <ul id="menu">
                     <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
@@ -26,7 +28,7 @@
         </div>
     </header>
     <div id="content">
-        <section class="content-wrapper main-content">
+        <section class="content-wrapper main-content clear-fix">
             @RenderBody()
         </section>
     </div>
