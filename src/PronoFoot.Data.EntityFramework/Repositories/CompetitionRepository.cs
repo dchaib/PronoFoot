@@ -14,10 +14,11 @@ namespace PronoFoot.Data.EntityFramework.Repositories
         {
         }
 
-        public void Create(Competition competition)
+        public int Create(Competition competition)
         {
             this.GetDbSet<Competition>().Add(competition);
             this.UnitOfWork.SaveChanges();
+            return competition.CompetitionId;
         }
 
         public Competition GetCompetition(int competitionId)

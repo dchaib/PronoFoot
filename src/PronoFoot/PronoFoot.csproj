@@ -55,6 +55,9 @@
     <Reference Include="Autofac.Integration.Mvc">
       <HintPath>..\packages\Autofac.Mvc3.2.5.2.830\lib\NET40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.1.267\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.4.3.0\lib\net40\EntityFramework.dll</HintPath>
@@ -103,7 +106,10 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Common\MenuModel.cs" />
+    <Compile Include="Models\Competition\CompetitionListModel.cs" />
+    <Compile Include="Models\Competition\CompetitionModel.cs" />
     <Compile Include="Models\Competition\CompetitionOverviewModel.cs" />
+    <Compile Include="Models\MappingExtensions.cs" />
     <Compile Include="ViewModels\CompetitionDetailsViewModel.cs" />
     <Compile Include="ViewModels\CompetitionViewModel.cs" />
     <Compile Include="ViewModels\DayDetailsViewModel.cs" />
@@ -294,6 +300,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Common\Menu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Competition\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Competition\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Competition\_Form.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Competition\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

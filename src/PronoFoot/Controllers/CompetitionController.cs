@@ -7,6 +7,7 @@ using PronoFoot.Business.Contracts;
 using PronoFoot.Security;
 using PronoFoot.Business.Models;
 using PronoFoot.ViewModels;
+using PronoFoot.Models;
 using PronoFoot.Models.Competition;
 
 namespace PronoFoot.Controllers
@@ -38,9 +39,18 @@ namespace PronoFoot.Controllers
             this.classificationService = classificationService;
         }
 
+        public ActionResult Index()
+        {
+            var competitions = competitionService.GetCompetitions();
+            return View(new CompetitionListModel
+            {
+                Competitions = competitions.Select(x => new PronoFoot.Models.Competition.CompetitionModel { Id = x.CompetitionId, Name = x.Name }).ToList()
+            });
+        }
+
         public ActionResult Details(int id)
         {
-            CompetitionModel competition = competitionService.GetCompetition(id);
+            var competition = competitionService.GetCompetition(id);
 
             if (competition == null)
             {
@@ -123,6 +133,57 @@ namespace PronoFoot.Controllers
             }
 
             return PartialView(viewModels);
+        }
+
+        [Authorize(Roles = "Administrators")]
+        public ActionResult Create()
+        {
+            return View(new PronoFoot.Models.Competition.CompetitionModel());
+        }
+
+        [Authorize(Roles = "Administrators")]
+        [HttpPost]
+        public ActionResult Create(PronoFoot.Models.Competition.CompetitionModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var competition = model.ToEntity();
+
+                int competitionId = competitionService.Create(competition);
+
+                return RedirectToAction("Details", new { id = competitionId });
+            }
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "Administrators")]
+        public ActionResult Edit(int id)
+        {
+            var competition = competitionService.GetCompetition(id);
+
+            if (competition == null)
+            {
+                return new HttpNotFoundResult("Il n'y a pas de compétition correspondant à cet identifiant");
+            }
+
+            return View(competition.ToModel());
+        }
+
+        [Authorize(Roles = "Administrators")]
+        [HttpPost]
+        public ActionResult Edit(PronoFoot.Models.Competition.CompetitionModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var competition = model.ToEntity();
+
+                competitionService.Update(competition);
+
+                return RedirectToAction("Details", new { id = competition.CompetitionId });
+            }
+
+            return View(model);
         }
     }
 }
