@@ -15,6 +15,7 @@
                 <th>
                     Date
                 </th>
+                <th>Coefficient</th>
                 <th colspan="2">
                     Pronostics
                 </th>
@@ -25,6 +26,7 @@
             <tr>
                 <td>@Html.ActionLink(item.Name, "Details", "Day", new {id = item.DayId}, null)</td>
                 <td>@item.Date.ToString("d")</td>
+                <td>@item.Coefficient</td>
                 <td>@if(item.ForecastMadeByCurrentUser)
                     {<img alt="OK" src="@Url.Content("~/Content/ok.png")" />}
                 </td>
@@ -46,6 +48,9 @@
                     Date
                 </th>
                 <th>
+                    Coefficient
+                </th>
+                <th>
                     Score
                 </th>
             </tr>
@@ -55,6 +60,7 @@
             <tr>
                 <td>@Html.ActionLink(item.Name, "Details", "Day", new {id = item.DayId}, null)</td>
                 <td>@item.Date.ToString("d")</td>
+                <td>@item.Coefficient</td>
                 <td></td>
             </tr>
         }
