@@ -62,6 +62,7 @@ namespace PronoFoot.Controllers
                     DayId = x.DayId,
                     Name = x.Name,
                     Date = x.Date,
+                    Coefficient = x.Coefficient,
                     ForecastMadeByCurrentUser = (fixtures.Count(y => y.DayId == x.DayId) == (forecastCounts.ContainsKey(x.DayId) ? forecastCounts[x.DayId] : 0)),
                     CanBeForecast = fixtures.Any(y => y.DayId == x.DayId && y.CanBeForecast)
                 });

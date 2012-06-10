@@ -11,6 +11,7 @@ namespace PronoFoot.Business.Models
         public int DayId { get; set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
+        public decimal Coefficient { get; set; }
         public int CompetitionId { get; set; }
 
         public DayModel()
@@ -23,6 +24,7 @@ namespace PronoFoot.Business.Models
             this.CompetitionId = day.CompetitionId;
             this.Name = day.Name;
             this.Date = day.Date;
+            this.Coefficient = day.Coefficient;
         }
     }
 }
