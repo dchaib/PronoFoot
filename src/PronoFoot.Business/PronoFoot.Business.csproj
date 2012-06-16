@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comparers\UserStatisticsComparer.cs" />
     <Compile Include="Contracts\IClassificationService.cs" />
     <Compile Include="Contracts\ICompetitionService.cs" />
     <Compile Include="Contracts\IDayService.cs" />
@@ -55,7 +56,7 @@
     <Compile Include="Models\FixtureModel.cs" />
     <Compile Include="Models\ForecastModel.cs" />
     <Compile Include="Models\TeamModel.cs" />
-    <Compile Include="Models\UserScoreModel.cs" />
+    <Compile Include="Models\UserStatistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ClassificationService.cs" />
     <Compile Include="Services\CompetitionService.cs" />

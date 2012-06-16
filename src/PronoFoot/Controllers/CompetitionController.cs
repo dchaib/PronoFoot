@@ -63,6 +63,7 @@ namespace PronoFoot.Controllers
                     Name = x.Name,
                     Date = x.Date,
                     Coefficient = x.Coefficient,
+                    Score = 0,
                     ForecastMadeByCurrentUser = (fixtures.Count(y => y.DayId == x.DayId) == (forecastCounts.ContainsKey(x.DayId) ? forecastCounts[x.DayId] : 0)),
                     CanBeForecast = fixtures.Any(y => y.DayId == x.DayId && y.CanBeForecast)
                 });
@@ -74,8 +75,8 @@ namespace PronoFoot.Controllers
                 NextDays = dayViewModels.Where(x => x.CanBeForecast),
                 Scores = scores.Select(x => new UserScoreViewModel
                 {
-                    UserId = x.UserId,
-                    UserName = users.First(y => y.UserId == x.UserId).Name,
+                    UserId = x.Key,
+                    UserName = users.First(y => y.UserId == x.Key).Name,
                     Score = x.Score,
                     NumberOfExactForecasts = x.NumberOfExactForecasts,
                     NumberOfCloseForecasts = x.NumberOfCloseForecasts,
@@ -109,8 +110,8 @@ namespace PronoFoot.Controllers
                 var scores = classificationService.GetUserScoresForCompetition(competition.CompetitionId);
                 viewModel.Scores = scores.Select(x => new UserScoreViewModel
                 {
-                    UserId = x.UserId,
-                    UserName = users.First(y => y.UserId == x.UserId).Name,
+                    UserId = x.Key,
+                    UserName = users.First(y => y.UserId == x.Key).Name,
                     Score = x.Score,
                     NumberOfExactForecasts = x.NumberOfExactForecasts,
                     NumberOfCloseForecasts = x.NumberOfCloseForecasts,
