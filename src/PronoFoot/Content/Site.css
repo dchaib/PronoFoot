@@ -473,9 +473,32 @@ input.goalCount
         float: none;
     }
 
+    #header-content
+    {
+        padding: 0;
+    }
+
+    .site-title
+    {
+        font-size: 1.4em;
+        /*padding: 0;*/
+    }
+
     #login
     {
-        margin: 0 0 12px;
+        margin: 0;
         text-align: center;
+    }
+
+    ul#menu
+    {
+        font-size: 1em;
+    }
+
+    ul#menu li
+    {
+        display: block;
+        padding-right: 0;
+        padding-bottom: 5px;
     }
 }
