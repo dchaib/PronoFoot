@@ -75,6 +75,7 @@ namespace PronoFoot.Business.Services
             dbDay.CompetitionId = day.CompetitionId;
             dbDay.Date = day.Date;
             dbDay.Name = day.Name;
+            dbDay.Coefficient = day.Coefficient;
 
             int dayId = dayRepository.Create(day.CompetitionId, dbDay);
 
@@ -101,6 +102,7 @@ namespace PronoFoot.Business.Services
 
             dbDay.Date = day.Date;
             dbDay.Name = day.Name;
+            dbDay.Coefficient = day.Coefficient;
 
             dayRepository.Update(dbDay);
 
@@ -128,7 +130,7 @@ namespace PronoFoot.Business.Services
                         {
                             foreach (var forecast in forecasts)
                             {
-                                forecast.Score = scoringService.GetScore(fixture.HomeTeamGoals.Value, fixture.AwayTeamGoals.Value, forecast.HomeTeamGoals, forecast.AwayTeamGoals);
+                                forecast.Score = (double)day.Coefficient * scoringService.GetScore(fixture.HomeTeamGoals.Value, fixture.AwayTeamGoals.Value, forecast.HomeTeamGoals, forecast.AwayTeamGoals);
                             }
                         }
                         else

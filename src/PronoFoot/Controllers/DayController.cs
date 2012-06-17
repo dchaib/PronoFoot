@@ -77,7 +77,8 @@ namespace PronoFoot.Controllers
             {
                 CompetitionId = competitionId,
                 Date = dayForm.Date,
-                Name = dayForm.Name
+                Name = dayForm.Name,
+                Coefficient = dayForm.Coefficient
             };
 
             var fixtures = new List<FixtureModel>();
@@ -119,6 +120,7 @@ namespace PronoFoot.Controllers
                         DayId = day.DayId,
                         Date = day.Date,
                         Name = day.Name,
+                        Coefficient = day.Coefficient,
                         Fixtures = fixtures.Select(x => new FixtureViewModel(x, teams)).ToList()
                     }
                 });
@@ -132,7 +134,8 @@ namespace PronoFoot.Controllers
             {
                 DayId = id,
                 Date = dayForm.Date,
-                Name = dayForm.Name
+                Name = dayForm.Name,
+                Coefficient = dayForm.Coefficient
             };
             
             var fixtures = new List<FixtureModel>();
