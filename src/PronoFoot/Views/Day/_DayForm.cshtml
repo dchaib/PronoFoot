@@ -1,57 +1,83 @@
 ﻿@model PronoFoot.ViewModels.DayFormViewModel
-<fieldset>
-    <div class="editor-label">
-        @Html.LabelFor(x => x.Name, "Nom")
-    </div>
-    <div class="editor-field">
-        @Html.TextBoxFor(x => x.Name)
-        @Html.ValidationMessageFor(x => x.Name)
-    </div>
-    <div class="editor-label">
-        @Html.LabelFor(x => x.Date)
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(x => x.Date, "Date")
-        @Html.ValidationMessageFor(x => x.Date)
-    </div>
-    <div class="editor-label">
-        @Html.LabelFor(x => x.Coefficient)
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(x => x.Coefficient, "Coefficient")
-        @Html.ValidationMessageFor(x => x.Coefficient)
-    </div>
-    <div class="editor-label">
-        Matches
-    </div>
-    <div class="editor-field">
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        Date
-                    </th>
-                    <th>
-                    </th>
-                    <th>
-                    </th>
-                    <th>
-                    </th>
-                    <th>
-                    </th>
-                </tr>
-            </thead>
-            @{
-                int i = 0;
-                foreach (var fixture in Model.Fixtures.OrderBy(x => x.Date))
-                {
-                    @Html.EditorFor(x => fixture, null, "Fixtures[" + i + "].");
-                    i++;
-                }
-            }
-        </table>
-    </div>
-</fieldset>
-<p>
-    <input type="submit" value="Enregistrer" />
-</p>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { data_bind = "submit: save" }))
+{
+    <fieldset>
+        <div class="editor-label">
+            @Html.LabelFor(x => x.Name, "Nom")
+        </div>
+        <div class="editor-field">
+            <input data-bind="value: name" type="text" />
+            @Html.ValidationMessageFor(x => x.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(x => x.Date)
+        </div>
+        <div class="editor-field">
+            <input data-bind="date: date, dateFormat: 'dd-MM-yyyy'" type="date" />
+            @Html.EditorFor(x => x.Date, "Date")
+            @Html.ValidationMessageFor(x => x.Date)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(x => x.Coefficient)
+        </div>
+        <div class="editor-field">
+            <input data-bind="value: coefficient" type="number" />
+            @Html.EditorFor(x => x.Coefficient, "Coefficient")
+            @Html.ValidationMessageFor(x => x.Coefficient)
+        </div>
+        <div class="editor-label">
+            Matches
+        </div>
+        <div class="editor-field">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: fixtures">
+                    <tr>
+                        <td>
+                            <input data-bind="date: date, dateFormat:'dd/MM/yyyy HH:mm'" />
+                        </td>
+                        <td>
+                            <select data-bind="options: $root.teams, value: homeTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
+                        </td>
+                        <td>
+                            <input data-bind="value: homeTeamGoals" type="number" />
+                        </td>
+                        <td>
+                            <input data-bind="value: awayTeamGoals" type="number" />
+                        </td>
+                        <td>
+                            <select data-bind="options: $root.teams, value: awayTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
+                        </td>
+                        <td><a href="#" data-bind="click: $root.removeFixture">Supprimer</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="#" data-bind="click: addFixture">Ajouter un match</a>
+        </div>
+    </fieldset>
+    <p>
+        <input type="submit" value="Enregistrer" />
+    </p>
+    
+    <script type="text/javascript" src="~/Scripts/xdate.js"> </script>
+    <script type="text/javascript" src="~/Scripts/dateHelpers.js"> </script>
+    <script type="text/javascript" src="~/Scripts/DayForm.js"> </script>
+    
+    string initialData = Newtonsoft.Json.JsonConvert.SerializeObject(Model, new Newtonsoft.Json.Converters.IsoDateTimeConverter());
+
+    <script>
+        var initialData = @Html.Raw(initialData);
+        var viewModel = new DayModel(initialData.Name, initialData.Date, initialData.Coefficient, initialData.Fixtures, initialData.Teams);
+        ko.applyBindings(viewModel);
+    </script>
+}

@@ -15,19 +15,12 @@ namespace PronoFoot.ViewModels
         public int AwayTeamId { get; set; }
         public int? HomeTeamGoals { get; set; }
         public int? AwayTeamGoals { get; set; }
-        public IEnumerable<SelectListItem> Teams { get; set; }
 
         public FixtureViewModel()
         {
         }
 
-        public FixtureViewModel(IEnumerable<TeamModel> teams)
-        {
-            this.Teams = teams.OrderBy(x => x.Name).Select(x => new SelectListItem { Value = x.TeamId.ToString(), Text = x.Name });
-        }
-
-        public FixtureViewModel(FixtureModel fixture, IEnumerable<TeamModel> teams)
-            : this(teams)
+        public FixtureViewModel(FixtureModel fixture)
         {
             this.FixtureId = fixture.FixtureId;
             this.Date = fixture.Date;
