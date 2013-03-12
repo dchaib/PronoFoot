@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <title>@ViewBag.Title - PronoFoot</title>
-    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
-    <!--<script src="@Url.Content("~/Scripts/jquery-1.7.2.min.js")" type="text/javascript"></script>-->
     <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @*@Scripts.Render("~/bundles/modernizr")*@
 </head>
 <body>
     <header>
@@ -32,5 +32,8 @@
         <div class="content-wrapper">
         </div>
     </footer>*@
+        
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
 </body>
 </html>
