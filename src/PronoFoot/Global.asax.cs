@@ -1,24 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.Security;
-using Autofac;
+﻿using Autofac;
 using Autofac.Integration.Mvc;
+using PronoFoot.Business.Contracts;
+using PronoFoot.Business.Services;
+using PronoFoot.Configuration;
 using PronoFoot.Data;
 using PronoFoot.Data.EntityFramework;
 using PronoFoot.Data.EntityFramework.Repositories;
-using System.Security.Principal;
-using PronoFoot.Business.Contracts;
-using PronoFoot.Business.Services;
+using PronoFoot.Logging;
+using PronoFoot.Messaging;
 using PronoFoot.Models;
 using PronoFoot.Security;
-using PronoFoot.Messaging;
-using PronoFoot.Logging;
-using PronoFoot.Configuration;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
+using System.Security.Principal;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Optimization;
+using System.Web.Routing;
+using System.Web.Security;
 
 namespace PronoFoot
 {
@@ -29,29 +30,15 @@ namespace PronoFoot
     {
         private static IContainer container;
 
-        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
-        {
-            filters.Add(new HandleErrorAttribute());
-        }
-
-        public static void RegisterRoutes(RouteCollection routes)
-        {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-            routes.MapRoute(
-                "Default", // Route name
-                "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
-            );
-
-        }
-
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
 
-            RegisterGlobalFilters(GlobalFilters.Filters);
-            RegisterRoutes(RouteTable.Routes);
+            //WebApiConfig.Register(GlobalConfiguration.Configuration);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //AuthConfig.RegisterAuth();
 
             InitializeDependecyInjection();
             InitializeAutoMapping();
