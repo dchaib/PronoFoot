@@ -13,16 +13,14 @@
             @Html.LabelFor(x => x.Date)
         </div>
         <div class="editor-field">
-            <input data-bind="date: date, dateFormat: 'dd-MM-yyyy'" type="date" />
-            @Html.EditorFor(x => x.Date, "Date")
+            <input data-bind="date: date, dateFormat: 'DD/MM/YYYY'" />
             @Html.ValidationMessageFor(x => x.Date)
         </div>
         <div class="editor-label">
             @Html.LabelFor(x => x.Coefficient)
         </div>
         <div class="editor-field">
-            <input data-bind="value: coefficient" type="number" />
-            @Html.EditorFor(x => x.Coefficient, "Coefficient")
+            <input class="coefficient" data-bind="value: coefficient" type="number" step="any" min="0" />
             @Html.ValidationMessageFor(x => x.Coefficient)
         </div>
         <div class="editor-label">
@@ -44,16 +42,16 @@
                 <tbody data-bind="foreach: fixtures">
                     <tr>
                         <td>
-                            <input data-bind="date: date, dateFormat:'dd/MM/yyyy HH:mm'" />
+                            <input data-bind="date: date, dateFormat: 'DD/MM/YYYY HH:mm'" />
                         </td>
                         <td>
                             <select data-bind="options: $root.teams, value: homeTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
                         </td>
                         <td>
-                            <input data-bind="value: homeTeamGoals" type="number" />
+                            <input class="goal-count" data-bind="value: homeTeamGoals" type="number" min="0" />
                         </td>
                         <td>
-                            <input data-bind="value: awayTeamGoals" type="number" />
+                            <input class="goal-count" data-bind="value: awayTeamGoals" type="number" min="0" />
                         </td>
                         <td>
                             <select data-bind="options: $root.teams, value: awayTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
@@ -68,16 +66,19 @@
     <p>
         <input type="submit" value="Enregistrer" />
     </p>
+}
     
-    <script type="text/javascript" src="~/Scripts/xdate.js"> </script>
-    <script type="text/javascript" src="~/Scripts/dateHelpers.js"> </script>
-    <script type="text/javascript" src="~/Scripts/DayForm.js"> </script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/knockout")
+    <script type="text/javascript" src="~/App/viewmodels/DayForm.js"> </script>
     
-    string initialData = Newtonsoft.Json.JsonConvert.SerializeObject(Model, new Newtonsoft.Json.Converters.IsoDateTimeConverter());
+    @{string initialData = Newtonsoft.Json.JsonConvert.SerializeObject(Model, new Newtonsoft.Json.Converters.IsoDateTimeConverter());}
 
     <script>
         var initialData = @Html.Raw(initialData);
         var viewModel = new DayModel(initialData.Name, initialData.Date, initialData.Coefficient, initialData.Fixtures, initialData.Teams);
         ko.applyBindings(viewModel);
     </script>
-}
+ 

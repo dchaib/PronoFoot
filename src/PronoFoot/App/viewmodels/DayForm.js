@@ -18,7 +18,7 @@
 function Fixture(id, date, homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals) {
     var self = this;
     self.fixtureId = id;
-    self.date = ko.observable(date);
+    self.date = ko.observable(moment(date).toDate());
     self.homeTeamId = homeTeamId;
     self.awayTeamId = awayTeamId;
     self.homeTeamGoals = ko.numericObservable(homeTeamGoals);
@@ -30,7 +30,7 @@ function DayModel(name, date, coefficient, fixtures, teams) {
     var self = this;
 
     self.name = ko.observable(name);
-    self.date = ko.observable(date);
+    self.date = ko.observable(moment(date).toDate());
     self.coefficient = ko.observable(coefficient);
     self.fixtures = ko.observableArray(ko.utils.arrayMap(fixtures, function (f) {
         return new Fixture(f.FixtureId, f.Date, f.HomeTeamId, f.AwayTeamId, f.HomeTeamGoals, f.AwayTeamGoals);

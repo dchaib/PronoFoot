@@ -179,6 +179,7 @@
     <Compile Include="ViewModels\UserScoreViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\bindings\date.js" />
     <Content Include="Content\ok.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -237,8 +238,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\dateHelpers.js" />
-    <Content Include="Scripts\DayForm.js" />
+    <Content Include="App\viewmodels\DayForm.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.7.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.2.js" />
@@ -249,8 +249,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
-    <Content Include="Scripts\xdate.dev.js" />
-    <Content Include="Scripts\xdate.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
