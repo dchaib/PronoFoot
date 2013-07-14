@@ -40,6 +40,9 @@ namespace PronoFoot
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //AuthConfig.RegisterAuth();
 
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new RazorViewEngine());
+
             InitializeDependecyInjection();
         }
 
