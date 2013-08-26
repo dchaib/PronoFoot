@@ -17,7 +17,5 @@ namespace PronoFoot.Business.Contracts
         void Update(User user);
 
         void ResetPassword();
-
-        IEnumerable<UserScoreModel> GetUserScoresForCompetition(int competitionId);
     }
 }

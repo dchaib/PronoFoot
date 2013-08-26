@@ -12,6 +12,7 @@ namespace PronoFoot.Data
 
         Day GetDay(int dayId);
         IEnumerable<Day> GetDays(int competitionId);
+        IEnumerable<Day> GetDays(int[] competitionIds);
 
         void Update(Day day);
     }

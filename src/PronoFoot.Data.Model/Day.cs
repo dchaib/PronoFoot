@@ -11,6 +11,7 @@ namespace PronoFoot.Data.Model
         public int CompetitionId { get; set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
+        public decimal Coefficient { get; set; }
 
         public ICollection<Fixture> Fixtures { get; set; }
     }

@@ -2,42 +2,20 @@
 @{
     ViewBag.Title = "Accueil";
 }
-<h2>@Model.Competition.Name</h2>
-<div id="days">
-    <h5>Journées</h5>
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    Journée
-                </th>
-                <th>
-                    Date
-                </th>
-                <th colspan="2">
-                    Pronostics
-                </th>
-            </tr>
-        </thead>
-        @foreach (var item in Model.Days)
-        {
-            <tr>
-                <td>@Html.ActionLink(item.Name, "Details", "Day", new {id = item.DayId}, null)</td>
-                <td>@item.Date.ToString("d")</td>
-                <td>@if(item.ForecastMadeByCurrentUser)
-                    {<img alt="OK" src="@Url.Content("~/Content/ok.png")" />}
-                </td>
-                <td>@if(item.CanBeForecast)
-                    {@Html.ActionLink("Pronostiquer", "Forecast", "Day", new {id = item.DayId}, null)}
-                </td>
-            </tr>
-        }
-    </table>
-    @if (Request.IsAuthenticated && User.IsInRole("Administrators"))
-    {
-        <p>@Html.ActionLink("Ajouter une journée...", "Create", "Day", new { competitionId = Model.Competition.CompetitionId }, null)</p>
-    }
+<div class="intro">
+    <h2>Bienvenue sur PronoFoot</h2>
+    <p>PronoFoot est un site de pronostics de foot entièrement gratuit.</p>
+    <p>
+        Le principe est ultra-simple : pronostiquez un score avant le début de chaque match et remportez des points en fonction du résultat
+        du match. Le joueur ayant le plus de points gagne.
+    </p>
+    <p>
+        Il n'y a rien à gagner, mais rien à perdre non plus, alors n'hésitez pas, rejoignez-nous !
+    </p>
+    <p>
+        Pour plus d'informations, vous pouvez consulter le @Html.ActionLink("règlement", "Rules").
+    </p>
 </div>
-<div id="classification">
-    @Html.Partial("_Classification", Model.Scores)
+<div class="competitions">
+    @Html.Action("CurrentCompetitions", "Competition")
 </div>
