@@ -8,6 +8,6 @@ namespace PronoFoot.Business.Contracts
 {
     public interface IClassificationService
     {
-        IEnumerable<UserStatistics> GetUserScoresForCompetition(int competitionId);
+        IEnumerable<UserStatistics> GetUserScoresForEdition(int editionId);
     }
 }

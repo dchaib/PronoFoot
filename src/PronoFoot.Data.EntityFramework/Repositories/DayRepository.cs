@@ -14,9 +14,9 @@ namespace PronoFoot.Data.EntityFramework.Repositories
         {
         }
 
-        public int Create(int competitionId, Day day)
+        public int Create(int editionId, Day day)
         {
-            day.CompetitionId = competitionId;
+            day.EditionId = editionId;
             this.GetDbSet<Day>().Add(day);
             this.UnitOfWork.SaveChanges();
             return day.DayId;
@@ -29,17 +29,17 @@ namespace PronoFoot.Data.EntityFramework.Repositories
                             .Single();
         }
 
-        public IEnumerable<Day> GetDays(int competitionId)
+        public IEnumerable<Day> GetDays(int editionId)
         {
             return this.GetDbSet<Day>()
-                            .Where(x => x.CompetitionId == competitionId)
+                            .Where(x => x.EditionId == editionId)
                             .ToList();
         }
 
-        public IEnumerable<Day> GetDays(int[] competitionIds)
+        public IEnumerable<Day> GetDays(int[] editionIds)
         {
             return this.GetDbSet<Day>()
-                            .Where(x => competitionIds.Contains(x.CompetitionId))
+                            .Where(x => editionIds.Contains(x.EditionId))
                             .ToList();
         }
 

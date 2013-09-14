@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using PronoFoot.ViewModels;
 
-namespace PronoFoot.Models.Competition
+namespace PronoFoot.Models.Edition
 {
-    public class CompetitionOverviewModel
+    public class EditionOverviewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

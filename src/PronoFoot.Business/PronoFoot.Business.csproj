@@ -49,6 +49,7 @@
     <Compile Include="Contracts\IClassificationService.cs" />
     <Compile Include="Contracts\ICompetitionService.cs" />
     <Compile Include="Contracts\IDayService.cs" />
+    <Compile Include="Contracts\IEditionService.cs" />
     <Compile Include="Contracts\IForecastService.cs" />
     <Compile Include="Contracts\IFixtureService.cs" />
     <Compile Include="Contracts\IScoringService.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Contracts\IUserService.cs" />
     <Compile Include="Models\CompetitionModel.cs" />
     <Compile Include="Models\DayModel.cs" />
+    <Compile Include="Models\EditionModel.cs" />
     <Compile Include="Models\FixtureModel.cs" />
     <Compile Include="Models\ForecastModel.cs" />
     <Compile Include="Models\TeamModel.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="Services\ClassificationService.cs" />
     <Compile Include="Services\CompetitionService.cs" />
     <Compile Include="Services\DayService.cs" />
+    <Compile Include="Services\EditionService.cs" />
     <Compile Include="Services\FixtureService.cs" />
     <Compile Include="Services\ForecastService.cs" />
     <Compile Include="Services\ScoringService.cs" />

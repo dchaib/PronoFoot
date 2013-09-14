@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="ICompetitionRepository.cs" />
     <Compile Include="IDayRepository.cs" />
+    <Compile Include="IEditionRepository.cs" />
     <Compile Include="IFixtureRepository.cs" />
     <Compile Include="IForecastRepository.cs" />
     <Compile Include="ITeamRepository.cs" />

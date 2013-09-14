@@ -28,6 +28,7 @@ namespace PronoFoot.Data.EntityFramework
         }
 
         public DbSet<Competition> Competitions { get; set; }
+        public DbSet<Edition> Editions { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Day> Days { get; set; }
         public DbSet<Fixture> Fixtures { get; set; }

@@ -4,74 +4,17 @@
     ViewBag.Title = Model.Competition.Name;
 }
 <h1>@Model.Competition.Name</h1>
-<div id="days" class="float-left">
-    <h2>Prochaines journées</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    Journée
-                </th>
-                <th>
-                    Date
-                </th>
-                <th>Coefficient</th>
-                <th colspan="2">
-                    Pronostics
-                </th>
-            </tr>
-        </thead>
-        @foreach (var item in Model.NextDays.OrderBy(x => x.Date))
+<div id="editions" class="float-left">
+    <h2>Editions</h2>
+    <ul>
+        @foreach (var edition in Model.Editions)
         {
-            <tr>
-                <td>@Html.ActionLink(item.Name, "Details", "Day", new {id = item.DayId}, null)</td>
-                <td>@item.Date.ToString("d")</td>
-                <td>@item.Coefficient</td>
-                <td>@if(item.ForecastMadeByCurrentUser)
-                    {<img alt="OK" src="@Url.Content("~/Content/ok.png")" />}
-                </td>
-                <td>@if(item.CanBeForecast)
-                    {@Html.ActionLink("Pronostiquer", "Forecast", "Day", new {id = item.DayId}, null)}
-                </td>
-            </tr>
+            <li>@Html.ActionLink(edition.Name, "Details", "Edition", new { id = edition.EditionId }, null)</li>
         }
-    </table>
-
-    <h2>Précédentes journées</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    Journée
-                </th>
-                <th>
-                    Date
-                </th>
-                <th>
-                    Coefficient
-                </th>
-                <th>
-                    Score
-                </th>
-            </tr>
-        </thead>
-        @foreach (var item in Model.PreviousDays.OrderByDescending(x => x.Date))
-        {
-            <tr>
-                <td>@Html.ActionLink(item.Name, "Details", "Day", new {id = item.DayId}, null)</td>
-                <td>@item.Date.ToString("d")</td>
-                <td>@item.Coefficient</td>
-                <td></td>
-            </tr>
-        }
-    </table>
+    </ul>
 
     @if (Request.IsAuthenticated && User.IsInRole("Administrators"))
     {
-        <p>@Html.ActionLink("Ajouter une journée...", "Create", "Day", new { competitionId = Model.Competition.CompetitionId }, null)</p>
+        <p>@Html.ActionLink("Ajouter une édition...", "Create", "Edition", new { competitionId = Model.Competition.CompetitionId }, null)</p>
     }
-</div>
-<div id="classification" class="float-left">
-    <h2>Classement</h2>
-    @Html.Partial("_Classification", Model.Scores)
 </div>
