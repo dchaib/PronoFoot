@@ -10,6 +10,8 @@ namespace PronoFoot.Models.Edition
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int CompetitionId { get; set; }
+        public string CompetitionName { get; set; }
         public FixtureOverviewModel NextFixture { get; set; }
         public IEnumerable<UserScoreViewModel> Scores { get; set; }
 

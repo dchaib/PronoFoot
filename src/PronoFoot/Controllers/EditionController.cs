@@ -87,45 +87,5 @@ namespace PronoFoot.Controllers
                 })
             });
         }
-        
-        //[ChildActionOnly]
-        //public ActionResult CurrentEditions()
-        //{
-        //    var editions = editionService.GetCurrentEditions();
-        //    var users = userService.GetUsers();
-
-        //    var viewModels = new List<EditionOverviewModel>();
-        //    foreach (var edition in editions)
-        //    {
-        //        var viewModel = new EditionOverviewModel
-        //        {
-        //            Id = edition.EditionId,
-        //            Name = edition.Name
-        //        };
-
-        //        var nextFixture = fixtureService.GetNextFixture(edition.EditionId);
-        //        if (nextFixture != null)
-        //            viewModel.NextFixture = new CompetitionOverviewModel.FixtureOverviewModel() { DateTime = nextFixture.Date, DayId = nextFixture.DayId };
-
-        //        var scores = classificationService.GetUserScoresForEdition(edition.EditionId);
-        //        viewModel.Scores = scores.Select(x => new UserScoreViewModel
-        //        {
-        //            UserId = x.Key,
-        //            UserName = users.First(y => y.UserId == x.Key).Name,
-        //            Score = x.Score,
-        //            NumberOfExactForecasts = x.NumberOfExactForecasts,
-        //            NumberOfCloseForecasts = x.NumberOfCloseForecasts,
-        //            NumberOfForecastsWithExactDifference = x.NumberOfForecastsWithExactDifference,
-        //            NumberOfCorrect1N2Forecasts = x.NumberOfCorrect1N2Forecasts,
-        //            NumberOfWrongForecasts = x.NumberOfWrongForecasts,
-        //            PercentageOfScoringForecasts = x.PercentageOfScoringForecasts
-        //        });
-
-        //        viewModels.Add(viewModel);
-        //    }
-
-        //    return PartialView(viewModels);
-        //}
-
     }
 }
