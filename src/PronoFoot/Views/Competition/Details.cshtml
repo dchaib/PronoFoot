@@ -12,9 +12,4 @@
             <li>@Html.ActionLink(edition.Name, "Details", "Edition", new { id = edition.EditionId }, null)</li>
         }
     </ul>
-
-    @if (Request.IsAuthenticated && User.IsInRole("Administrators"))
-    {
-        <p>@Html.ActionLink("Ajouter une édition...", "Create", "Edition", new { competitionId = Model.Competition.CompetitionId }, null)</p>
-    }
 </div>
