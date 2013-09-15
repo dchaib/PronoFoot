@@ -70,7 +70,7 @@
 
     @if (Request.IsAuthenticated && User.IsInRole("Administrators"))
     {
-        <p>@Html.ActionLink("Ajouter une journée...", "Create", "Day", new { competitionId = Model.Edition.EditionId }, null)</p>
+        <p>@Html.ActionLink("Ajouter une journée...", "Create", "Day", new { editionId = Model.Edition.EditionId }, null)</p>
     }
 </div>
 <div id="classification" class="float-left">
