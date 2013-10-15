@@ -56,6 +56,7 @@
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\CompetitionRepository.cs" />
     <Compile Include="Repositories\DayRepository.cs" />
+    <Compile Include="Repositories\EditionRepository.cs" />
     <Compile Include="Repositories\FixtureRepository.cs" />
     <Compile Include="Repositories\ForecastRepository.cs" />
     <Compile Include="Repositories\TeamRepository.cs" />

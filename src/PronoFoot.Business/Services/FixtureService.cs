@@ -24,9 +24,9 @@ namespace PronoFoot.Business.Services
             return new FixtureModel(fixture);
         }
 
-        public FixtureModel GetNextFixture(int competitionId)
+        public FixtureModel GetNextFixture(int editionId)
         {
-            var query = from f in fixtureRepository.GetFixturesForCompetition(competitionId)
+            var query = from f in fixtureRepository.GetFixturesForEdition(editionId)
                         let fm = new FixtureModel(f)
                         where fm.CanBeForecast
                         orderby fm.Date
@@ -53,9 +53,9 @@ namespace PronoFoot.Business.Services
             return fixtureModels.ToList();
         }
 
-        public IEnumerable<FixtureModel> GetFixturesForCompetition(int competitionId)
+        public IEnumerable<FixtureModel> GetFixturesForEdition(int editionId)
         {
-            var fixtures = fixtureRepository.GetFixturesForCompetition(competitionId);
+            var fixtures = fixtureRepository.GetFixturesForEdition(editionId);
 
             var fixtureModels = fixtures.Select(x => new FixtureModel(x));
 

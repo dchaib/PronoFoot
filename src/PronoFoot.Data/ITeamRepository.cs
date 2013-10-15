@@ -12,7 +12,7 @@ namespace PronoFoot.Data
 
         Team GetTeam(int teamId);
         IEnumerable<Team> GetTeams();
-        IEnumerable<Team> GetTeamsForCompetition(int competitionId);
+        IEnumerable<Team> GetTeamsForEdition(int editionId);
 
         void Update(Team team);
     }

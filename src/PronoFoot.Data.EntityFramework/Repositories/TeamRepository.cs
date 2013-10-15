@@ -33,10 +33,10 @@ namespace PronoFoot.Data.EntityFramework.Repositories
                 .ToList();
         }
 
-        public IEnumerable<Team> GetTeamsForCompetition(int competitionId)
+        public IEnumerable<Team> GetTeamsForEdition(int editionId)
         {
             return this.GetDbSet<Team>()
-                .Where(x => x.Competitions.Select(y => y.CompetitionId).Contains(competitionId))
+                .Where(x => x.Editions.Select(y => y.EditionId).Contains(editionId))
                 .ToList();
         }
 

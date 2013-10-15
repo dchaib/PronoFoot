@@ -5,9 +5,9 @@ using System.Web;
 
 namespace PronoFoot.ViewModels
 {
-    public class CompetitionViewModel
+    public class EditionViewModel
     {
-        public int CompetitionId { get; set; }
+        public int EditionId { get; set; }
         public string Name { get; set; }
     }
 }

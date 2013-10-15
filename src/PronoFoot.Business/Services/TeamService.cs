@@ -17,9 +17,9 @@ namespace PronoFoot.Business.Services
             this.teamRepository = teamRepository;
         }
 
-        public IEnumerable<TeamModel> GetTeamsForCompetition(int competitionId)
+        public IEnumerable<TeamModel> GetTeamsForEdition(int editionId)
         {
-            var teams = teamRepository.GetTeamsForCompetition(competitionId);
+            var teams = teamRepository.GetTeamsForEdition(editionId);
 
             var teamModels = teams.Select(x => new TeamModel(x));
 
