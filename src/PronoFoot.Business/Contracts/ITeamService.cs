@@ -8,6 +8,6 @@ namespace PronoFoot.Business.Contracts
 {
     public interface ITeamService
     {
-        IEnumerable<TeamModel> GetTeamsForCompetition(int competitionId);
+        IEnumerable<TeamModel> GetTeamsForEdition(int competitionId);
     }
 }

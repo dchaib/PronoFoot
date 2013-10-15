@@ -53,6 +53,7 @@ namespace PronoFoot
             //Data
             builder.RegisterType<PronoFootDbContext>().As<IUnitOfWork>();
             builder.RegisterType<CompetitionRepository>().As<ICompetitionRepository>();
+            builder.RegisterType<EditionRepository>().As<IEditionRepository>();
             builder.RegisterType<TeamRepository>().As<ITeamRepository>();
             builder.RegisterType<DayRepository>().As<IDayRepository>();
             builder.RegisterType<FixtureRepository>().As<IFixtureRepository>();
@@ -61,6 +62,7 @@ namespace PronoFoot
             //Business
             builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
             builder.RegisterType<CompetitionService>().As<ICompetitionService>().InstancePerLifetimeScope();
+            builder.RegisterType<EditionService>().As<IEditionService>().InstancePerLifetimeScope();
             builder.RegisterType<DayService>().As<IDayService>().InstancePerLifetimeScope();
             builder.RegisterType<FixtureService>().As<IFixtureService>().InstancePerLifetimeScope();
             builder.RegisterType<ForecastService>().As<IForecastService>().InstancePerLifetimeScope();

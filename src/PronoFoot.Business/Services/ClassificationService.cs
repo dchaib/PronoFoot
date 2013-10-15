@@ -19,9 +19,9 @@ namespace PronoFoot.Business.Services
             this.forecastRepository = forecastRepository;
         }
 
-        public IEnumerable<UserStatistics> GetUserScoresForCompetition(int competitionId)
+        public IEnumerable<UserStatistics> GetUserScoresForEdition(int editionId)
         {
-            var forecasts = forecastRepository.GetForecastsForCompetition(competitionId);
+            var forecasts = forecastRepository.GetForecastsForEdition(editionId);
             var userStatistics = GetUserStatistics(forecasts).ToList();
             userStatistics.Sort(new UserStatisticsComparer());
             return userStatistics;

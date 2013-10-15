@@ -153,6 +153,7 @@
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\CompetitionController.cs" />
     <Compile Include="Controllers\DayController.cs" />
+    <Compile Include="Controllers\EditionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
@@ -161,9 +162,10 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Common\MenuModel.cs" />
-    <Compile Include="Models\Competition\CompetitionOverviewModel.cs" />
+    <Compile Include="Models\Edition\EditionOverviewModel.cs" />
     <Compile Include="ViewModels\CompetitionDetailsViewModel.cs" />
-    <Compile Include="ViewModels\CompetitionViewModel.cs" />
+    <Compile Include="ViewModels\EditionDetailsViewModel.cs" />
+    <Compile Include="ViewModels\EditionViewModel.cs" />
     <Compile Include="ViewModels\DayDetailsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DayEditViewModel.cs" />
@@ -270,6 +272,7 @@
     <Content Include="Views\Shared\_LogOnPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Edition\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

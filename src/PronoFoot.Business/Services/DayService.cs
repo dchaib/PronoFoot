@@ -72,12 +72,12 @@ namespace PronoFoot.Business.Services
         {
             var dbDay = new Day();
 
-            dbDay.CompetitionId = day.CompetitionId;
+            dbDay.EditionId = day.EditionId;
             dbDay.Date = day.Date;
             dbDay.Name = day.Name;
             dbDay.Coefficient = day.Coefficient;
 
-            int dayId = dayRepository.Create(day.CompetitionId, dbDay);
+            int dayId = dayRepository.Create(day.EditionId, dbDay);
 
             foreach (var fixture in fixtures)
             {

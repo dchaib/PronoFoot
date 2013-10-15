@@ -39,7 +39,7 @@ namespace PronoFoot.Controllers
             var day = dayServices.GetDay(id);
             var fixtures = fixtureService.GetFixturesForDay(id);
             var forecasts = forecastService.GetForecastsForDay(id);
-            var teams = teamService.GetTeamsForCompetition(day.CompetitionId);
+            var teams = teamService.GetTeamsForEdition(day.EditionId);
             var users = userService.GetUsers();
             return View(new DayDetailsViewModel
             {
@@ -53,9 +53,9 @@ namespace PronoFoot.Controllers
         }
 
         [Authorize(Roles = "Administrators")]
-        public ActionResult Create(int competitionId)
+        public ActionResult Create(int editionId)
         {
-            var teams = teamService.GetTeamsForCompetition(competitionId);
+            var teams = teamService.GetTeamsForEdition(editionId);
 
             return View(new DayEditViewModel
             {
@@ -71,11 +71,11 @@ namespace PronoFoot.Controllers
 
         [Authorize(Roles = "Administrators")]
         [HttpPost]
-        public ActionResult Create(int competitionId, DayFormViewModel dayForm)
+        public ActionResult Create(int editionId, DayFormViewModel dayForm)
         {
             var day = new DayModel
             {
-                CompetitionId = competitionId,
+                EditionId = editionId,
                 Date = dayForm.Date,
                 Name = dayForm.Name,
                 Coefficient = dayForm.Coefficient
@@ -105,7 +105,7 @@ namespace PronoFoot.Controllers
         {
             var day = dayServices.GetDay(id);
             var fixtures = fixtureService.GetFixturesForDay(id);
-            var teams = teamService.GetTeamsForCompetition(day.CompetitionId);
+            var teams = teamService.GetTeamsForEdition(day.EditionId);
 
             if (day == null)
             {
@@ -165,7 +165,7 @@ namespace PronoFoot.Controllers
             var day = dayServices.GetDay(id);
             var fixtures = fixtureService.GetFixturesForDay(id).ToList();
             var forecasts = forecastService.GetForecastsForDayUser(id, this.CurrentUser.UserId).ToList();
-            var teams = teamService.GetTeamsForCompetition(day.CompetitionId).ToList();
+            var teams = teamService.GetTeamsForEdition(day.EditionId).ToList();
 
             var forecastViewModels = new List<ForecastViewModel>();
             foreach (var fixture in fixtures)

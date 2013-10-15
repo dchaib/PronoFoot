@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Competition.cs" />
     <Compile Include="Day.cs" />
+    <Compile Include="Edition.cs" />
     <Compile Include="Fixture.cs" />
     <Compile Include="Forecast.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
