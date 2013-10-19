@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using PronoFoot.Data.Model;
 using System.Data;
+using System.Data.Entity;
 
 namespace PronoFoot.Data.EntityFramework.Repositories
 {
