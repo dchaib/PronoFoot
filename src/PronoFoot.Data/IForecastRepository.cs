@@ -11,11 +11,11 @@ namespace PronoFoot.Data
         Forecast GetForecast(int fixtureId, int userId);
 
         IEnumerable<Forecast> GetForecasts(IEnumerable<int> forecastIds);
-        IEnumerable<Forecast> GetForecastsForCompetition(int competitionId);
+        IEnumerable<Forecast> GetForecastsForEdition(int editionId);
         IEnumerable<Forecast> GetForecastsForDay(int dayId);
         IEnumerable<Forecast> GetForecastsForDayUser(int dayId, int userId);
         IEnumerable<Forecast> GetForecastsForFixture(int fixtureId);
-        IDictionary<int, int> GetForecastCountByDayForCompetitionUser(int competitionId, int userId);
+        IDictionary<int, int> GetForecastCountByDayForEditionUser(int editionId, int userId);
 
         void Save(IEnumerable<Forecast> forecasts);
 

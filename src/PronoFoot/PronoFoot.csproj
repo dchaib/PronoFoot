@@ -69,6 +69,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Glimpse.AspNet">
+      <HintPath>..\packages\Glimpse.AspNet.1.3.1\lib\net45\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Glimpse.1.5.0\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Mvc4">
+      <HintPath>..\packages\Glimpse.Mvc4.1.3.2\lib\net40\Glimpse.Mvc4.dll</HintPath>
+    </Reference>
     <Reference Include="le_nlog, Version=2.1.7.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\le_nlog.2.1.7\lib\Net40\le_nlog.dll</HintPath>
@@ -143,16 +153,19 @@
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\CompetitionController.cs" />
     <Compile Include="Controllers\DayController.cs" />
+    <Compile Include="Controllers\EditionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Common\MenuModel.cs" />
-    <Compile Include="Models\Competition\CompetitionOverviewModel.cs" />
+    <Compile Include="Models\Edition\EditionOverviewModel.cs" />
     <Compile Include="ViewModels\CompetitionDetailsViewModel.cs" />
-    <Compile Include="ViewModels\CompetitionViewModel.cs" />
+    <Compile Include="ViewModels\EditionDetailsViewModel.cs" />
+    <Compile Include="ViewModels\EditionViewModel.cs" />
     <Compile Include="ViewModels\DayDetailsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DayEditViewModel.cs" />
@@ -259,6 +272,7 @@
     <Content Include="Views\Shared\_LogOnPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Edition\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

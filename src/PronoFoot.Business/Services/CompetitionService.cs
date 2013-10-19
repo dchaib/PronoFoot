@@ -24,14 +24,6 @@ namespace PronoFoot.Business.Services
             return competitionModels.ToList();
         }
 
-        public IList<CompetitionModel> GetCurrentCompetitions()
-        {
-            //TODO Add a parameter to know current competitions
-            var competitions = competitionRepository.GetCompetitions();            
-            var competitionModels = competitions.Select(x => new CompetitionModel(x));
-            return competitionModels.ToList();
-        }
-
         public CompetitionModel GetCompetition(int id)
         {
             var competition = competitionRepository.GetCompetition(id);

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Web;
 using PronoFoot.ViewModels;
 
-namespace PronoFoot.Models.Competition
+namespace PronoFoot.Models.Edition
 {
-    public class CompetitionOverviewModel
+    public class EditionOverviewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int CompetitionId { get; set; }
+        public string CompetitionName { get; set; }
         public FixtureOverviewModel NextFixture { get; set; }
         public IEnumerable<UserScoreViewModel> Scores { get; set; }
 

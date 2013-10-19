@@ -10,7 +10,6 @@ namespace PronoFoot.Data.Model
         public int CompetitionId { get; set; }
         public string Name { get; set; }
 
-        public ICollection<Day> Days { get; set; }
-        public ICollection<Team> Teams { get; set; }
+        public virtual ICollection<Edition> Editions { get; set; }
     }
 }
