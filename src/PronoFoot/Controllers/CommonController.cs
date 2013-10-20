@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using PronoFoot.Business.Contracts;
 using PronoFoot.Models.Common;
-using PronoFoot.Models.Competition;
 
 namespace PronoFoot.Controllers
 {

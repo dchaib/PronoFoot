@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using PronoFoot.Data.Model;
 using System.Data;
+using System.Data.Entity;
 
 namespace PronoFoot.Data.EntityFramework.Repositories
 {
@@ -42,12 +43,12 @@ namespace PronoFoot.Data.EntityFramework.Repositories
                             .ToList();
         }
 
-        public IEnumerable<Fixture> GetFixturesForCompetition(int competitionId)
+        public IEnumerable<Fixture> GetFixturesForEdition(int editionId)
         {
             //TODO Find a better way, not using DayDbSet?
             var q = from day in this.GetDbSet<Day>()
                     from fixture in day.Fixtures
-                    where day.CompetitionId == competitionId
+                    where day.EditionId == editionId
                     select fixture;
             return q.ToList();
         }

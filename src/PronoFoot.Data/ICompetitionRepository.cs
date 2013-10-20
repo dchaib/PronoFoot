@@ -14,8 +14,5 @@ namespace PronoFoot.Data
         IEnumerable<Competition> GetCompetitions();
 
         void Update(Competition competition);
-
-        void AddTeamToCompetition(int competitionId, Team team);
-        void RemoveTeamFromCompetition(int competitionId, int teamId);
     }
 }

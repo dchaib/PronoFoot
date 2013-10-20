@@ -1,27 +1,26 @@
-﻿@model IList<PronoFoot.Models.Competition.CompetitionOverviewModel>
+﻿@model IList<PronoFoot.Models.Edition.EditionOverviewModel>
 @if (Model.Count > 0)
 {
     <div class="current-competitions">
         <h2>Compétitions</h2>
         <ol>
-            @foreach (var competition in Model)
+            @foreach (var edition in Model)
             {
                 <li class="current-competition">
                     <div class="current-competition-heading">
-                        <h3>@Html.ActionLink(competition.Name, "Details", new { id = competition.Id })
-                        </h3>
+                        <h3>@Html.ActionLink(edition.CompetitionName + " " + edition.Name, "Details", "Edition", new { id = edition.Id }, null)</h3>
                     </div>
                     <div class="current-competition-content">
-                        @if (competition.NextFixture != null)
+                        @if (edition.NextFixture != null)
                         {
-                            @:Prochain match : @Html.ActionLink(competition.NextFixture.DateTime.ToString("g"), "Details", "Day", new { id = competition.NextFixture.DayId }, null)
+                            @:Prochain match : @Html.ActionLink(edition.NextFixture.DateTime.ToString("g"), "Details", "Day", new { id = edition.NextFixture.DayId }, null)
                     }
                         <div class="classification">
                             @*<h4>Classement</h4>*@
                             <table>
                                 @{
                         int rank = 1;
-                        foreach (var userScore in competition.Scores.OrderByDescending(x => x.Score).ThenByDescending(x => x.NumberOfExactForecasts).ThenByDescending(x => x.NumberOfCloseForecasts).Take(3))
+                        foreach (var userScore in edition.Scores.OrderByDescending(x => x.Score).ThenByDescending(x => x.NumberOfExactForecasts).ThenByDescending(x => x.NumberOfCloseForecasts).Take(3))
                         {
                                     <tr>
                                         <td>@rank
