@@ -64,7 +64,8 @@ namespace PronoFoot.Controllers
                 {
                     Date = DateTime.Today,
                     Name = string.Empty,
-                    Fixtures = Enumerable.Repeat(new FixtureViewModel(teams), teams.Count() / 2).ToList()
+                    Fixtures = Enumerable.Repeat(new FixtureViewModel(), teams.Count() / 2).ToList(),
+                    Teams = teams.Select(x => new TeamViewModel { Id = x.TeamId, Name = x.Name }).ToList()
                 }
             });
         }
@@ -121,14 +122,15 @@ namespace PronoFoot.Controllers
                         Date = day.Date,
                         Name = day.Name,
                         Coefficient = day.Coefficient,
-                        Fixtures = fixtures.Select(x => new FixtureViewModel(x, teams)).ToList()
+                        Fixtures = fixtures.Select(x => new FixtureViewModel(x)).OrderBy(x => x.Date).ToList(),
+                        Teams = teams.Select(x => new TeamViewModel { Id = x.TeamId, Name = x.Name }).ToList()
                     }
                 });
         }
 
         [Authorize(Roles = "Administrators")]
         [HttpPost]
-        public ActionResult Edit(int id, DayFormViewModel dayForm)
+        public ActionResult Edit(int id, [FromJson]DayFormViewModel dayForm)
         {
             var day = new DayModel
             {
@@ -137,10 +139,14 @@ namespace PronoFoot.Controllers
                 Name = dayForm.Name,
                 Coefficient = dayForm.Coefficient
             };
-            
+
             var fixtures = new List<FixtureModel>();
             foreach (var fixture in dayForm.Fixtures)
             {
+                //HACK: convert back to French time, because the dates in the database are not UTC!!!
+                if (fixture.Date.Kind == DateTimeKind.Utc)
+                    fixture.Date = TimeZoneInfo.ConvertTimeFromUtc(fixture.Date, TimeZoneInfo.FindSystemTimeZoneById("Romance Standard Time"));
+
                 fixtures.Add(new FixtureModel
                 {
                     DayId = id,
@@ -212,6 +218,25 @@ namespace PronoFoot.Controllers
             forecastService.DeleteForecasts(forecastIdsToDelete);
 
             return RedirectToAction("Details", new { id = id });
+        }
+    }
+
+    public class FromJsonAttribute : CustomModelBinderAttribute
+    {
+        public override IModelBinder GetBinder()
+        {
+            return new JsonModelBinder();
+        }
+
+        private class JsonModelBinder : IModelBinder
+        {
+            public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+            {
+                var stringified = controllerContext.HttpContext.Request[bindingContext.ModelName];
+                if (string.IsNullOrEmpty(stringified))
+                    return null;
+                return Newtonsoft.Json.JsonConvert.DeserializeObject(stringified, bindingContext.ModelType, new Newtonsoft.Json.Converters.IsoDateTimeConverter());
+            }
         }
     }
 }

@@ -461,9 +461,18 @@ table
 }
 
 /* PronoFoot */
-input.goalCount
+input.goal-count
 {
-    width: 2em;
+    padding-right: 0.5em;
+    text-align: right;
+    width: 3em;
+}
+
+input.coefficient
+{
+    padding-right: 0.5em;
+    text-align: right;
+    width: 4em;
 }
 
 @media only screen and (max-width: 850px)

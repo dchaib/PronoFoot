@@ -44,6 +44,7 @@ namespace PronoFoot
             ViewEngines.Engines.Add(new RazorViewEngine());
 
             InitializeDependecyInjection();
+            InitializeAutoMapping();
         }
 
         private void InitializeDependecyInjection()
@@ -78,6 +79,14 @@ namespace PronoFoot
             builder.RegisterType<DefaultMembershipService>().As<IMembershipService>();
             container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+        }
+
+        private void InitializeAutoMapping()
+        {
+            AutoMapper.Mapper.CreateMap<PronoFoot.Models.Competition.CompetitionModel, PronoFoot.Business.Models.CompetitionModel>()
+                .ForMember(dest => dest.CompetitionId, opt => opt.MapFrom(src => src.Id));
+            AutoMapper.Mapper.CreateMap<PronoFoot.Business.Models.CompetitionModel, PronoFoot.Models.Competition.CompetitionModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CompetitionId));
         }
 
     }
