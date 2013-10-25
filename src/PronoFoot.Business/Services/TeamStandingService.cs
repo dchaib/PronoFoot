@@ -13,28 +13,33 @@ namespace PronoFoot.Business.Services
     public class TeamStandingService : ITeamStandingService
     {
         private readonly IFixtureRepository fixtureRepository;
+        private readonly ITeamRepository teamRepository;
 
-        public TeamStandingService(IFixtureRepository fixtureRepository)
+        public TeamStandingService(IFixtureRepository fixtureRepository, ITeamRepository teamRepository)
         {
             this.fixtureRepository = fixtureRepository;
+            this.teamRepository = teamRepository;
         }
 
         public IEnumerable<TeamStanding> GetTeamStandings(int editionId)
         {
             var fixtures = fixtureRepository.GetFixturesForEdition(editionId);
+            var teams = teamRepository.GetTeamsForEdition(editionId);
             var homeStats = GetHomeStatistics(fixtures);
             var awayStats = GetAwayStatistics(fixtures);
 
-            var teamStats = from homeStat in homeStats
-                            join awayStat in awayStats on homeStat.TeamId equals awayStat.TeamId
+            var teamStats = from team in teams
+                            join homeStat in homeStats on team.TeamId equals homeStat.TeamId
+                            join awayStat in awayStats on team.TeamId equals awayStat.TeamId
                             select new TeamStanding
                             {
-                                TeamId = homeStat.TeamId,
+                                TeamId = team.TeamId,
+                                TeamName = team.Name,
                                 HomeStatistics = homeStat,
                                 AwayStatistics = awayStat,
                                 OverallStatistics = new TeamStatistics
                                 {
-                                    TeamId = homeStat.TeamId,
+                                    TeamId = team.TeamId,
                                     Matches = homeStat.Matches + awayStat.Matches,
                                     Wins = homeStat.Wins + awayStat.Wins,
                                     Draws = homeStat.Draws + awayStat.Draws,

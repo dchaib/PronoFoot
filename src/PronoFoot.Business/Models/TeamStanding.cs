@@ -10,6 +10,7 @@ namespace PronoFoot.Business.Models
     public class TeamStanding
     {
         public int TeamId { get; set; }
+        public string TeamName { get; set; }
         public int Position { get; set; }
         public TeamStatistics HomeStatistics { get; set; }
         public TeamStatistics AwayStatistics { get; set; }

@@ -54,10 +54,19 @@ namespace PronoFoot.Business.Tests.Services
                 new Fixture{ HomeTeamId=3, AwayTeamId=1, HomeTeamGoals=3, AwayTeamGoals=2},
                 new Fixture{ HomeTeamId=4, AwayTeamId=2, HomeTeamGoals=1, AwayTeamGoals=0},
             };
+            IEnumerable<Team> teams = new List<Team>()
+            {
+                new Team { TeamId = 1, Name = "Team 1" },
+                new Team { TeamId = 2, Name = "Team 2" },
+                new Team { TeamId = 3, Name = "Team 3" },
+                new Team { TeamId = 4, Name = "Team 4" }
+            };
 
             var fixtureRepository = new Mock<IFixtureRepository>();
             fixtureRepository.Setup(x => x.GetFixturesForEdition(It.IsAny<int>())).Returns(() => fixtures);
-            var service = new TeamStandingService(fixtureRepository.Object);
+            var teamRepository = new Mock<ITeamRepository>();
+            teamRepository.Setup(x => x.GetTeamsForEdition(It.IsAny<int>())).Returns(() => teams);
+            var service = new TeamStandingService(fixtureRepository.Object, teamRepository.Object);
 
             var standings = service.GetTeamStandings(0);
 
