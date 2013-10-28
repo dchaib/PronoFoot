@@ -63,7 +63,7 @@ namespace PronoFoot.Business.Tests.Services
             };
 
             var fixtureRepository = new Mock<IFixtureRepository>();
-            fixtureRepository.Setup(x => x.GetFixturesForEdition(It.IsAny<int>())).Returns(() => fixtures);
+            fixtureRepository.Setup(x => x.GetFixturesWithResultForEdition(It.IsAny<int>())).Returns(() => fixtures);
             var teamRepository = new Mock<ITeamRepository>();
             teamRepository.Setup(x => x.GetTeamsForEdition(It.IsAny<int>())).Returns(() => teams);
             var service = new TeamStandingService(fixtureRepository.Object, teamRepository.Object);

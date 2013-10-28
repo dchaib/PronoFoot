@@ -23,7 +23,7 @@ namespace PronoFoot.Business.Services
 
         public IEnumerable<TeamStanding> GetTeamStandings(int editionId)
         {
-            var fixtures = fixtureRepository.GetFixturesForEdition(editionId);
+            var fixtures = fixtureRepository.GetFixturesWithResultForEdition(editionId);
             var teams = teamRepository.GetTeamsForEdition(editionId);
             var homeStats = GetHomeStatistics(fixtures);
             var awayStats = GetAwayStatistics(fixtures);
@@ -64,7 +64,6 @@ namespace PronoFoot.Business.Services
         public static IEnumerable<TeamStatistics> GetHomeStatistics(IEnumerable<Fixture> fixtures)
         {
             var q = from f in fixtures
-                    where f.HomeTeamGoals.HasValue && f.AwayTeamGoals.HasValue
                     let gd = f.HomeTeamGoals - f.AwayTeamGoals
                     group f by f.HomeTeamId into g
                     select new TeamStatistics
@@ -83,7 +82,6 @@ namespace PronoFoot.Business.Services
         private static IEnumerable<TeamStatistics> GetAwayStatistics(IEnumerable<Fixture> fixtures)
         {
             var q = from f in fixtures
-                    where f.HomeTeamGoals.HasValue && f.AwayTeamGoals.HasValue
                     group f by f.AwayTeamId into g
                     select new TeamStatistics
                     {
