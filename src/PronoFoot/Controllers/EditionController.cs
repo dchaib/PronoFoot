@@ -19,6 +19,7 @@ namespace PronoFoot.Controllers
         private readonly IScoringService scoringService;
         private readonly IEditionService editionService;
         private readonly IClassificationService classificationService;
+        private readonly ITeamStandingService teamStandingService;
 
         public EditionController(IUserService userService,
             IFixtureService fixtureService,
@@ -27,7 +28,8 @@ namespace PronoFoot.Controllers
             IScoringService scoringService,
             IEditionService editionService,
             IAuthenticationService authenticationService,
-            IClassificationService classificationService)
+            IClassificationService classificationService,
+            ITeamStandingService teamStandingService)
             : base(userService, authenticationService)
         {
             this.dayService = dayService;
@@ -36,6 +38,7 @@ namespace PronoFoot.Controllers
             this.scoringService = scoringService;
             this.editionService = editionService;
             this.classificationService = classificationService;
+            this.teamStandingService = teamStandingService;
         }
 
         public ActionResult Details(int id)
@@ -86,6 +89,14 @@ namespace PronoFoot.Controllers
                     PercentageOfScoringForecasts = x.PercentageOfScoringForecasts
                 })
             });
+        }
+
+        [ChildActionOnly]
+        [OutputCache(Duration=100)]
+        public ActionResult TeamStandings(int editionId)
+        {
+            var standings = teamStandingService.GetTeamStandings(editionId);
+            return PartialView(standings);
         }
     }
 }
