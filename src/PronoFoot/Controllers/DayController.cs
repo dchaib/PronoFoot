@@ -17,11 +17,13 @@ namespace PronoFoot.Controllers
         private readonly IFixtureService fixtureService;
         private readonly IForecastService forecastService;
         private readonly ITeamService teamService;
+        private readonly ITeamStandingService teamStandingService;
 
         public DayController(IDayService dayServices,
                              IFixtureService fixtureService,
                              IForecastService forecastService,
                              ITeamService teamService,
+                             ITeamStandingService teamStandingService,
                              IUserService userService,
                              Security.IAuthenticationService authenticationService)
             : base(userService, authenticationService)
@@ -30,6 +32,7 @@ namespace PronoFoot.Controllers
             this.fixtureService = fixtureService;
             this.forecastService = forecastService;
             this.teamService = teamService;
+            this.teamStandingService = teamStandingService;
         }
 
         [Authorize]
@@ -173,19 +176,25 @@ namespace PronoFoot.Controllers
             var forecasts = forecastService.GetForecastsForDayUser(id, this.CurrentUser.UserId).ToList();
             var teams = teamService.GetTeamsForEdition(day.EditionId).ToList();
             var teamLatestFixtures = teamService.GetTeamLastestFixtures(day.EditionId);
+            var teamStandings = teamStandingService.GetTeamStandings(day.EditionId);
 
             var forecastViewModels = new List<ForecastViewModel>();
             foreach (var fixture in fixtures)
             {
                 var homeTeam = teams.First(x => x.TeamId == fixture.HomeTeamId);
+                var homeTeamStanding = teamStandings.FirstOrDefault(x => x.TeamId == homeTeam.TeamId);
+                
                 var awayTeam = teams.First(x => x.TeamId == fixture.AwayTeamId);
-                var forecast = forecasts.SingleOrDefault(f => f.FixtureId == fixture.FixtureId);
+                var awayTeamStanding = teamStandings.FirstOrDefault(x => x.TeamId == awayTeam.TeamId);
+
                 var vm = new ForecastViewModel()
                 {
                     Fixture = fixture,
-                    HomeTeam = new PronoFoot.ViewModels.ForecastViewModel.Team(homeTeam, teamLatestFixtures[homeTeam.TeamId]),
-                    AwayTeam = new PronoFoot.ViewModels.ForecastViewModel.Team(awayTeam, teamLatestFixtures[awayTeam.TeamId])
+                    HomeTeam = new PronoFoot.ViewModels.ForecastViewModel.Team(homeTeam, teamLatestFixtures[homeTeam.TeamId], homeTeamStanding != null ? (int?)homeTeamStanding.Position : null),
+                    AwayTeam = new PronoFoot.ViewModels.ForecastViewModel.Team(awayTeam, teamLatestFixtures[awayTeam.TeamId], awayTeamStanding != null ? (int?)awayTeamStanding.Position : null)
                 };
+
+                var forecast = forecasts.SingleOrDefault(f => f.FixtureId == fixture.FixtureId);
                 if (forecast != null && forecast.ForecastId > 0)
                 {
                     vm.ForecastId = forecast.ForecastId;

@@ -23,13 +23,15 @@ namespace PronoFoot.ViewModels
         {
             public int Id { get; set; }
             public string Name { get; set; }
+            public int? Standing { get; set; }
             public IEnumerable<TeamResult> Fixtures { get; set; }
 
-            public Team(TeamModel team, IEnumerable<FixtureModel> fixtures)
+            public Team(TeamModel team, IEnumerable<FixtureModel> fixtures, int? standing)
             {
                 Id = team.TeamId;
                 Name = team.Name;
                 Fixtures = fixtures.Select(x => new TeamResult(x, team.TeamId));
+                Standing = standing;
             }
         }
 
