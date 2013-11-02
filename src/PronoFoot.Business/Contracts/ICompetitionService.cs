@@ -9,7 +9,9 @@ namespace PronoFoot.Business.Contracts
     public interface ICompetitionService
     {
         IList<CompetitionModel> GetCompetitions();
-        IList<CompetitionModel> GetCurrentCompetitions();
         CompetitionModel GetCompetition(int id);
+
+        int Create(CompetitionModel competition);
+        void Update(CompetitionModel competition);
     }
 }

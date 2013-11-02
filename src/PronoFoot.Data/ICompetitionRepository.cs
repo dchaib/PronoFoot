@@ -8,14 +8,11 @@ namespace PronoFoot.Data
 {
     public interface ICompetitionRepository
     {
-        void Create(Competition competition);
+        int Create(Competition competition);
 
         Competition GetCompetition(int competitionId);
         IEnumerable<Competition> GetCompetitions();
 
         void Update(Competition competition);
-
-        void AddTeamToCompetition(int competitionId, Team team);
-        void RemoveTeamFromCompetition(int competitionId, int teamId);
     }
 }

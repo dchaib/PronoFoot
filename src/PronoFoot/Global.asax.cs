@@ -44,6 +44,7 @@ namespace PronoFoot
             ViewEngines.Engines.Add(new RazorViewEngine());
 
             InitializeDependecyInjection();
+            InitializeAutoMapping();
         }
 
         private void InitializeDependecyInjection()
@@ -53,6 +54,7 @@ namespace PronoFoot
             //Data
             builder.RegisterType<PronoFootDbContext>().As<IUnitOfWork>();
             builder.RegisterType<CompetitionRepository>().As<ICompetitionRepository>();
+            builder.RegisterType<EditionRepository>().As<IEditionRepository>();
             builder.RegisterType<TeamRepository>().As<ITeamRepository>();
             builder.RegisterType<DayRepository>().As<IDayRepository>();
             builder.RegisterType<FixtureRepository>().As<IFixtureRepository>();
@@ -61,12 +63,14 @@ namespace PronoFoot
             //Business
             builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
             builder.RegisterType<CompetitionService>().As<ICompetitionService>().InstancePerLifetimeScope();
+            builder.RegisterType<EditionService>().As<IEditionService>().InstancePerLifetimeScope();
             builder.RegisterType<DayService>().As<IDayService>().InstancePerLifetimeScope();
             builder.RegisterType<FixtureService>().As<IFixtureService>().InstancePerLifetimeScope();
             builder.RegisterType<ForecastService>().As<IForecastService>().InstancePerLifetimeScope();
             builder.RegisterType<TeamService>().As<ITeamService>().InstancePerLifetimeScope();
             builder.RegisterType<ScoringService>().As<IScoringService>().InstancePerLifetimeScope();
             builder.RegisterType<ClassificationService>().As<IClassificationService>().InstancePerLifetimeScope();
+            builder.RegisterType<TeamStandingService>().As<ITeamStandingService>().SingleInstance();
             //Framework
             builder.RegisterType<NLogLoggerFactory>().As<ILoggerFactory>().SingleInstance();
             builder.RegisterModule(new LoggerInjectionModule());
@@ -76,6 +80,14 @@ namespace PronoFoot
             builder.RegisterType<DefaultMembershipService>().As<IMembershipService>();
             container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+        }
+
+        private void InitializeAutoMapping()
+        {
+            AutoMapper.Mapper.CreateMap<PronoFoot.Models.Competition.CompetitionModel, PronoFoot.Business.Models.CompetitionModel>()
+                .ForMember(dest => dest.CompetitionId, opt => opt.MapFrom(src => src.Id));
+            AutoMapper.Mapper.CreateMap<PronoFoot.Business.Models.CompetitionModel, PronoFoot.Models.Competition.CompetitionModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CompetitionId));
         }
 
     }

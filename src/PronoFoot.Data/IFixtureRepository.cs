@@ -13,7 +13,8 @@ namespace PronoFoot.Data
         Fixture GetFixture(int fixtureId);
         IEnumerable<Fixture> GetFixtures(IEnumerable<int> fixtureIds);
         IEnumerable<Fixture> GetFixturesForDay(int dayId);
-        IEnumerable<Fixture> GetFixturesForCompetition(int competitionId);
+        IEnumerable<Fixture> GetFixturesForEdition(int editionId);
+        IEnumerable<Fixture> GetFixturesWithResultForEdition(int editionId);
 
         void Save(Fixture fixture);
     }

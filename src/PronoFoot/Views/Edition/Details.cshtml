@@ -1,0 +1,82 @@
+﻿@model EditionDetailsViewModel
+
+@{
+    ViewBag.Title = Model.Edition.Name;
+}
+<h1>@Model.Edition.Name</h1>
+<div id="days" class="float-left">
+    <h2>Prochaines journées</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Journée
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>Coefficient</th>
+                <th colspan="2">
+                    Pronostics
+                </th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.NextDays.OrderBy(x => x.Date))
+        {
+            <tr>
+                <td>@Html.ActionLink(item.Name, "Details", "Day", new { id = item.DayId }, null)</td>
+                <td>@item.Date.ToString("d")</td>
+                <td>@item.Coefficient</td>
+                <td>
+                    @if (item.ForecastMadeByCurrentUser)
+                    {<img alt="OK" src="@Url.Content("~/Content/ok.png")" />}
+            </td>
+            <td>
+                @if (item.CanBeForecast)
+                {@Html.ActionLink("Pronostiquer", "Forecast", "Day", new { id = item.DayId }, null)}
+        </td>
+    </tr>
+        }
+    </table>
+
+    <h2>Précédentes journées</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Journée
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Coefficient
+                </th>
+                <th>
+                    Score
+                </th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.PreviousDays.OrderByDescending(x => x.Date))
+        {
+            <tr>
+                <td>@Html.ActionLink(item.Name, "Details", "Day", new { id = item.DayId }, null)</td>
+                <td>@item.Date.ToString("d")</td>
+                <td>@item.Coefficient</td>
+                <td></td>
+            </tr>
+        }
+    </table>
+
+    @if (Request.IsAuthenticated && User.IsInRole("Administrators"))
+    {
+        <p>@Html.ActionLink("Ajouter une journée...", "Create", "Day", new { editionId = Model.Edition.EditionId }, null)</p>
+    }
+</div>
+<div id="classification" class="float-left">
+    <h2>Classement des joueurs</h2>
+    @Html.Partial("_Classification", Model.Scores)
+
+    <h2>Classement des équipes</h2>
+    @Html.Action("TeamStandings", new { editionId = Model.Edition.EditionId })
+</div>

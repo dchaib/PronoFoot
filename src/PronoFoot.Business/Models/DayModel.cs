@@ -12,7 +12,7 @@ namespace PronoFoot.Business.Models
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public decimal Coefficient { get; set; }
-        public int CompetitionId { get; set; }
+        public int EditionId { get; set; }
 
         public DayModel()
         {
@@ -21,7 +21,7 @@ namespace PronoFoot.Business.Models
         public DayModel(Day day)
         {
             this.DayId = day.DayId;
-            this.CompetitionId = day.CompetitionId;
+            this.EditionId = day.EditionId;
             this.Name = day.Name;
             this.Date = day.Date;
             this.Coefficient = day.Coefficient;

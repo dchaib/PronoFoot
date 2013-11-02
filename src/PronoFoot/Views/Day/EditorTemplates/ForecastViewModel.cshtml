@@ -1,16 +1,16 @@
 ﻿@model ForecastViewModel
 
 @Html.HiddenFor(x => x.ForecastId)
-@Html.HiddenFor(x => x.FixtureId)
+@Html.HiddenFor(x => x.Fixture.FixtureId)
 <tr>
     <td>@String.Format("{0:g}", Model.Fixture.Date)
     </td>
-    <td>@Model.HomeTeam.Name
+    <td>@Model.HomeTeam.Name (@Model.HomeTeam.Standing)
     </td>
     <td>@Html.EditorFor(x => x.HomeTeamGoals, "GoalCount")
     </td>
     <td>@Html.EditorFor(x => x.AwayTeamGoals, "GoalCount")
     </td>
-    <td>@Model.AwayTeam.Name
+    <td>@Model.AwayTeam.Name (@Model.AwayTeam.Standing)
     </td>
 </tr>

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<PronoFoot.Business.Models.TeamStanding>
+
+<table class="table" id="team-standings">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col" class="team">Equipe</th>
+            <th scope="col"><abbr title="Points">Pts</abbr></th>
+            <th scope="col"><abbr title="Matchs joués">J</abbr></th>
+            <th scope="col"><abbr title="Matchs gagnés">G</abbr></th>
+            <th scope="col"><abbr title="Matchs nuls">N</abbr></th>
+            <th scope="col"><abbr title="Matchs perdus">P</abbr></th>
+            <th scope="col"><abbr title="Buts pour">Bp</abbr></th>
+            <th scope="col"><abbr title="Buts contre">Bc</abbr></th>
+            <th scope="col"><abbr title="Différence de but">Diff.</abbr></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="rank">
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
+                <td class="team">
+                    @Html.DisplayFor(modelItem => item.TeamName)
+                </td>
+                <td class="points">
+                    @Html.DisplayFor(modelItem => item.OverallStatistics.Points)
+                </td>
+                <td class="stats">
+                    @Html.DisplayFor(modelItem => item.OverallStatistics.Matches)
+                </td>
+                <td class="stats">
+                    @Html.DisplayFor(modelItem => item.OverallStatistics.Wins)
+                </td>
+                <td class="stats">
+                    @Html.DisplayFor(modelItem => item.OverallStatistics.Draws)
+                </td>
+                <td class="stats">
+                    @Html.DisplayFor(modelItem => item.OverallStatistics.Losses)
+                </td>
+                <td class="stats">
+                    @Html.DisplayFor(modelItem => item.OverallStatistics.GoalsFor)
+                </td>
+                <td class="stats">
+                    @Html.DisplayFor(modelItem => item.OverallStatistics.GoalsAgainst)
+                </td>
+                <td class="stats">
+                    @Html.DisplayFor(modelItem => item.OverallStatistics.GoalDifference)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

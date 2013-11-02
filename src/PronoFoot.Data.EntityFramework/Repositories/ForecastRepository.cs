@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using PronoFoot.Data.Model;
 using System.Data;
+using System.Data.Entity;
 
 namespace PronoFoot.Data.EntityFramework.Repositories
 {
@@ -33,13 +34,13 @@ namespace PronoFoot.Data.EntityFramework.Repositories
             return this.GetDbSet<Forecast>().Where(x => forecastIds.Contains(x.ForecastId)).ToList();
         }
 
-        public IEnumerable<Forecast> GetForecastsForCompetition(int competitionId)
+        public IEnumerable<Forecast> GetForecastsForEdition(int editionId)
         {
             //TODO Find a better way, not using DayDbSet?
             var q = from day in this.GetDbSet<Day>()
                     from fixture in day.Fixtures
                     from forecast in fixture.Forecasts
-                    where day.CompetitionId == competitionId
+                    where day.EditionId == editionId
                     select forecast;
             return q.ToList();
         }
@@ -69,13 +70,13 @@ namespace PronoFoot.Data.EntityFramework.Repositories
             return this.GetDbSet<Forecast>().Where(x => x.FixtureId == fixtureId).ToList();
         }
 
-        public IDictionary<int, int> GetForecastCountByDayForCompetitionUser(int competitionId, int userId)
+        public IDictionary<int, int> GetForecastCountByDayForEditionUser(int editionId, int userId)
         {
             //TODO Find a better way, not using DayDbSet?
             var q = from day in this.GetDbSet<Day>()
                     from fixture in day.Fixtures
                     from forecast in fixture.Forecasts
-                    where day.CompetitionId == competitionId && forecast.UserId == userId
+                    where day.EditionId == editionId && forecast.UserId == userId
                     group forecast by fixture.DayId into g
                     select new { DayId = g.Key, ForecastCount = g.Count() };
             return q.ToDictionary(x => x.DayId, x => x.ForecastCount);

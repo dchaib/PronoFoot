@@ -17,11 +17,13 @@ namespace PronoFoot.Controllers
         private readonly IFixtureService fixtureService;
         private readonly IForecastService forecastService;
         private readonly ITeamService teamService;
+        private readonly ITeamStandingService teamStandingService;
 
         public DayController(IDayService dayServices,
                              IFixtureService fixtureService,
                              IForecastService forecastService,
                              ITeamService teamService,
+                             ITeamStandingService teamStandingService,
                              IUserService userService,
                              Security.IAuthenticationService authenticationService)
             : base(userService, authenticationService)
@@ -30,6 +32,7 @@ namespace PronoFoot.Controllers
             this.fixtureService = fixtureService;
             this.forecastService = forecastService;
             this.teamService = teamService;
+            this.teamStandingService = teamStandingService;
         }
 
         [Authorize]
@@ -39,7 +42,7 @@ namespace PronoFoot.Controllers
             var day = dayServices.GetDay(id);
             var fixtures = fixtureService.GetFixturesForDay(id);
             var forecasts = forecastService.GetForecastsForDay(id);
-            var teams = teamService.GetTeamsForCompetition(day.CompetitionId);
+            var teams = teamService.GetTeamsForEdition(day.EditionId);
             var users = userService.GetUsers();
             return View(new DayDetailsViewModel
             {
@@ -53,9 +56,9 @@ namespace PronoFoot.Controllers
         }
 
         [Authorize(Roles = "Administrators")]
-        public ActionResult Create(int competitionId)
+        public ActionResult Create(int editionId)
         {
-            var teams = teamService.GetTeamsForCompetition(competitionId);
+            var teams = teamService.GetTeamsForEdition(editionId);
 
             return View(new DayEditViewModel
             {
@@ -64,18 +67,19 @@ namespace PronoFoot.Controllers
                 {
                     Date = DateTime.Today,
                     Name = string.Empty,
-                    Fixtures = Enumerable.Repeat(new FixtureViewModel(teams), teams.Count() / 2).ToList()
+                    Fixtures = Enumerable.Repeat(new FixtureViewModel(), teams.Count() / 2).ToList(),
+                    Teams = teams.Select(x => new TeamViewModel { Id = x.TeamId, Name = x.Name }).ToList()
                 }
             });
         }
 
         [Authorize(Roles = "Administrators")]
         [HttpPost]
-        public ActionResult Create(int competitionId, DayFormViewModel dayForm)
+        public ActionResult Create(int editionId, DayFormViewModel dayForm)
         {
             var day = new DayModel
             {
-                CompetitionId = competitionId,
+                EditionId = editionId,
                 Date = dayForm.Date,
                 Name = dayForm.Name,
                 Coefficient = dayForm.Coefficient
@@ -105,7 +109,7 @@ namespace PronoFoot.Controllers
         {
             var day = dayServices.GetDay(id);
             var fixtures = fixtureService.GetFixturesForDay(id);
-            var teams = teamService.GetTeamsForCompetition(day.CompetitionId);
+            var teams = teamService.GetTeamsForEdition(day.EditionId);
 
             if (day == null)
             {
@@ -121,14 +125,15 @@ namespace PronoFoot.Controllers
                         Date = day.Date,
                         Name = day.Name,
                         Coefficient = day.Coefficient,
-                        Fixtures = fixtures.Select(x => new FixtureViewModel(x, teams)).ToList()
+                        Fixtures = fixtures.Select(x => new FixtureViewModel(x)).OrderBy(x => x.Date).ToList(),
+                        Teams = teams.Select(x => new TeamViewModel { Id = x.TeamId, Name = x.Name }).ToList()
                     }
                 });
         }
 
         [Authorize(Roles = "Administrators")]
         [HttpPost]
-        public ActionResult Edit(int id, DayFormViewModel dayForm)
+        public ActionResult Edit(int id, [FromJson]DayFormViewModel dayForm)
         {
             var day = new DayModel
             {
@@ -137,10 +142,14 @@ namespace PronoFoot.Controllers
                 Name = dayForm.Name,
                 Coefficient = dayForm.Coefficient
             };
-            
+
             var fixtures = new List<FixtureModel>();
             foreach (var fixture in dayForm.Fixtures)
             {
+                //HACK: convert back to French time, because the dates in the database are not UTC!!!
+                if (fixture.Date.Kind == DateTimeKind.Utc)
+                    fixture.Date = TimeZoneInfo.ConvertTimeFromUtc(fixture.Date, TimeZoneInfo.FindSystemTimeZoneById("Romance Standard Time"));
+
                 fixtures.Add(new FixtureModel
                 {
                     DayId = id,
@@ -165,15 +174,33 @@ namespace PronoFoot.Controllers
             var day = dayServices.GetDay(id);
             var fixtures = fixtureService.GetFixturesForDay(id).ToList();
             var forecasts = forecastService.GetForecastsForDayUser(id, this.CurrentUser.UserId).ToList();
-            var teams = teamService.GetTeamsForCompetition(day.CompetitionId).ToList();
+            var teams = teamService.GetTeamsForEdition(day.EditionId).ToList();
+            var teamLatestFixtures = teamService.GetTeamLastestFixtures(day.EditionId);
+            var teamStandings = teamStandingService.GetTeamStandings(day.EditionId);
 
             var forecastViewModels = new List<ForecastViewModel>();
             foreach (var fixture in fixtures)
             {
                 var homeTeam = teams.First(x => x.TeamId == fixture.HomeTeamId);
+                var homeTeamStanding = teamStandings.FirstOrDefault(x => x.TeamId == homeTeam.TeamId);
+                
                 var awayTeam = teams.First(x => x.TeamId == fixture.AwayTeamId);
+                var awayTeamStanding = teamStandings.FirstOrDefault(x => x.TeamId == awayTeam.TeamId);
+
+                var vm = new ForecastViewModel()
+                {
+                    Fixture = fixture,
+                    HomeTeam = new PronoFoot.ViewModels.ForecastViewModel.Team(homeTeam, teamLatestFixtures[homeTeam.TeamId], homeTeamStanding != null ? (int?)homeTeamStanding.Position : null),
+                    AwayTeam = new PronoFoot.ViewModels.ForecastViewModel.Team(awayTeam, teamLatestFixtures[awayTeam.TeamId], awayTeamStanding != null ? (int?)awayTeamStanding.Position : null)
+                };
+
                 var forecast = forecasts.SingleOrDefault(f => f.FixtureId == fixture.FixtureId);
-                var vm = forecast == null ? new ForecastViewModel(fixture, homeTeam, awayTeam) : new ForecastViewModel(forecast, fixture, homeTeam, awayTeam);
+                if (forecast != null && forecast.ForecastId > 0)
+                {
+                    vm.ForecastId = forecast.ForecastId;
+                    vm.HomeTeamGoals = forecast.HomeTeamGoals;
+                    vm.AwayTeamGoals = forecast.AwayTeamGoals;
+                }                
                 forecastViewModels.Add(vm);
             }
 
@@ -181,7 +208,8 @@ namespace PronoFoot.Controllers
             {
                 Day = day,
                 Teams = teams.ToList(),
-                Forecasts = forecastViewModels
+                Forecasts = forecastViewModels,
+                LatestFixtures = teamLatestFixtures
             });
         }
 
@@ -197,7 +225,7 @@ namespace PronoFoot.Controllers
                 {
                     models.Add(new ForecastModel
                     {
-                        FixtureId = forecast.FixtureId,
+                        FixtureId = forecast.Fixture.FixtureId,
                         UserId = this.CurrentUser.UserId,
                         HomeTeamGoals = forecast.HomeTeamGoals.Value,
                         AwayTeamGoals = forecast.AwayTeamGoals.Value
@@ -212,6 +240,25 @@ namespace PronoFoot.Controllers
             forecastService.DeleteForecasts(forecastIdsToDelete);
 
             return RedirectToAction("Details", new { id = id });
+        }
+    }
+
+    public class FromJsonAttribute : CustomModelBinderAttribute
+    {
+        public override IModelBinder GetBinder()
+        {
+            return new JsonModelBinder();
+        }
+
+        private class JsonModelBinder : IModelBinder
+        {
+            public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+            {
+                var stringified = controllerContext.HttpContext.Request[bindingContext.ModelName];
+                if (string.IsNullOrEmpty(stringified))
+                    return null;
+                return Newtonsoft.Json.JsonConvert.DeserializeObject(stringified, bindingContext.ModelType, new Newtonsoft.Json.Converters.IsoDateTimeConverter());
+            }
         }
     }
 }
