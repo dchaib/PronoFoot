@@ -74,6 +74,9 @@
     }
 </div>
 <div id="classification" class="float-left">
-    <h2>Classement</h2>
+    <h2>Classement des joueurs</h2>
     @Html.Partial("_Classification", Model.Scores)
+
+    <h2>Classement des équipes</h2>
+    @Html.Action("TeamStandings", new { editionId = Model.Edition.EditionId })
 </div>
