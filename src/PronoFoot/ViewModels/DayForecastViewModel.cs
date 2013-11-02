@@ -11,5 +11,6 @@ namespace PronoFoot.ViewModels
         public DayModel Day { get; set; }
         public IList<TeamModel> Teams { get; set; }
         public IList<ForecastViewModel> Forecasts { get; set; }
+        public IDictionary<int, IEnumerable<FixtureModel>> LatestFixtures { get; set; }
     }
 }

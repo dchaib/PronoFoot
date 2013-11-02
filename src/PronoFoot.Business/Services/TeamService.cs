@@ -11,10 +11,12 @@ namespace PronoFoot.Business.Services
     public class TeamService : ITeamService
     {
         private readonly ITeamRepository teamRepository;
+        private readonly IFixtureRepository fixtureRepository;
 
-        public TeamService(ITeamRepository teamRepository)
+        public TeamService(ITeamRepository teamRepository, IFixtureRepository fixtureRepository)
         {
             this.teamRepository = teamRepository;
+            this.fixtureRepository = fixtureRepository;
         }
 
         public IEnumerable<TeamModel> GetTeamsForEdition(int editionId)
@@ -24,6 +26,16 @@ namespace PronoFoot.Business.Services
             var teamModels = teams.Select(x => new TeamModel(x));
 
             return teamModels.ToList();
+        }
+
+        public IDictionary<int, IEnumerable<FixtureModel>> GetTeamLastestFixtures(int editionId)
+        {
+            var fixtures = fixtureRepository.GetFixturesWithResultForEdition(editionId).ToList();
+            var q = from team in teamRepository.GetTeamsForEdition(editionId)
+                    join homeFixture in fixtures on team.TeamId equals homeFixture.HomeTeamId into homeFixtures
+                    join awayFixture in fixtures on team.TeamId equals awayFixture.HomeTeamId into awayFixtures
+                    select new { Team = team, LatestFixtures = homeFixtures.Union(awayFixtures).OrderByDescending(x => x.Date).Take(5).OrderBy(x => x.Date) };
+            return q.ToDictionary(x => x.Team.TeamId, y => y.LatestFixtures.Select(x => new FixtureModel(x)));
         }
     }
 }

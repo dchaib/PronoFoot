@@ -1,7 +1,7 @@
 ﻿@model ForecastViewModel
 
 @Html.HiddenFor(x => x.ForecastId)
-@Html.HiddenFor(x => x.FixtureId)
+@Html.HiddenFor(x => x.Fixture.FixtureId)
 <tr>
     <td>@String.Format("{0:g}", Model.Fixture.Date)
     </td>

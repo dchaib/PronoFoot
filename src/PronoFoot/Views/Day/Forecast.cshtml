@@ -5,7 +5,7 @@
 <h2>@Model.Day.Name</h2>
 
 @using (Html.BeginForm())
-{ 
+{
     <table>
         <thead>
             <tr>
@@ -23,17 +23,55 @@
             </tr>
         </thead>
         @{
-            int i = 0;
-            foreach (var forecast in Model.Forecasts.OrderBy(x => x.Fixture.Date))
-            {
-                if (forecast.Fixture.CanBeForecast)
-                { @Html.EditorFor(x => forecast, null, "Forecasts[" + i +"]." );
-                    i++;
-                }
-                else
-                { @Html.DisplayFor(x => forecast);
-                }
-            }
+    int i = 0;
+    foreach (var forecast in Model.Forecasts.OrderBy(x => x.Fixture.Date))
+    {
+        if (forecast.Fixture.CanBeForecast)
+        { @Html.EditorFor(x => forecast, null, "Forecasts[" + i + "].");
+                                                                               i++;
+        }
+        else
+        { @Html.DisplayFor(x => forecast);
+        }
+
+        <tr>
+            <td></td>
+            <td>
+                @forecast.HomeTeam.Fixtures.Select(x =>
+                       {
+                           switch (x.Result)
+                           {
+                               case ForecastViewModel.FixtureResult.Won:
+                                   return "V";
+                               case ForecastViewModel.FixtureResult.Drawn:
+                                   return "N";
+                               case ForecastViewModel.FixtureResult.Lost:
+                                   return "D";
+                               default:
+                                   return "?";
+                           }
+                       }).Aggregate((x, y) => x + " - " + y)
+            </td>
+            <td>            </td>
+            <td></td>
+            <td>
+                @forecast.AwayTeam.Fixtures.Select(x =>
+                       {
+                           switch (x.Result)
+                           {
+                               case ForecastViewModel.FixtureResult.Won:
+                                   return "V";
+                               case ForecastViewModel.FixtureResult.Drawn:
+                                   return "N";
+                               case ForecastViewModel.FixtureResult.Lost:
+                                   return "D";
+                               default:
+                                   return "?";
+                           }
+                       }).Aggregate((x, y) => x + " - " + y)
+        </td>
+    </tr>
+    }
         }
     </table>
     <p>
