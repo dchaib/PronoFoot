@@ -2,39 +2,38 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title - PronoFoot</title>
-    <script src="~/Scripts/knockout-2.1.0.js" type="text/javascript"></script>
-    <meta name="viewport" content="width=device-width" />
     @Styles.Render("~/Content/css")
     @*@Scripts.Render("~/bundles/modernizr")*@
 </head>
 <body>
-    <header>
-        <div class="content-wrapper" id="header-content">
-            <div class="clear-fix">
-                <div id="title" class="float-left">
-                    <p class="site-title">@Html.ActionLink("PronoFoot", "Index", "Home")</p>
-                </div>
-                <section id="login" class="float-right">
-                    @Html.Partial("_LogOnPartial")
-                </section>
-            </div class="clear-fix">
-            <nav>
-                @Html.Action("Menu", "Common")
-            </nav>
+    <header class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("PronoFoot", "Index", "Home", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <nav>
+                    <ul class="nav navbar-nav">
+                        @Html.Action("Menu", "Common")
+                    </ul>
+                </nav>
+                @Html.Partial("_LogOnPartial")
+            </div>
         </div>
     </header>
-    <div id="content">
-        <section class="content-wrapper main-content clear-fix">
-            @RenderBody()
-        </section>
+    <div class="container">
+        @RenderBody()
     </div>
-    @*<footer>
-        <div class="content-wrapper">
-        </div>
-    </footer>*@
-        
-
+    <footer></footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -8,11 +8,15 @@
 body
 {
     background-color: #f2faf0; /*#4D8640;*/
-    font-size: .85em;
     font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
     color: #696969;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 /*
 a:link {
@@ -67,35 +71,9 @@ header, footer, nav, section
 
 /* PRIMARY LAYOUT ELEMENTS   
 ----------------------------------------------------------*/
-.content-wrapper
-{
-    margin: 0 auto; /*max-width: 960px;*/
-    width: 90%;
-}
-
-#content
-{
-}
-
-.main-content
-{
-    /*background: #f8fbf8;*/
-    text-align: left;
-    padding: 30px 30px 15px 30px; /*padding: 0 20px;*/
-    -moz-border-radius: 4px 0 0 0;
-    -webkit-border-radius: 4px 0 0 0;
-    border-radius: 4px 0 0 0;
-}
-
 header
 {
     background-color: #1A7306; /*#4D8640;*/
-}
-
-#header-content
-{
-    background-color: #1A7306; /*#4D8640;*/
-    padding: 10px 1% 0.8em;
 }
 
 /* Title
@@ -515,11 +493,6 @@ input.coefficient
     .float-left, .float-right
     {
         float: none;
-    }
-
-    #header-content
-    {
-        padding: 0;
     }
 
     .site-title

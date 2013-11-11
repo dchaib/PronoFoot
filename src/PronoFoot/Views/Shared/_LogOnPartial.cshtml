@@ -1,13 +1,15 @@
 ﻿@if (Request.IsAuthenticated)
 {
-    <p>
-        Bienvenue <strong>@Html.ActionLink((string)ViewBag.UserName ?? User.Identity.Name, "Index", "User", routeValues: null, htmlAttributes: new { @class="username" })</strong> !
-        ( @Html.ActionLink("Se déconnecter", "LogOff", "Account") )
-    </p>
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink((string)ViewBag.UserName ?? User.Identity.Name, "Index", "User", routeValues: null, htmlAttributes: null)
+        </li>
+        <li>@Html.ActionLink("Se déconnecter", "LogOff", "Account")</li>
+    </ul>
 }
 else
 {
-    <ul>
+    <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("S'inscrire", "Register", "Account")</li>
         <li>@Html.ActionLink("Se connecter", "LogOn", "Account")</li>
     </ul>
