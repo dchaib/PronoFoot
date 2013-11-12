@@ -15,7 +15,7 @@
 </div>
 <div>
     <p><strong>Exemples :</strong></p>
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>Score</th>
@@ -24,14 +24,14 @@
             </tr>
         </thead>
         <tbody>
-        @foreach (var example in Model)
-        {
-           <tr>
-                <td>@example.ScoreHomeGoals-@example.ScoreAwayGoals</td>                
-                <td>@example.ForecastHomeGoals-@example.ForecastAwayGoals</td>
-                <td>@example.Score</td>
-            </tr> 
-        }
+            @foreach (var example in Model)
+            {
+                <tr>
+                    <td>@example.ScoreHomeGoals-@example.ScoreAwayGoals</td>
+                    <td>@example.ForecastHomeGoals-@example.ForecastAwayGoals</td>
+                    <td>@example.Score</td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
