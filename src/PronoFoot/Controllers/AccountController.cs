@@ -77,8 +77,9 @@ namespace PronoFoot.Controllers
         //
         // GET: /Account/Register
 
-        public ActionResult Register()
+        public ActionResult Register(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
