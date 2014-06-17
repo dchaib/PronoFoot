@@ -71,7 +71,17 @@ namespace PronoFoot.Controllers
             foreach (var competition in competitions)
             {
                 var editions = editionService.GetEditions(competition.CompetitionId);
-                foreach (var edition in editions)
+                var selectedEditions = editions.Where(x => x.FirstFixtureDate < DateTime.Today && x.LastFixtureDate > DateTime.Today);
+                if (!selectedEditions.Any())
+                {
+                    selectedEditions = editions.Where(x => x.FirstFixtureDate > DateTime.Today).OrderBy(x => x.FirstFixtureDate).Take(1);
+                }
+                if (!selectedEditions.Any())
+                {
+                    selectedEditions = editions.Where(x => x.LastFixtureDate < DateTime.Today).OrderByDescending(x => x.LastFixtureDate).Take(1);
+                }
+
+                foreach (var edition in selectedEditions)
                 {
                     var viewModel = new EditionOverviewModel
                     {

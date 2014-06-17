@@ -9,6 +9,7 @@ namespace PronoFoot.Data.Model
     {
         public int CompetitionId { get; set; }
         public string Name { get; set; }
+        public bool HasTeamClassification { get; set; }
 
         public virtual ICollection<Edition> Editions { get; set; }
     }

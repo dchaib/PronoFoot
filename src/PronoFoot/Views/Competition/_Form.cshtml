@@ -9,8 +9,8 @@
         @Html.EditorFor(model => model.Name, new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.Name)
     </div>
-</div>
-
-<div class="form-group">
-    <input type="submit" value="Enregistrer" class="btn btn-default" />
+    <div class="">
+        @Html.CheckBoxFor(model => model.HasTeamClassification, new { @class = "form-control" })
+        @Html.LabelFor(model => model.HasTeamClassification, "Afficher le classement des équipes", new { @class = "control-label" })
+    </div>
 </div>
