@@ -4,7 +4,7 @@
     <div class="current-competitions">
         <h2>Compétitions</h2>
         <ol>
-            @foreach (var edition in Model)
+            @foreach (var edition in Model.OrderBy(x => x.CompetitionName))
             {
                 <li class="current-competition">
                     <div class="current-competition-heading">
