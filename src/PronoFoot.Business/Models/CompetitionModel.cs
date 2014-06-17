@@ -10,6 +10,7 @@ namespace PronoFoot.Business.Models
     {
         public int CompetitionId { get; set; }
         public string Name { get; set; }
+        public bool HasTeamClassification { get; set; }
 
         public CompetitionModel()
         {
@@ -18,7 +19,8 @@ namespace PronoFoot.Business.Models
         public CompetitionModel(Competition competition)
         {
             this.CompetitionId = competition.CompetitionId;
-            this.Name = competition.Name;            
+            this.Name = competition.Name;
+            this.HasTeamClassification = competition.HasTeamClassification;
         }
     }
 }

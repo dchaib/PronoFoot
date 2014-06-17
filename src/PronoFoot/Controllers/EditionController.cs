@@ -13,6 +13,7 @@ namespace PronoFoot.Controllers
 {
     public class EditionController : BaseController
     {
+        private readonly ICompetitionService competitionService;
         private readonly IDayService dayService;
         private readonly IFixtureService fixtureService;
         private readonly IForecastService forecastService;
@@ -21,7 +22,8 @@ namespace PronoFoot.Controllers
         private readonly IClassificationService classificationService;
         private readonly ITeamStandingService teamStandingService;
 
-        public EditionController(IUserService userService,
+        public EditionController(ICompetitionService competitionService,
+            IUserService userService,
             IFixtureService fixtureService,
             IDayService dayService,
             IForecastService forecastService,
@@ -32,6 +34,7 @@ namespace PronoFoot.Controllers
             ITeamStandingService teamStandingService)
             : base(userService, authenticationService)
         {
+            this.competitionService = competitionService;
             this.dayService = dayService;
             this.fixtureService = fixtureService;
             this.forecastService = forecastService;
@@ -56,6 +59,7 @@ namespace PronoFoot.Controllers
             else
                 forecastCounts = new Dictionary<int, int>();
 
+            var competition = competitionService.GetCompetition(edition.CompetitionId);
             var days = dayService.GetDaysForCompetition(id);
             var fixtures = fixtureService.GetFixturesForEdition(id);
             var scores = classificationService.GetUserScoresForEdition(id);
@@ -73,7 +77,12 @@ namespace PronoFoot.Controllers
 
             return View(new EditionDetailsViewModel
             {
-                Edition = new EditionViewModel { EditionId = edition.EditionId, Name = edition.Name },
+                Edition = new EditionViewModel
+                {
+                    EditionId = edition.EditionId,
+                    Name = edition.Name,
+                    HasTeamClassification = competition.HasTeamClassification
+                },
                 PreviousDays = dayViewModels.Where(x => !x.CanBeForecast),
                 NextDays = dayViewModels.Where(x => x.CanBeForecast),
                 Scores = scores.Select(x => new UserScoreViewModel
@@ -92,7 +101,7 @@ namespace PronoFoot.Controllers
         }
 
         [ChildActionOnly]
-        [OutputCache(Duration=100)]
+        [OutputCache(Duration = 100)]
         public ActionResult TeamStandings(int editionId)
         {
             var standings = teamStandingService.GetTeamStandings(editionId);

@@ -39,6 +39,7 @@ namespace PronoFoot.Business.Services
             var dbCompetition = new Competition();
 
             dbCompetition.Name = competition.Name;
+            dbCompetition.HasTeamClassification = competition.HasTeamClassification;
 
             int competitionId = competitionRepository.Create(dbCompetition);
 
@@ -51,6 +52,7 @@ namespace PronoFoot.Business.Services
 
             dbCompetition.CompetitionId = competition.CompetitionId;
             dbCompetition.Name = competition.Name;
+            dbCompetition.HasTeamClassification = competition.HasTeamClassification;
 
             competitionRepository.Update(dbCompetition);
         }

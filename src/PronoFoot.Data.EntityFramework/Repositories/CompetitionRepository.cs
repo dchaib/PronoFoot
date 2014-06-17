@@ -43,6 +43,7 @@ namespace PronoFoot.Data.EntityFramework.Repositories
                         .First();
 
             competitionToUpdate.Name = competition.Name;
+            competitionToUpdate.HasTeamClassification = competition.HasTeamClassification;
 
             this.SetEntityState(competitionToUpdate, competitionToUpdate.CompetitionId == 0
                                                      ? EntityState.Added
