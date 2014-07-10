@@ -43,11 +43,11 @@ namespace PronoFoot.Business.Models
         {
             Key = key;
             Score = forecasts.Sum(f => f.Score.Value);
-            NumberOfExactForecasts = forecasts.Count(f => f.Score.Value == 3);
-            NumberOfCloseForecasts = forecasts.Count(f => f.Score.Value == 2);
-            NumberOfForecastsWithExactDifference = forecasts.Count(f => f.Score.Value == 1.5);
-            NumberOfCorrect1N2Forecasts = forecasts.Count(f => f.Score.Value == 1);
-            NumberOfWrongForecasts = forecasts.Count(f => f.Score.Value == 0);
+            NumberOfExactForecasts = forecasts.Count(f => f.Rating.Value == Rating.Exact);
+            NumberOfCloseForecasts = forecasts.Count(f => f.Rating.Value == Rating.Close);
+            NumberOfForecastsWithExactDifference = forecasts.Count(f => f.Rating.Value == Rating.CorrectDifference);
+            NumberOfCorrect1N2Forecasts = forecasts.Count(f => f.Rating.Value == Rating.CorrectOutcome);
+            NumberOfWrongForecasts = forecasts.Count(f => f.Rating.Value == Rating.Wrong);
         }
     }
 }

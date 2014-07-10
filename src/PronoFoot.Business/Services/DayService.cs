@@ -130,7 +130,9 @@ namespace PronoFoot.Business.Services
                         {
                             foreach (var forecast in forecasts)
                             {
-                                forecast.Score = (double)day.Coefficient * scoringService.GetScore(fixture.HomeTeamGoals.Value, fixture.AwayTeamGoals.Value, forecast.HomeTeamGoals, forecast.AwayTeamGoals);
+                                var rating = scoringService.GetRating(fixture.HomeTeamGoals.Value, fixture.AwayTeamGoals.Value, forecast.HomeTeamGoals, forecast.AwayTeamGoals);
+                                forecast.Rating = rating;
+                                forecast.Score = (double)day.Coefficient * scoringService.GetScore(rating);
                             }
                         }
                         else
