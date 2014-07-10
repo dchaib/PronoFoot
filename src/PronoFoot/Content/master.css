@@ -10,46 +10,54 @@
     border-color: #186e06;
 }
 
-.navbar-inverse .navbar-brand {
-    color: #dff6df;
-}
+    .navbar-inverse .navbar-brand {
+        color: #dff6df;
+    }
 
-.navbar-inverse .navbar-nav > li > a {
-    color: #dff6df;
-}
+    .navbar-inverse .navbar-nav > li > a {
+        color: #dff6df;
+    }
 
-.navbar-inverse .navbar-text {
-    color: #dff6df;
-}
+    .navbar-inverse .navbar-text {
+        color: #dff6df;
+    }
 
-.navbar-inverse .navbar-link {
-    color: #dff6df;
-}
+    .navbar-inverse .navbar-link {
+        color: #dff6df;
+    }
 
-.navbar-inverse .navbar-toggle {
-    border-color:#155505;
-}
+    .navbar-inverse .navbar-toggle {
+        border-color: #155505;
+    }
 
-.navbar-inverse .navbar-toggle:hover,
-.navbar-inverse .navbar-toggle:focus {
-    background-color: #155505;
-}
+        .navbar-inverse .navbar-toggle:hover,
+        .navbar-inverse .navbar-toggle:focus {
+            background-color: #155505;
+        }
 
-.navbar-inverse .navbar-collapse {
-    border-color: #155505;
-}
+    .navbar-inverse .navbar-collapse {
+        border-color: #155505;
+    }
 
 .jumbotron {
     background-color: #fff;
     border: 1px solid #ccc;
     font-size: 1em;
-    margin: 5px
+    margin: 5px;
 }
 
-.jumbotron h1 {
-    font-size: 2em;
-}
+    .jumbotron h1 {
+        font-size: 2em;
+    }
 
 footer {
     border-top: 1px solid #E5E5E5;
+}
+
+table {
+    background-color: white;
+}
+
+.competition-list {
+    list-style: none;
 }

@@ -3,7 +3,7 @@
 {
     <div class="current-competitions">
         <h2>Compétitions</h2>
-        <ol>
+        <ul class="competition-list">
             @foreach (var edition in Model.OrderBy(x => x.CompetitionName))
             {
                 <li class="current-competition">
@@ -43,6 +43,6 @@
                     </div>
                 </li>
             }
-        </ol>
+        </ul>
     </div>
 }
