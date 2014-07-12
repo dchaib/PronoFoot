@@ -18,6 +18,8 @@ namespace PronoFoot.Controllers
         private readonly IForecastService forecastService;
         private readonly ITeamService teamService;
         private readonly ITeamStandingService teamStandingService;
+        private readonly IEditionService editionService;
+        private readonly ICompetitionService competitionService;
 
         public DayController(IDayService dayServices,
                              IFixtureService fixtureService,
@@ -25,6 +27,8 @@ namespace PronoFoot.Controllers
                              ITeamService teamService,
                              ITeamStandingService teamStandingService,
                              IUserService userService,
+                             IEditionService editionService,
+                             ICompetitionService competitionService,
                              Security.IAuthenticationService authenticationService)
             : base(userService, authenticationService)
         {
@@ -33,6 +37,8 @@ namespace PronoFoot.Controllers
             this.forecastService = forecastService;
             this.teamService = teamService;
             this.teamStandingService = teamStandingService;
+            this.editionService = editionService;
+            this.competitionService = competitionService;
         }
 
         [Authorize]
@@ -172,18 +178,20 @@ namespace PronoFoot.Controllers
         {
             var currentUser = this.CurrentUser;
             var day = dayServices.GetDay(id);
+            var edition = editionService.GetEdition(day.EditionId);
+            var competition = competitionService.GetCompetition(edition.CompetitionId);
             var fixtures = fixtureService.GetFixturesForDay(id).ToList();
             var forecasts = forecastService.GetForecastsForDayUser(id, this.CurrentUser.UserId).ToList();
             var teams = teamService.GetTeamsForEdition(day.EditionId).ToList();
             var teamLatestFixtures = teamService.GetTeamLastestFixtures(day.EditionId);
-            var teamStandings = teamStandingService.GetTeamStandings(day.EditionId);
+            var teamStandings = competition.HasTeamClassification ? teamStandingService.GetTeamStandings(day.EditionId) : Enumerable.Empty<TeamStanding>();
 
             var forecastViewModels = new List<ForecastViewModel>();
             foreach (var fixture in fixtures)
             {
                 var homeTeam = teams.First(x => x.TeamId == fixture.HomeTeamId);
                 var homeTeamStanding = teamStandings.FirstOrDefault(x => x.TeamId == homeTeam.TeamId);
-                
+
                 var awayTeam = teams.First(x => x.TeamId == fixture.AwayTeamId);
                 var awayTeamStanding = teamStandings.FirstOrDefault(x => x.TeamId == awayTeam.TeamId);
 
@@ -200,7 +208,7 @@ namespace PronoFoot.Controllers
                     vm.ForecastId = forecast.ForecastId;
                     vm.HomeTeamGoals = forecast.HomeTeamGoals;
                     vm.AwayTeamGoals = forecast.AwayTeamGoals;
-                }                
+                }
                 forecastViewModels.Add(vm);
             }
 
