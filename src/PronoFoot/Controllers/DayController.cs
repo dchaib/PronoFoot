@@ -75,7 +75,7 @@ namespace PronoFoot.Controllers
 
         [Authorize(Roles = "Administrators")]
         [HttpPost]
-        public ActionResult Create(int editionId, DayFormViewModel dayForm)
+        public ActionResult Create(int editionId, [FromJson]DayFormViewModel dayForm)
         {
             var day = new DayModel
             {
