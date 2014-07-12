@@ -68,7 +68,7 @@ namespace PronoFoot.Controllers
                     Date = DateTime.Today,
                     Name = string.Empty,
                     Fixtures = Enumerable.Repeat(new FixtureViewModel(), teams.Count() / 2).ToList(),
-                    Teams = teams.Select(x => new TeamViewModel { Id = x.TeamId, Name = x.Name }).ToList()
+                    Teams = teams.Select(x => new TeamViewModel { Id = x.TeamId, Name = x.Name }).OrderBy(x => x.Name).ToList()
                 }
             });
         }
@@ -126,7 +126,7 @@ namespace PronoFoot.Controllers
                         Name = day.Name,
                         Coefficient = day.Coefficient,
                         Fixtures = fixtures.Select(x => new FixtureViewModel(x)).OrderBy(x => x.Date).ToList(),
-                        Teams = teams.Select(x => new TeamViewModel { Id = x.TeamId, Name = x.Name }).ToList()
+                        Teams = teams.Select(x => new TeamViewModel { Id = x.TeamId, Name = x.Name }).OrderBy(x => x.Name).ToList()
                     }
                 });
         }
