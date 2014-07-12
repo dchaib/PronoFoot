@@ -546,3 +546,24 @@ input.coefficient
         padding-bottom: 5px;
     }
 }
+
+.rank {
+    font-size: 0.8em;
+}
+
+.result {
+    font-size:0.8em;
+    font-weight:bold;
+}
+
+.win {
+    color:green;
+}
+
+.draw {
+    color:orange;
+}
+
+.loss {
+    color:red;
+}
