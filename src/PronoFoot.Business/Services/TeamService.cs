@@ -33,7 +33,7 @@ namespace PronoFoot.Business.Services
             var fixtures = fixtureRepository.GetFixturesWithResultForEdition(editionId).ToList();
             var q = from team in teamRepository.GetTeamsForEdition(editionId)
                     join homeFixture in fixtures on team.TeamId equals homeFixture.HomeTeamId into homeFixtures
-                    join awayFixture in fixtures on team.TeamId equals awayFixture.HomeTeamId into awayFixtures
+                    join awayFixture in fixtures on team.TeamId equals awayFixture.AwayTeamId into awayFixtures
                     select new { Team = team, LatestFixtures = homeFixtures.Union(awayFixtures).OrderByDescending(x => x.Date).Take(5).OrderBy(x => x.Date) };
             return q.ToDictionary(x => x.Team.TeamId, y => y.LatestFixtures.Select(x => new FixtureModel(x)));
         }
