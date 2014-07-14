@@ -12,6 +12,8 @@ namespace PronoFoot.Data.Model
         public int CompetitionId { get; set; }
         public string Name { get; set; }
         public string Slug { get; set; }
+        public DateTime? FirstFixtureDate { get; set; }
+        public DateTime? LastFixtureDate { get; set; }
         public virtual Competition Competition { get; set; }
 
         public virtual ICollection<Team> Teams { get; set; }

@@ -12,6 +12,7 @@ namespace PronoFoot.ViewModels
         public string Name { get; set; }
         public decimal Coefficient { get; set; }
         public IList<FixtureViewModel> Fixtures { get; set; }
+        public IList<TeamViewModel> Teams { get; set; }
 
         public DayFormViewModel()
         {

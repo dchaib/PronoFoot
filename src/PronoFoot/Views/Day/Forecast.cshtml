@@ -5,7 +5,7 @@
 <h2>@Model.Day.Name</h2>
 
 @using (Html.BeginForm())
-{ 
+{
     <table>
         <thead>
             <tr>
@@ -23,17 +23,18 @@
             </tr>
         </thead>
         @{
-            int i = 0;
-            foreach (var forecast in Model.Forecasts.OrderBy(x => x.Fixture.Date))
-            {
-                if (forecast.Fixture.CanBeForecast)
-                { @Html.EditorFor(x => forecast, null, "Forecasts[" + i +"]." );
-                    i++;
-                }
-                else
-                { @Html.DisplayFor(x => forecast);
-                }
-            }
+    int i = 0;
+    foreach (var forecast in Model.Forecasts.OrderBy(x => x.Fixture.Date))
+    {
+        if (forecast.Fixture.CanBeForecast)
+        {
+            @Html.EditorFor(x => forecast, null, "Forecasts[" + i + "]."); i++;
+        }
+        else
+        {
+            @Html.DisplayFor(x => forecast);
+        }
+    }
         }
     </table>
     <p>

@@ -30,7 +30,7 @@ namespace PronoFoot.Business.Services
         private static IEnumerable<UserStatistics> GetUserStatistics(IEnumerable<Forecast> forecasts)
         {
             return from forecast in forecasts
-                   where forecast.Score.HasValue
+                   where forecast.Score.HasValue && forecast.Rating.HasValue
                    group forecast by forecast.UserId into g
                    select new UserStatistics(g.Key, g.ToList());
         }

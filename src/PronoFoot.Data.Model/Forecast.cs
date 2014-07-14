@@ -12,6 +12,7 @@ namespace PronoFoot.Data.Model
         public int UserId { get; set; }
         public int HomeTeamGoals { get; set; }
         public int AwayTeamGoals { get; set; }
+        public Rating? Rating { get; set; }
         public double? Score { get; set; }
     }
 }

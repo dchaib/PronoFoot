@@ -307,6 +307,7 @@ ul#menu li.selected a {
 
 .current-competition .classification
 {
+    margin-top: 1em;
 }
 
     .current-competition .classification table
@@ -461,9 +462,53 @@ table
 }
 
 /* PronoFoot */
-input.goalCount
+input.goal-count
 {
-    width: 2em;
+    padding-right: 0.5em;
+    text-align: right;
+    width: 3em;
+}
+
+input.coefficient
+{
+    padding-right: 0.5em;
+    text-align: right;
+    width: 4em;
+}
+
+#team-standings th
+{
+    text-align: center;
+}
+
+#team-standings th.team
+{
+    text-align: left;
+}
+
+#team-standings td.rank
+{
+    font-size: 1em;
+    font-weight: bold;
+    min-width: 2em;
+    text-align: center;
+}
+
+#team-standings td.team
+{
+}
+
+#team-standings td.points
+{
+    font-weight: bold;
+    min-width: 2em;
+    text-align: center;
+}
+
+#team-standings td.stats
+{
+    min-width: 2em;
+    text-align: center;
 }
 
 @media only screen and (max-width: 850px)
@@ -501,4 +546,25 @@ input.goalCount
         padding-right: 0;
         padding-bottom: 5px;
     }
+}
+
+.rank {
+    font-size: 0.8em;
+}
+
+.result {
+    font-size:0.8em;
+    font-weight:bold;
+}
+
+.win {
+    color:green;
+}
+
+.draw {
+    color:orange;
+}
+
+.loss {
+    color:red;
 }

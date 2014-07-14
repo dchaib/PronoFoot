@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using PronoFoot.Data.Model;
 using System.Data;
+using System.Data.Entity;
 
 namespace PronoFoot.Data.EntityFramework.Repositories
 {
@@ -14,10 +15,11 @@ namespace PronoFoot.Data.EntityFramework.Repositories
         {
         }
 
-        public void Create(Competition competition)
+        public int Create(Competition competition)
         {
             this.GetDbSet<Competition>().Add(competition);
             this.UnitOfWork.SaveChanges();
+            return competition.CompetitionId;
         }
 
         public Competition GetCompetition(int competitionId)
@@ -41,6 +43,7 @@ namespace PronoFoot.Data.EntityFramework.Repositories
                         .First();
 
             competitionToUpdate.Name = competition.Name;
+            competitionToUpdate.HasTeamClassification = competition.HasTeamClassification;
 
             this.SetEntityState(competitionToUpdate, competitionToUpdate.CompetitionId == 0
                                                      ? EntityState.Added

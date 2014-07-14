@@ -12,6 +12,8 @@ namespace PronoFoot.Business.Models
         public int EditionId { get; set; }
         public int CompetitionId { get; set; }
         public string Name { get; set; }
+        public DateTime? FirstFixtureDate { get; set; }
+        public DateTime? LastFixtureDate { get; set; }
 
         public EditionModel()
         {
@@ -21,7 +23,9 @@ namespace PronoFoot.Business.Models
         {
             this.EditionId = edition.EditionId;
             this.CompetitionId = edition.CompetitionId;
-            this.Name = edition.Name;            
+            this.Name = edition.Name;
+            this.FirstFixtureDate = edition.FirstFixtureDate;
+            this.LastFixtureDate = edition.LastFixtureDate;
         }
     }
 }

@@ -10,5 +10,8 @@ namespace PronoFoot.Business.Contracts
     {
         IList<CompetitionModel> GetCompetitions();
         CompetitionModel GetCompetition(int id);
+
+        int Create(CompetitionModel competition);
+        void Update(CompetitionModel competition);
     }
 }
