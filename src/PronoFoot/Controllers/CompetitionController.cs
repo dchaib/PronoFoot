@@ -104,7 +104,12 @@ namespace PronoFoot.Controllers
                 });
             }
 
-            return PartialView(editions);
+            return PartialView(new ActiveEditionsViewModel
+            {
+                CurrentEditions = editions.Where(x => x.FirstFixtureDate < DateTime.Today && x.LastFixtureDate > DateTime.Today),
+                UpcomingEditions = editions.Where(x => x.FirstFixtureDate > DateTime.Today),
+                RecentEditions = editions.Where(x => x.LastFixtureDate < DateTime.Today)
+            });
         }
 
         [Authorize(Roles = "Administrators")]
