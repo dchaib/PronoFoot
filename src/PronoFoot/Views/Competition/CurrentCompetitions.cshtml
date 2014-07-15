@@ -5,37 +5,37 @@
     @if (Model.CurrentEditions.Count() > 0)
     {
         <h2>En cours</h2>
-        <ol>
+        <ul class="competition-list">
             @foreach (var edition in Model.CurrentEditions.OrderBy(x => x.FirstFixtureDate))
             {
                 <li class="current-competition">
                     @Html.DisplayFor(x => edition)
                 </li>
             }
-        </ol>
+        </ul>
     }
     @if (Model.UpcomingEditions.Count() > 0)
     {
         <h2>Bientôt</h2>
-        <ol>
+        <ul class="competition-list">
             @foreach (var edition in Model.UpcomingEditions.OrderBy(x => x.FirstFixtureDate))
             {
-                <li class="current-competition">  
+                <li class="current-competition">
                     @Html.DisplayFor(x => edition)
                 </li>
             }
-        </ol>
+        </ul>
     }
     @if (Model.RecentEditions.Count() > 0)
     {
         <h2>Terminé</h2>
-    <ol>
-        @foreach (var edition in Model.RecentEditions.OrderByDescending(x => x.LastFixtureDate))
+        <ul class="competition-list">
+            @foreach (var edition in Model.RecentEditions.OrderByDescending(x => x.LastFixtureDate))
             {
-            <li class="current-competition">
-                @Html.DisplayFor(x => edition)
-            </li>
+                <li class="current-competition">
+                    @Html.DisplayFor(x => edition)
+                </li>
             }
-    </ol>
+        </ul>
     }
 </div>
