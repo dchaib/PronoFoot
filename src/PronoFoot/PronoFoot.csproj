@@ -170,6 +170,7 @@
     <Compile Include="Controllers\EditionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Filters\AnalyticsFilterAttribute.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -180,6 +181,7 @@
     <Compile Include="Models\Edition\EditionOverviewModel.cs" />
     <Compile Include="Models\Competition\CompetitionModel.cs" />
     <Compile Include="Models\MappingExtensions.cs" />
+    <Compile Include="ViewModels\ActiveEditionsViewModel.cs" />
     <Compile Include="ViewModels\CompetitionDetailsViewModel.cs" />
     <Compile Include="ViewModels\EditionDetailsViewModel.cs" />
     <Compile Include="ViewModels\EditionViewModel.cs" />
@@ -253,6 +255,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Edition\Details.cshtml" />
     <Content Include="Views\Edition\TeamStandings.cshtml" />
+    <Content Include="Views\Competition\DisplayTemplates\EditionOverviewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

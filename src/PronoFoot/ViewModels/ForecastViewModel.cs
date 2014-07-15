@@ -30,7 +30,7 @@ namespace PronoFoot.ViewModels
             {
                 Id = team.TeamId;
                 Name = team.Name;
-                Fixtures = fixtures.Select(x => new TeamResult(x, team.TeamId));
+                Fixtures = fixtures.Any() ? fixtures.Select(x => new TeamResult(x, team.TeamId)).ToList() : Enumerable.Empty<TeamResult>();
                 Standing = standing;
             }
         }

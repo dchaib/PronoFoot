@@ -64,7 +64,7 @@ namespace PronoFoot.Controllers
                 ScoreAwayGoals = x.ScoreAwayGoals,
                 ForecastHomeGoals = x.ForecastHomeGoals,
                 ForecastAwayGoals = x.ForecastAwayGoals,
-                Score = scoringService.GetScore(x.ScoreHomeGoals, x.ScoreAwayGoals, x.ForecastHomeGoals, x.ForecastAwayGoals)
+                Score = scoringService.GetScore(scoringService.GetRating(x.ScoreHomeGoals, x.ScoreAwayGoals, x.ForecastHomeGoals, x.ForecastAwayGoals))
             }));
         }
 

@@ -52,6 +52,7 @@ namespace PronoFoot
             var builder = new ContainerBuilder();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
             //Data
+            builder.RegisterType<PronoFootDbContext>().As<System.Data.Entity.DbContext>();
             builder.RegisterType<PronoFootDbContext>().As<IUnitOfWork>();
             builder.RegisterType<CompetitionRepository>().As<ICompetitionRepository>();
             builder.RegisterType<EditionRepository>().As<IEditionRepository>();
@@ -88,6 +89,9 @@ namespace PronoFoot
                 .ForMember(dest => dest.CompetitionId, opt => opt.MapFrom(src => src.Id));
             AutoMapper.Mapper.CreateMap<PronoFoot.Business.Models.CompetitionModel, PronoFoot.Models.Competition.CompetitionModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CompetitionId));
+
+            AutoMapper.Mapper.CreateMap<PronoFoot.Data.Model.Edition, PronoFoot.Models.Edition.EditionOverviewModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.EditionId));
         }
 
     }

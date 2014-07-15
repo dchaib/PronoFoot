@@ -5,12 +5,56 @@
 <tr>
     <td>@String.Format("{0:g}", Model.Fixture.Date)
     </td>
-    <td>@Model.HomeTeam.Name (@Model.HomeTeam.Standing)
+    <td>
+        @Model.HomeTeam.Name @if (Model.HomeTeam.Standing.HasValue) { <span class="rank">(@Model.HomeTeam.Standing)</span> }
+        @if (Model.HomeTeam.Fixtures.Any()) {
+            <br />
+            foreach (var fixture in Model.HomeTeam.Fixtures)
+            {
+
+                switch (fixture.Result)
+                {
+                    case ForecastViewModel.FixtureResult.Won:
+                        <span class="result win">V</span>
+                        break;
+                    case ForecastViewModel.FixtureResult.Drawn:
+                    <span class="result draw">N</span>
+                        break;
+                    case ForecastViewModel.FixtureResult.Lost:
+                    <span class="result loss">P</span>
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     </td>
     <td>@Html.EditorFor(x => x.HomeTeamGoals, "GoalCount")
     </td>
     <td>@Html.EditorFor(x => x.AwayTeamGoals, "GoalCount")
     </td>
-    <td>@Model.AwayTeam.Name (@Model.AwayTeam.Standing)
+    <td>@Model.AwayTeam.Name @if (Model.AwayTeam.Standing.HasValue) { <span class="rank">(@Model.AwayTeam.Standing)</span> }
+    @if (Model.AwayTeam.Fixtures.Any())
+    {
+        <br />
+        foreach (var fixture in Model.AwayTeam.Fixtures)
+        {
+
+            switch (fixture.Result)
+            {
+                case ForecastViewModel.FixtureResult.Won:
+                    <span class="result win">V</span>
+                    break;
+                case ForecastViewModel.FixtureResult.Drawn:
+                <span class="result draw">N</span>
+                    break;
+                case ForecastViewModel.FixtureResult.Lost:
+                <span class="result loss">P</span>
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
     </td>
 </tr>
