@@ -4,6 +4,13 @@
     padding-top: 50px;
 }
 
+.container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .navbar-inverse {
     background-color: #1a7306;
     background-image: linear-gradient(to bottom, #1f7c10 0%, #1a7306 100%);
