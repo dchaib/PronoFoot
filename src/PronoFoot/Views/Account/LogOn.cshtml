@@ -9,10 +9,10 @@
     Entrez votre identifiant et votre mot de passe. @Html.ActionLink("Inscrivez-vous", "Register") si vous n'avez pas de compte.
 </p>
 
-@Html.ValidationSummary(true, "La connexion a échoué. Merci de corriger les erreurs et de réessayer.")
-
-@using (Html.BeginForm("LogOn", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("LogOn", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
 {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "La connexion a échoué. Merci de corriger les erreurs et de réessayer.")
     <div class="form-group">
         @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
         <div class="">
@@ -28,10 +28,10 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="checkbox">
+        <label class="checkbox">
             @Html.CheckBoxFor(m => m.RememberMe)
             @Html.LabelFor(m => m.RememberMe)
-        </div>
+        </label>
     </div>
     <div class="form-group">
         <input type="submit" value="Se connecter" class="btn btn-default" />

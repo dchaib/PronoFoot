@@ -9,8 +9,9 @@
     Le mot de passe doit contenir au moins @Membership.MinRequiredPasswordLength caractères.
 </p>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
 {
+    @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "La création du compte a échoué. Veuillez corriger les erreurs et recommencer.")
     <div class="form-group">
         @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
