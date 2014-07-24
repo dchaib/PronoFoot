@@ -29,9 +29,9 @@
             }
         }
     </td>
-    <td>@Html.EditorFor(x => x.HomeTeamGoals, "GoalCount")
+    <td>@Html.TextBoxFor(x => x.HomeTeamGoals, "GoalCount", new { @class = "form-control goal-input", @type = "number", min = 0 })
     </td>
-    <td>@Html.EditorFor(x => x.AwayTeamGoals, "GoalCount")
+    <td>@Html.TextBoxFor(x => x.AwayTeamGoals, "GoalCount", new { @class = "form-control goal-input", @type = "number", min = 0 })
     </td>
     <td>@Model.AwayTeam.Name @if (Model.AwayTeam.Standing.HasValue) { <span class="rank">(@Model.AwayTeam.Standing)</span> }
     @if (Model.AwayTeam.Fixtures.Any())
