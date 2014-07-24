@@ -5,9 +5,9 @@
     </td>
     <td>@Model.HomeTeam.Name @if(Model.HomeTeam.Standing.HasValue) { <span class="rank">(@Model.HomeTeam.Standing)</span> }
     </td>
-    <td>@Model.HomeTeamGoals
+    <td><p class="goal-label">@Model.HomeTeamGoals</p>
     </td>
-    <td>@Model.AwayTeamGoals
+    <td><p class="goal-label">@Model.AwayTeamGoals</p>
     </td>
     <td>@Model.AwayTeam.Name @if (Model.AwayTeam.Standing.HasValue) { <span class="rank">(@Model.AwayTeam.Standing)</span> }
 </td>
