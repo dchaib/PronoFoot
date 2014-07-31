@@ -3,10 +3,10 @@
 @Html.HiddenFor(x => x.ForecastId)
 @Html.HiddenFor(x => x.Fixture.FixtureId)
 <tr>
-    <td>@String.Format("{0:g}", Model.Fixture.Date)
+    <td class="hidden-xs">@String.Format("{0:g}", Model.Fixture.Date)
     </td>
-    <td>
-        @Model.HomeTeam.Name @if (Model.HomeTeam.Standing.HasValue) { <span class="rank">(@Model.HomeTeam.Standing)</span> }
+    <td class="home">
+        <span class="team">@Model.HomeTeam.Name</span> @if (Model.HomeTeam.Standing.HasValue) { <span class="rank">(@Model.HomeTeam.Standing)</span> }
         @if (Model.HomeTeam.Fixtures.Any()) {
             <br />
             foreach (var fixture in Model.HomeTeam.Fixtures)
@@ -29,11 +29,11 @@
             }
         }
     </td>
-    <td>@Html.TextBoxFor(x => x.HomeTeamGoals, "GoalCount", new { @class = "form-control goal-input", @type = "number", min = 0 })
+    <td>@Html.TextBoxFor(x => x.HomeTeamGoals, new { @class = "form-control goal-input", @type = "number", min = 0 })
     </td>
-    <td>@Html.TextBoxFor(x => x.AwayTeamGoals, "GoalCount", new { @class = "form-control goal-input", @type = "number", min = 0 })
+    <td>@Html.TextBoxFor(x => x.AwayTeamGoals, new { @class = "form-control goal-input", @type = "number", min = 0 })
     </td>
-    <td>@Model.AwayTeam.Name @if (Model.AwayTeam.Standing.HasValue) { <span class="rank">(@Model.AwayTeam.Standing)</span> }
+    <td><span class="team">@Model.AwayTeam.Name</span> @if (Model.AwayTeam.Standing.HasValue) { <span class="rank">(@Model.AwayTeam.Standing)</span> }
     @if (Model.AwayTeam.Fixtures.Any())
     {
         <br />

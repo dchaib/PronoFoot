@@ -1,9 +1,9 @@
 ﻿@model PronoFoot.ViewModels.ForecastViewModel
            
 <tr>
-    <td>@String.Format("{0:g}", Model.Fixture.Date)
+    <td class="hidden-xs">@String.Format("{0:g}", Model.Fixture.Date)
     </td>
-    <td>@Model.HomeTeam.Name @if(Model.HomeTeam.Standing.HasValue) { <span class="rank">(@Model.HomeTeam.Standing)</span> }
+    <td class="home">@Model.HomeTeam.Name @if(Model.HomeTeam.Standing.HasValue) { <span class="rank">(@Model.HomeTeam.Standing)</span> }
     </td>
     <td><p class="goal-label">@Model.HomeTeamGoals</p>
     </td>

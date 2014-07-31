@@ -119,8 +119,20 @@ table {
             border: 0;
         }
 
+.date-row {
+    background-color: #f9f9f9;
+}
+
+.team {
+    font-weight: bold;
+}
+
+.home {
+    text-align: right;
+}
+
 .goal-label {
-    text-align: center
+    text-align: center;
 }
 
 .goal-input {
