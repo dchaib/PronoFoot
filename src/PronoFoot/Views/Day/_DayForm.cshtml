@@ -25,7 +25,7 @@
     <div class="form-group">
         <label class="control-label" for="Matches">Matchs</label>
         <div class="">
-            <table>
+            <table class="table table-condensed table-narrow">
                 <thead>
                     <tr>
                         <th>
@@ -41,21 +41,21 @@
                 <tbody data-bind="foreach: fixtures">
                     <tr>
                         <td>
-                            <input data-bind="date: date, dateFormat: 'DD/MM/YYYY HH:mm'" />
+                            <input class="form-control" data-bind="date: date, dateFormat: 'DD/MM/YYYY HH:mm'" />
                         </td>
                         <td>
-                            <select data-bind="options: $root.teams, value: homeTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
+                            <select class="form-control" data-bind="options: $root.teams, value: homeTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
                         </td>
                         <td>
-                            <input class="goal-count" data-bind="value: homeTeamGoals" type="number" min="0" />
+                            <input class="form-control goal-input" data-bind="value: homeTeamGoals" type="number" min="0" />
                         </td>
                         <td>
-                            <input class="goal-count" data-bind="value: awayTeamGoals" type="number" min="0" />
+                            <input class="form-control goal-input" data-bind="value: awayTeamGoals" type="number" min="0" />
                         </td>
                         <td>
-                            <select data-bind="options: $root.teams, value: awayTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
+                            <select class="form-control" data-bind="options: $root.teams, value: awayTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
                         </td>
-                        <td><a href="#" data-bind="click: $root.removeFixture">Supprimer</a></td>
+                        <td><a href="#" data-bind="click: $root.removeFixture"><span class="glyphicon glyphicon-trash"></span></a></td>
                     </tr>
                 </tbody>
             </table>

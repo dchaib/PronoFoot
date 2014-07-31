@@ -329,12 +329,7 @@ table
 }
 
 /* PronoFoot */
-input.goal-count
-{
-    padding-right: 0.5em;
-    text-align: right;
-    width: 3em;
-}
+
 
 input.coefficient
 {
