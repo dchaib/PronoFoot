@@ -24,36 +24,23 @@ namespace PronoFoot.Business.Services
         public IEnumerable<TeamStanding> GetTeamStandings(int editionId)
         {
             var fixtures = fixtureRepository.GetFixturesWithResultForEdition(editionId);
-            var teams = teamRepository.GetTeamsForEdition(editionId);
+            var teams = teamRepository.GetTeamsForEdition(editionId).OrderBy(x => x.Name);
             var homeStats = GetHomeStatistics(fixtures);
             var awayStats = GetAwayStatistics(fixtures);
 
             var teamStats = from team in teams
-                            join homeStat in homeStats on team.TeamId equals homeStat.TeamId
-                            join awayStat in awayStats on team.TeamId equals awayStat.TeamId
-                            select new TeamStanding
-                            {
-                                TeamId = team.TeamId,
-                                TeamName = team.Name,
-                                HomeStatistics = homeStat,
-                                AwayStatistics = awayStat,
-                                OverallStatistics = new TeamStatistics
-                                {
-                                    TeamId = team.TeamId,
-                                    Matches = homeStat.Matches + awayStat.Matches,
-                                    Wins = homeStat.Wins + awayStat.Wins,
-                                    Draws = homeStat.Draws + awayStat.Draws,
-                                    Losses = homeStat.Losses + awayStat.Losses,
-                                    GoalsFor = homeStat.GoalsFor + awayStat.GoalsFor,
-                                    GoalsAgainst = homeStat.GoalsAgainst + awayStat.GoalsAgainst
-                                }
-                            };
+                            join homeStat in homeStats on team.TeamId equals homeStat.TeamId into hstats
+                            from homeStat in hstats.DefaultIfEmpty()
+                            join awayStat in awayStats on team.TeamId equals awayStat.TeamId into astats
+                            from awayStat in astats.DefaultIfEmpty()
+                            select new TeamStanding(team.TeamId, team.Name, homeStat, awayStat);
 
             int overallRank = 1;
             var q = from teamStat in teamStats
                     group teamStat by new { teamStat.OverallStatistics.Points, teamStat.OverallStatistics.GoalDifference, teamStat.OverallStatistics.GoalsFor } into rankGroup
                     orderby rankGroup.Key.Points descending, rankGroup.Key.GoalDifference descending, rankGroup.Key.GoalsFor descending
-                    let currentRank = overallRank++
+                    let currentRank = overallRank
+                    let dumb = overallRank = overallRank + rankGroup.Count()
                     from team in rankGroup
                     let dummy = team.Position = currentRank
                     select team;
