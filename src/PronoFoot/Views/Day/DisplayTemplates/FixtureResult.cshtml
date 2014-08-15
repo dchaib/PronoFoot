@@ -1,0 +1,21 @@
+﻿@model ForecastViewModel.FixtureResult
+
+
+@{
+    string resultClass = null;
+    switch (Model)
+    {
+        case ForecastViewModel.FixtureResult.Won:
+            resultClass = "win";
+            break;
+        case ForecastViewModel.FixtureResult.Drawn:
+            resultClass = "draw";
+            break;
+        case ForecastViewModel.FixtureResult.Lost:
+            resultClass = "loss";
+            break;
+        default:
+            break;
+    }
+}
+<span class="result @resultClass">&nbsp;</span>

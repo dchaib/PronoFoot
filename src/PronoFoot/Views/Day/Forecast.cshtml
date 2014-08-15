@@ -7,42 +7,32 @@
 @using (Html.BeginForm())
 {
     <div class="from-group">
-        <table class="table">
-            <thead class="hidden-xs">
-                <tr>
-                    <th>
-                        Date
-                    </th>
-                    <th>
-                    </th>
-                    <th>
-                    </th>
-                    <th>
-                    </th>
-                    <th>
-                    </th>
-                </tr>
-            </thead>
-            @{
+        @{
     int i = 0;
     foreach (var group in Model.Forecasts.GroupBy(x => x.Fixture.Date).OrderBy(x => x.Key))
     {
-        <tr class="date-row visible-xs"><td colspan="4">@group.Key.ToLongDateString() à @group.Key.ToShortTimeString()</td></tr>
-        foreach (var forecast in group)
-            {
-                if (forecast.Fixture.CanBeForecast)
+        <div class="row">
+            <div class="col-md-4">
+                <h4>@group.Key.ToLongDateString() à @group.Key.ToShortTimeString()</h4>
+            </div>
+            <div class="col-md-8 forecasts">
+                @foreach (var forecast in group)
                 {
-                    @Html.EditorFor(x => forecast, null, "Forecasts[" + i + "].");
-                    i++;
+                    <div class="fixture">
+                        @if (forecast.Fixture.CanBeForecast)
+                        {
+                            @Html.EditorFor(x => forecast, null, "Forecasts[" + i++ + "].")                            
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(x => forecast)
+                        }
+                    </div>
                 }
-                else
-                {
-                    @Html.DisplayFor(x => forecast);
-                }
-            }
+            </div>
+        </div>
+    }
         }
-        }
-    </table>
     </div>
     <div class="form-group">
         <input type="submit" value="Sauvegarder" class="btn btn-default">

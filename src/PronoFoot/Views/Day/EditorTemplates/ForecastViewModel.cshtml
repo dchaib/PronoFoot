@@ -2,59 +2,16 @@
 
 @Html.HiddenFor(x => x.ForecastId)
 @Html.HiddenFor(x => x.Fixture.FixtureId)
-<tr>
-    <td class="hidden-xs">@String.Format("{0:g}", Model.Fixture.Date)
-    </td>
-    <td class="home">
-        <span class="team">@Model.HomeTeam.Name</span> @if (Model.HomeTeam.Standing.HasValue) { <span class="rank">(@Model.HomeTeam.Standing)</span> }
-        @if (Model.HomeTeam.Fixtures.Any()) {
-            <br />
-            foreach (var fixture in Model.HomeTeam.Fixtures)
-            {
 
-                switch (fixture.Result)
-                {
-                    case ForecastViewModel.FixtureResult.Won:
-                        <span class="result win">V</span>
-                        break;
-                    case ForecastViewModel.FixtureResult.Drawn:
-                    <span class="result draw">N</span>
-                        break;
-                    case ForecastViewModel.FixtureResult.Lost:
-                    <span class="result loss">P</span>
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    </td>
-    <td>@Html.TextBoxFor(x => x.HomeTeamGoals, new { @class = "form-control goal-input", @type = "number", min = 0 })
-    </td>
-    <td>@Html.TextBoxFor(x => x.AwayTeamGoals, new { @class = "form-control goal-input", @type = "number", min = 0 })
-    </td>
-    <td><span class="team">@Model.AwayTeam.Name</span> @if (Model.AwayTeam.Standing.HasValue) { <span class="rank">(@Model.AwayTeam.Standing)</span> }
-    @if (Model.AwayTeam.Fixtures.Any())
-    {
-        <br />
-        foreach (var fixture in Model.AwayTeam.Fixtures)
-        {
-
-            switch (fixture.Result)
-            {
-                case ForecastViewModel.FixtureResult.Won:
-                    <span class="result win">V</span>
-                    break;
-                case ForecastViewModel.FixtureResult.Drawn:
-                <span class="result draw">N</span>
-                    break;
-                case ForecastViewModel.FixtureResult.Lost:
-                <span class="result loss">P</span>
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-    </td>
-</tr>
+<div class="home col-xs-6">
+    @Html.TextBoxFor(x => x.HomeTeamGoals, new { @class = "form-control goals goal-input", @type = "number", min = 0 })
+    <div class="team">
+        @Html.DisplayFor(x => x.HomeTeam, new { ShowLastResults = true })
+    </div>
+</div>
+<div class="away col-xs-6">
+    @Html.TextBoxFor(x => x.AwayTeamGoals, new { @class = "form-control goals goal-input", @type = "number", min = 0 })
+    <div class="team">
+        @Html.DisplayFor(x => x.AwayTeam, new { ShowLastResults = true })
+    </div>
+</div>

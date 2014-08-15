@@ -121,47 +121,84 @@ table {
 
 .date-row {
     background-color: #f9f9f9;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0.6em;
 }
 
-.team {
-    font-weight: bold;
+.fixture {
+    min-height: 50px;
+    vertical-align: middle;
+}
+
+.forecast {
+    display: block;
+    margin: auto;
+    text-align: center;
+    width: 200px;
+}
+
+.team-name {
+}
+
+.team-rank {
+    font-size: 0.8em;
 }
 
 .home {
     text-align: right;
 }
 
-.goal-label {
+    .home .team {
+        float: right;
+        margin-right: 15px;
+    }
+
+    .home .goals {
+        float: right;
+    }
+
+.away .team {
+    float: left;
+    margin-left: 15px;
+}
+
+.away .goals {
+    float: left;
+}
+
+.fixture-result {
+    text-align: center;
+}
+
+.goals {
+    width: 4em;
     text-align: center;
 }
 
 .goal-input {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 4em;
     padding-top: 0;
     padding-right: 0;
     padding-bottom: 0;
-    text-align: center;
-}
-
-.rank {
-    font-size: 0.8em;
 }
 
 .result {
-    font-size: 0.8em;
-    font-weight: bold;
+    display: inline-block;
+    vertical-align: middle;
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    margin-right: 3px;
 }
 
 .win {
-    color: green;
+    background-color: green;
 }
 
 .draw {
-    color: orange;
+    background-color: orange;
 }
 
 .loss {
-    color: red;
+    background-color: red;
 }
