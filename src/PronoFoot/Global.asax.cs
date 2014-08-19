@@ -43,6 +43,9 @@ namespace PronoFoot
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
 
+
+            System.Data.Entity.Database.SetInitializer<PronoFootDbContext>(null);
+
             InitializeDependecyInjection();
             InitializeAutoMapping();
         }
