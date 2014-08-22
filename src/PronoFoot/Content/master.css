@@ -147,7 +147,7 @@ ul.forecasts {
     width: 200px;
 }
 
-.team {
+div.team {
     display: inline-block;
 }
 
