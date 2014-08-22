@@ -6,19 +6,19 @@
 
 @using (Html.BeginForm())
 {
-    <div class="from-group">
+    <ul class="from-group forecast-dates">
         @{
     int i = 0;
     foreach (var group in Model.Forecasts.GroupBy(x => x.Fixture.Date).OrderBy(x => x.Key))
     {
-        <div class="row">
+        <li class="row">
             <div class="col-md-4">
                 <h4>@group.Key.ToLongDateString() à @group.Key.ToShortTimeString()</h4>
             </div>
-            <div class="col-md-8 forecasts">
+            <ul class="col-md-8 forecasts">
                 @foreach (var forecast in group)
                 {
-                    <div class="fixture">
+                    <li class="fixture row">
                         @if (forecast.Fixture.CanBeForecast)
                         {
                             @Html.EditorFor(x => forecast, null, "Forecasts[" + i++ + "].")                            
@@ -27,15 +27,12 @@
                         {
                             @Html.DisplayFor(x => forecast)
                         }
-                    </div>
+                    </li>
                 }
-            </div>
-        </div>
+            </ul>
+        </li>
     }
         }
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Sauvegarder" class="btn btn-default">
-    </div>
-    <div>@Html.ActionLink("Annuler", "Details", new { id = Model.Day.DayId })</div>
+    </ul>
+    <button type="submit" class="btn btn-default">Sauvegarder</button>
 }
