@@ -25,56 +25,42 @@
     <div class="form-group">
         <label class="control-label" for="Matches">Matchs</label>
         <div class="">
-            <table class="table table-condensed table-narrow">
-                <thead>
-                    <tr>
-                        <th>
-                            Date
-                        </th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody data-bind="foreach: fixtures">
-                    <tr>
-                        <td>
-                            <input class="form-control" data-bind="date: date, dateFormat: 'DD/MM/YYYY HH:mm'" />
-                        </td>
-                        <td>
-                            <select class="form-control" data-bind="options: $root.teams, value: homeTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
-                        </td>
-                        <td>
-                            <input class="form-control goal-input" data-bind="value: homeTeamGoals" type="number" min="0" />
-                        </td>
-                        <td>
-                            <input class="form-control goal-input" data-bind="value: awayTeamGoals" type="number" min="0" />
-                        </td>
-                        <td>
-                            <select class="form-control" data-bind="options: $root.teams, value: awayTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
-                        </td>
-                        <td><a href="#" data-bind="click: $root.removeFixture"><span class="glyphicon glyphicon-trash"></span></a></td>
-                    </tr>
-                </tbody>
-            </table>
-            <a href="#" data-bind="click: addFixture">Ajouter un match</a>
+            <ul class="no-style" data-bind="foreach: fixtures">
+                <li>
+                    <input class="form-control match-time" data-bind="date: date, dateFormat: 'DD/MM/YYYY HH:mm'" />
+                    <div class="fixture row">
+                        <div class="home col-sm-6">
+                            <input class="form-control goals goal-input" data-bind="value: homeTeamGoals" type="number" min="0" />
+                            <div class="team">
+                                <select class="form-control" data-bind="options: $root.teams, value: homeTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
+                            </div>
+                        </div>
+                        <div class="away col-sm-6">
+                            <input class="form-control goals goal-input" data-bind="value: awayTeamGoals" type="number" min="0" />
+                            <div class="team">
+                                <select class="form-control" data-bind="options: $root.teams, value: awayTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
+                            </div>                            
+                        </div>
+                    </div>
+                    @*<a href="#" data-bind="click: $root.removeFixture"><span class="glyphicon glyphicon-trash"></span></a>*@
+                </li>
+            </ul>
         </div>
+        <a href="#" data-bind="click: addFixture">Ajouter un match</a>
     </div>
 
     <button type="submit" class="btn btn-default">Enregistrer</button>
 }
-    
-    @Scripts.Render("~/bundles/moment")
-    @Scripts.Render("~/bundles/knockout")
-    <script type="text/javascript" src="~/App/viewmodels/DayForm.js"> </script>
-    
-    @{string initialData = Newtonsoft.Json.JsonConvert.SerializeObject(Model, new Newtonsoft.Json.Converters.IsoDateTimeConverter());}
 
-    <script>
-        var initialData = @Html.Raw(initialData);
-        var viewModel = new DayModel(initialData.Name, initialData.Date, initialData.Coefficient, initialData.Fixtures, initialData.Teams);
-        ko.applyBindings(viewModel);
-    </script>
- 
+@Scripts.Render("~/bundles/moment")
+@Scripts.Render("~/bundles/knockout")
+<script type="text/javascript" src="~/App/viewmodels/DayForm.js"> </script>
+
+@{string initialData = Newtonsoft.Json.JsonConvert.SerializeObject(Model, new Newtonsoft.Json.Converters.IsoDateTimeConverter());}
+
+<script>
+    var initialData = @Html.Raw(initialData);
+    var viewModel = new DayModel(initialData.Name, initialData.Date, initialData.Coefficient, initialData.Fixtures, initialData.Teams);
+    ko.applyBindings(viewModel);
+</script>
+

@@ -65,10 +65,16 @@ table {
     width: auto;
 }
 
+ul.no-style {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
 .current-competitions ul {
     list-style-type: none;
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
 }
 
 .current-competition {
@@ -115,12 +121,6 @@ table {
             border: 0;
         }
 
-ul.forecast-dates {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
 .date-row {
     background-color: #f9f9f9;
     font-weight: bold;
@@ -128,30 +128,15 @@ ul.forecast-dates {
     padding: 0.6em;
 }
 
-ul.forecasts {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
 .fixture {
     min-height: 50px;
     vertical-align: middle;
     margin-bottom: 20px;
-}
-
-.forecast {
-    display: block;
-    margin: auto;
-    text-align: center;
-    width: 200px;
+    overflow: hidden;
 }
 
 div.team {
-    display: inline-block;
-}
-
-.team-name {
+    overflow: hidden;
 }
 
 .team-rank {
@@ -162,23 +147,32 @@ div.team {
     display: inline-block;
     width: 3em;
     text-align: center;
-}
-
-.home .goals {
     float: right;
 }
 
-.away .goals {
-    float: right;
+.forecasts {
+    margin-left: 30px;
+    margin-right: 15px;
 }
 
 @media screen and (min-width: 768px) {
+    .match-time {
+        display: inline-block;
+        float: left;
+        width: 140px;
+    }
+
     .fixture {
         margin-bottom: 0;
     }
 
     .goals {
         display: block;
+    }
+
+    .forecasts {
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .home {

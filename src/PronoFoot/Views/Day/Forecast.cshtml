@@ -6,7 +6,7 @@
 
 @using (Html.BeginForm())
 {
-    <ul class="from-group forecast-dates">
+    <ul class="from-group no-style">
         @{
     int i = 0;
     foreach (var group in Model.Forecasts.GroupBy(x => x.Fixture.Date).OrderBy(x => x.Key))
@@ -15,21 +15,23 @@
             <div class="col-md-4">
                 <h4>@group.Key.ToLongDateString() à @group.Key.ToShortTimeString()</h4>
             </div>
-            <ul class="col-md-8 forecasts">
-                @foreach (var forecast in group)
-                {
-                    <li class="fixture row">
-                        @if (forecast.Fixture.CanBeForecast)
-                        {
-                            @Html.EditorFor(x => forecast, null, "Forecasts[" + i++ + "].")                            
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(x => forecast)
-                        }
-                    </li>
-                }
-            </ul>
+            <div class="col-md-8 forecasts">
+                <ul class="no-style">
+                    @foreach (var forecast in group)
+                    {
+                        <li class="fixture row">
+                            @if (forecast.Fixture.CanBeForecast)
+                            {
+                                @Html.EditorFor(x => forecast, null, "Forecasts[" + i++ + "].")
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(x => forecast)
+                            }
+                        </li>
+                    }
+                </ul>
+            </div>
         </li>
     }
         }
