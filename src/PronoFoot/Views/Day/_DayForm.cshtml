@@ -27,7 +27,10 @@
         <div class="">
             <ul class="no-style" data-bind="foreach: fixtures">
                 <li>
-                    <input class="form-control match-time" data-bind="date: date, dateFormat: 'DD/MM/YYYY HH:mm'" />
+                    <div class="delete-action">
+                        <a href="#" data-bind="click: $root.removeFixture"><span class="glyphicon glyphicon-trash"></span></a>
+                    </div>
+                    <input class="form-control fixture-date" data-bind="date: date, dateFormat: 'DD/MM/YYYY HH:mm'" />
                     <div class="fixture row">
                         <div class="home col-sm-6">
                             <input class="form-control goals goal-input" data-bind="value: homeTeamGoals" type="number" min="0" />
@@ -39,10 +42,9 @@
                             <input class="form-control goals goal-input" data-bind="value: awayTeamGoals" type="number" min="0" />
                             <div class="team">
                                 <select class="form-control" data-bind="options: $root.teams, value: awayTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
-                    @*<a href="#" data-bind="click: $root.removeFixture"><span class="glyphicon glyphicon-trash"></span></a>*@
                 </li>
             </ul>
         </div>
