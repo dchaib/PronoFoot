@@ -12,10 +12,9 @@
             <th></th>
             <th></th>
             <th></th>
-            <th></th>
             @foreach (var user in Model.Users)
             {
-                <th colspan="2" style="min-width:81px">@user.Name</th>
+                <th colspan="2" style="min-width:81px;text-align:center;">@user.Name</th>
             }
         </tr>
     </thead>
@@ -26,54 +25,47 @@
                 <td>
                     @String.Format("{0:g}", fixture.Date)
                 </td>
-                <td>
+                <td class="home">
                     @Model.Teams.First(t => t.TeamId == fixture.HomeTeamId).Name
                 </td>
                 <td>
-                    @if (fixture.HomeTeamGoals.HasValue)
-                    {@fixture.HomeTeamGoals.Value}
+                    @if (fixture.HomeTeamGoals.HasValue && fixture.AwayTeamGoals.HasValue)
+                    {
+                        @: @fixture.HomeTeamGoals.Value - @fixture.AwayTeamGoals.Value
+                    }
                 </td>
-                <td>
-                    @if (fixture.AwayTeamGoals.HasValue)
-                    { @fixture.AwayTeamGoals.Value }
-                </td>
-                <td>
+                <td class="away">
                     @Model.Teams.First(t => t.TeamId == fixture.AwayTeamId).Name
                 </td>
                 @foreach (var user in Model.Users)
                 {
                     var userForecast = Model.Forecasts.FirstOrDefault(f => f.UserId == user.UserId && f.FixtureId == fixture.FixtureId);
+                    string forecastResult = string.Empty;
+                    string forecastScore = string.Empty;
                     if (userForecast != null)
                     {
                         if (user.UserId == Model.CurrentUserId || !fixture.CanBeForecast)
                         {
-                            <td>@userForecast.HomeTeamGoals - @userForecast.AwayTeamGoals</td>
+                            forecastResult = string.Format("{0} - {1}", userForecast.HomeTeamGoals, userForecast.AwayTeamGoals);
                         }
                         else
                         {
-                            <td>? - ?</td>
+                            forecastResult = "? - ?";
                         }
                         if (userForecast.Score.HasValue)
                         {
-                            <td style="width:20px;text-align:right">@String.Format("{0:F1}", userForecast.Score.Value)</td>
-                        }
-                        else
-                        {
-                            <td style="width:20px"></td>
+                            forecastScore = string.Format("{0:F1}", userForecast.Score.Value);
                         }
                     }
-                    else
-                    {
-                        <td></td>
-                        <td style="width:20px"></td>
-                    }
+                    <td>@forecastResult</td>
+                    <td style="width:20px;text-align:right">@forecastScore</td>
                 }
             </tr>
         }
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="5"></td>
+            <td colspan="4"></td>
             @foreach (var user in Model.Users)
             {
                 <td colspan="2" style="text-align:right">@String.Format("{0:F1}", Model.Forecasts.Where(x => x.UserId == user.UserId).Sum(x => x.Score))</td>
@@ -83,7 +75,7 @@
 </table>
 
 @if (Model.Fixtures.Any(x => x.CanBeForecast))
-{ 
+{
     <p>@Html.ActionLink("Pronostiquer", "Forecast", new { id = Model.Day.DayId })</p>
 }
 @if (Request.IsAuthenticated && User.IsInRole("Administrators"))
