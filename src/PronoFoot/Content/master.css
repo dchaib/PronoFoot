@@ -136,7 +136,6 @@ ul.no-style {
     min-height: 50px;
     vertical-align: middle;
     margin-bottom: 20px;
-    overflow: hidden;
 }
 
 div.team {
@@ -184,7 +183,9 @@ div.team {
     }
 
     .fixture {
+        margin-left: 15px;
         margin-bottom: 0;
+        overflow: hidden;
     }
 
     .goals {
