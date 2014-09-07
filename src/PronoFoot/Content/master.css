@@ -71,55 +71,40 @@ ul, ol {
     list-style: none;
 }
 
-.current-competitions ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
 .current-competition {
-    padding: 1.25em 1.45em 1.5em 1.55em;
-    margin: 1.25em 0px 3em;
-    background-color: white; /*#f8fcf8;*/
-    border-radius: 1em;
-    opacity: 0.9;
-    box-shadow: 0 0 1.1em #666;
+    margin: 1.25em 0 3em;
 }
 
-.current-competition-heading {
-    background-color: #498C3A; /*#549945 #638763 #4D8640*/
-    margin: -2em -1.45em 1.25em -1.55em;
-    padding: 0.7em 1em 0.7em 1.75em;
-    border-top-right-radius: 1em;
-    border-top-left-radius: 1em;
-}
-
-.current-competition-content table {
-    margin: 0;
-}
-
-.current-competition h3 {
-    color: #ffffff; /*#f1cdc8;*/
-    margin: 0.2em 0 0.2em 0;
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-    .current-competition h3 a {
-        color: #d9f7d2;
+    .current-competition .panel-default > .panel-heading {
+        background-color: #498C3A;
+        background-image: none;
     }
 
-.current-competition .classification {
-    margin-top: 1em;
-}
-
-    .current-competition .classification table {
-        border: 0;
+    .current-competition table {
+        margin: 0;
     }
 
-        .current-competition .classification table td {
+    .current-competition h3 {
+        margin: 0.2em 0 0.2em 0;
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+        .current-competition h3 a {
+            color: #d9f7d2;
+        }
+
+    .current-competition .classification {
+        margin-top: 1em;
+    }
+
+        .current-competition .classification table {
             border: 0;
         }
+
+            .current-competition .classification table td {
+                border: 0;
+            }
 
 .fixture {
     min-height: 50px;
