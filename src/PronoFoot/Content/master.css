@@ -65,7 +65,7 @@ table {
     width: auto;
 }
 
-ul.no-style {
+ul, ol {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -121,21 +121,14 @@ ul.no-style {
             border: 0;
         }
 
-.date-row {
-    background-color: #f9f9f9;
-    font-weight: bold;
-    font-style: italic;
-    padding: 0.6em;
-}
-
-.fixture-date {
-    width: 140px;
-}
-
 .fixture {
     min-height: 50px;
     vertical-align: middle;
     margin-bottom: 20px;
+}
+
+.fixture-date {
+    width: 140px;
 }
 
 div.team {
@@ -176,7 +169,101 @@ div.team {
     width: 30px;
 }
 
+input.goals {
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+
+.result {
+    display: inline-block;
+    vertical-align: middle;
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    margin-right: 3px;
+}
+
+.win {
+    background-color: green;
+}
+
+.draw {
+    background-color: orange;
+}
+
+.loss {
+    background-color: red;
+}
+
+.score {
+    text-align: center;
+    white-space: nowrap;
+    width: 50px;
+}
+
+.ff-details .home {
+    text-align: right;
+}
+
+.ff-details .points {
+    float: right;
+    text-align: right;
+}
+
+.ff-details .home, .ff-details .score, .ff-details .away, .ff-details .player, .ff-details .points {
+    display: inline-block;
+}
+
+.ff-details .home, .ff-details .away, .ff-details .player {
+    width: calc(50% - 30px);
+}
+
 @media screen and (min-width: 768px) {
+    .ff-details {
+        display: table;
+        width: 100%;
+    }
+
+        .ff-details .fixture {
+            display: table-row;
+        }
+
+        .ff-details .fixture-date, .ff-details .home, .ff-details .score, .ff-details .away, .ff-details .player-forecast, .ff-details .points {
+            display: table-cell;
+            vertical-align: bottom;
+        }
+
+        .ff-details .player-forecast {
+        }
+
+        .ff-details .forecast {
+            min-width: 50px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .ff-details .points {
+            padding-left: 10px;
+            padding-right: 10px;
+            float: none;
+        }
+
+        .ff-details .player {
+            display: block;
+            text-align: center;
+            width: auto;
+        }
+
+        .ff-details .footer .points {
+            text-align: center;
+            width: 90px;
+        }
+
+        .ff-details .fixture:not(:first-child) .player, .ff-details .footer .player {
+            display: none;
+        }
+
     .fixture-date {
         display: inline-block;
         float: left;
@@ -213,35 +300,4 @@ div.team {
         margin-left: 0;
         margin-right: 15px;
     }
-}
-
-.fixture-result {
-    text-align: center;
-}
-
-.goal-input {
-    padding-top: 0;
-    padding-right: 0;
-    padding-bottom: 0;
-}
-
-.result {
-    display: inline-block;
-    vertical-align: middle;
-    width: 6px;
-    height: 6px;
-    border-radius: 3px;
-    margin-right: 3px;
-}
-
-.win {
-    background-color: green;
-}
-
-.draw {
-    background-color: orange;
-}
-
-.loss {
-    background-color: red;
 }

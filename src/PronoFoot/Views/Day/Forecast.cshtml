@@ -6,7 +6,7 @@
 
 @using (Html.BeginForm())
 {
-    <ul class="from-group no-style">
+    <ul class="from-group">
         @{
     int i = 0;
     foreach (var group in Model.Forecasts.GroupBy(x => x.Fixture.Date).OrderBy(x => x.Key))
@@ -16,7 +16,7 @@
                 <h4>@group.Key.ToLongDateString() à @group.Key.ToShortTimeString()</h4>
             </div>
             <div class="col-md-8 forecasts">
-                <ul class="no-style">
+                <ul>
                     @foreach (var forecast in group)
                     {
                         <li class="fixture row">

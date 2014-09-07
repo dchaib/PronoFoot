@@ -5,40 +5,24 @@
 <h2>@Model.Day.Name</h2>
 <p><em>@String.Format("{0:D}", Model.Day.Date)</em></p>
 <p>Coefficient : @String.Format("{0:F1}", Model.Day.Coefficient)</p>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            @foreach (var user in Model.Users)
-            {
-                <th colspan="2" style="min-width:81px;text-align:center;">@user.Name</th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var fixture in Model.Fixtures.OrderBy(x => x.Date))
-        {
-            <tr>
-                <td>
-                    @String.Format("{0:g}", fixture.Date)
-                </td>
-                <td class="home">
-                    @Model.Teams.First(t => t.TeamId == fixture.HomeTeamId).Name
-                </td>
-                <td>
-                    @if (fixture.HomeTeamGoals.HasValue && fixture.AwayTeamGoals.HasValue)
-                    {
-                        @: @fixture.HomeTeamGoals.Value - @fixture.AwayTeamGoals.Value
+<ul class="ff-details">
+    @foreach (var fixture in Model.Fixtures.OrderBy(x => x.Date))
+    {
+        <li class="fixture">
+            <div class="fixture-date">@String.Format("{0:g}", fixture.Date)</div>
+            <div class="home">@Model.Teams.First(t => t.TeamId == fixture.HomeTeamId).Name</div>
+            <div class="score">
+                @if (fixture.HomeTeamGoals.HasValue && fixture.AwayTeamGoals.HasValue)
+                {
+                    @: @fixture.HomeTeamGoals.Value - @fixture.AwayTeamGoals.Value
                     }
-                </td>
-                <td class="away">
-                    @Model.Teams.First(t => t.TeamId == fixture.AwayTeamId).Name
-                </td>
+            </div>
+            <div class="away">@Model.Teams.First(t => t.TeamId == fixture.AwayTeamId).Name</div>
+            <ul>
                 @foreach (var user in Model.Users)
                 {
+                    <li class="player-forecast">
+                        @{
                     var userForecast = Model.Forecasts.FirstOrDefault(f => f.UserId == user.UserId && f.FixtureId == fixture.FixtureId);
                     string forecastResult = string.Empty;
                     string forecastScore = string.Empty;
@@ -57,22 +41,31 @@
                             forecastScore = string.Format("{0:F1}", userForecast.Score.Value);
                         }
                     }
-                    <td>@forecastResult</td>
-                    <td style="width:20px;text-align:right">@forecastScore</td>
+                        }
+                        <div class="player">@user.Name</div>
+                        <div class="score forecast">@forecastResult</div>
+                        <div class="points">@forecastScore</div>
+                    </li>
                 }
-            </tr>
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="4"></td>
+            </ul>
+        </li>
+    }
+    <li class="fixture footer">
+        <div class="fixture-date"></div>
+        <div class="home"></div>
+        <div class="score"></div>
+        <div class="away"></div>
+        <ul>
             @foreach (var user in Model.Users)
             {
-                <td colspan="2" style="text-align:right">@String.Format("{0:F1}", Model.Forecasts.Where(x => x.UserId == user.UserId).Sum(x => x.Score))</td>
+                <li class="player-forecast">
+                    <div class="player">@user.Name</div>
+                    <div class="points">@String.Format("{0:F1}", Model.Forecasts.Where(x => x.UserId == user.UserId).Sum(x => x.Score))</div>
+                </li>
             }
-        </tr>
-    </tfoot>
-</table>
+        </ul>
+    </li>
+</ul>
 
 @if (Model.Fixtures.Any(x => x.CanBeForecast))
 {
