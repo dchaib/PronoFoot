@@ -11,15 +11,31 @@
     margin-right: auto;
 }
 
+.navbar-brand {
+    color: #dff6df;
+    text-align: center;
+    width: 100%;
+}
+
+    .navbar-brand a {
+        color: #dff6df;
+        margin: 0 auto;
+        text-decoration: none;
+    }
+
+.navbar-toggle {
+    float: left;
+    left: 0;
+    margin-left: 15px;
+    margin-right: 0;
+    position: absolute;
+}
+
 .navbar-inverse {
     background-color: #1a7306;
     background-image: linear-gradient(to bottom, #1f7c10 0%, #1a7306 100%);
     border-color: #186e06;
 }
-
-    .navbar-inverse .navbar-brand {
-        color: #dff6df;
-    }
 
     .navbar-inverse .navbar-nav > li > a {
         color: #dff6df;
