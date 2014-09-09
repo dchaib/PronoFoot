@@ -111,6 +111,10 @@
     margin: 5px;
 }
 
+    .jumbotron p {
+        font-size: 1em;
+    }
+
     .jumbotron h1 {
         font-size: 2em;
     }
