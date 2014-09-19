@@ -1,7 +1,19 @@
 ﻿body {
     background-color: #f2faf0;
     color: #696969;
-    padding-top: 50px;
+    padding-top: 70px;
+}
+
+h1 {
+    font-size: 1.8em;
+}
+
+h2 {
+    font-size: 1.6em;
+}
+
+h3 {
+    font-size: 1.4em;
 }
 
 .container-fluid {
@@ -24,10 +36,7 @@
     }
 
 .navbar-toggle {
-    float: left;
-    left: 0;
-    margin-left: 15px;
-    margin-right: 0;
+    right: 0;
     position: absolute;
 }
 
@@ -108,7 +117,7 @@
     background-color: #fff;
     border: 1px solid #ccc;
     font-size: 1em;
-    margin: 5px;
+    padding: 15px;
 }
 
     .jumbotron p {
@@ -116,8 +125,19 @@
     }
 
     .jumbotron h1 {
-        font-size: 2em;
+        font-size: 1.7em;
     }
+
+
+.panel-default > .panel-heading {
+    background-color: #498C3A;
+    padding: 12px 15px;
+}
+
+.panel-title {
+    color: #d9f7d2;
+    font-weight: bold;
+}
 
 table {
     background-color: white;
@@ -127,34 +147,31 @@ table {
     width: auto;
 }
 
+.header, .footer {
+    font-weight: bold;
+}
+
 ul, ol {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
+.actions .btn {
+    margin: 10px 5px 10px 0;
+}
+
+.competitions h2 {
+    font-size: 1.4em;
+}
+
 .current-competition {
     margin: 1.25em 0 3em;
 }
 
-    .current-competition .panel-default > .panel-heading {
-        background-color: #498C3A;
-        background-image: none;
-    }
-
     .current-competition table {
         margin: 0;
     }
-
-    .current-competition h3 {
-        margin: 0.2em 0 0.2em 0;
-        font-weight: bold;
-        font-size: 1.2em;
-    }
-
-        .current-competition h3 a {
-            color: #d9f7d2;
-        }
 
     .current-competition .classification {
         margin-top: 1em;
@@ -197,17 +214,13 @@ div.team {
     margin-left: 10px;
 }
 
-.home, .away {
-    margin-top: 5px;
+.home .goals {
+    margin-left: 5px;
 }
 
-    .home .goals {
-        margin-left: 5px;
-    }
-
-    .away .goals {
-        margin-left: 5px;
-    }
+.away .goals {
+    margin-left: 5px;
+}
 
 .delete-action {
     float: right;
@@ -249,6 +262,27 @@ input.goals {
     width: 50px;
 }
 
+th.points, th.stat {
+    text-align: center;
+}
+
+table > tbody > tr > td.points {
+    font-weight: bold;
+    text-align: center;
+}
+
+table > tbody > tr > td.stat {
+    text-align: center;
+}
+
+.ff-details .header {
+    display: none;
+}
+
+.ff-details .header, .ff-details .fixture, .ff-details .footer {
+    background-color: #fff;
+}
+
 .ff-details .home {
     text-align: right;
 }
@@ -256,6 +290,18 @@ input.goals {
 .ff-details .points {
     float: right;
     text-align: right;
+}
+
+.ff-details .header .fixture-date, .ff-details .header .home, .ff-details .header > .score, .ff-details .header .away, .ff-details .header > ul {
+    border-bottom: 1px solid #ddd;
+}
+
+.ff-details .fixture > ul {
+    border-top: 1px solid #ddd;
+}
+
+.ff-details .fixture-date, .ff-details .home, .ff-details .score, .ff-details .away, .ff-details .player, .ff-details .points {
+    padding: 8px;
 }
 
 .ff-details .home, .ff-details .score, .ff-details .away, .ff-details .player, .ff-details .points {
@@ -266,18 +312,48 @@ input.goals {
     width: calc(50% - 30px);
 }
 
+
+@media screen and (max-width: 767px) {
+    .ff-details .fixture-date {
+        font-style: italic;
+        padding: 4px;
+        width: auto;
+    }
+
+    .ff-details .footer .fixture-date, .ff-details .footer .home, .ff-details .footer > .score, .ff-details .footer .away {
+        display: none;
+    }
+
+    .ff-details .fixture > ul {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .ff-details .fixture .player-forecast, .ff-details .footer .player-forecast:not(:first-child) {
+        border-top: 1px solid #ddd;
+    }
+
+        .ff-details .fixture .player-forecast:nth-child(2n+1), .ff-details .footer .player-forecast:nth-child(2n+1) {
+            background-color: #f9f9f9;
+        }
+}
+
 @media screen and (min-width: 768px) {
     .ff-details {
         display: table;
         width: 100%;
     }
 
-        .ff-details .fixture {
+        .ff-details .header, .ff-details .fixture, .ff-details .footer {
             display: table-row;
+        }
+
+        .ff-details > .fixture:nth-child(2n) {
+            background-color: #f9f9f9;
         }
 
         .ff-details .fixture-date, .ff-details .home, .ff-details .score, .ff-details .away, .ff-details .player-forecast, .ff-details .points {
             display: table-cell;
+            float: none;
             vertical-align: bottom;
         }
 
@@ -299,7 +375,15 @@ input.goals {
         .ff-details .player {
             display: block;
             text-align: center;
-            width: auto;
+            width: 90px;
+        }
+
+        .ff-details .fixture .fixture-date, .ff-details .fixture .home, .ff-details .fixture > .score, .ff-details .fixture .away {
+            border-top: 1px solid #ddd;
+        }
+
+        .ff-details .footer .fixture-date, .ff-details .footer .home, .ff-details .footer > .score, .ff-details .footer .away, .ff-details .footer > ul {
+            border-top: 2px solid #ddd;
         }
 
         .ff-details .footer .points {
@@ -307,7 +391,7 @@ input.goals {
             width: 90px;
         }
 
-        .ff-details .fixture:not(:first-child) .player, .ff-details .footer .player {
+        .ff-details .fixture .player, .ff-details .footer .player {
             display: none;
         }
 

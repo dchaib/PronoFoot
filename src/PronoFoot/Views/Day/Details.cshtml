@@ -5,7 +5,23 @@
 <h2>@Model.Day.Name</h2>
 <p><em>@String.Format("{0:D}", Model.Day.Date)</em></p>
 <p>Coefficient : @String.Format("{0:F1}", Model.Day.Coefficient)</p>
+
+@Actions()
 <ul class="ff-details">
+    <li class="header">
+        <div class="fixture-date"></div>
+        <div class="home"></div>
+        <div class="score"></div>
+        <div class="away"></div>
+        <ul>
+            @foreach (var user in Model.Users)
+            {
+                <li class="player-forecast">
+                    <div class="player">@user.Name</div>
+                </li>
+            }
+        </ul>
+    </li>
     @foreach (var fixture in Model.Fixtures.OrderBy(x => x.Date))
     {
         <li class="fixture">
@@ -50,7 +66,7 @@
             </ul>
         </li>
     }
-    <li class="fixture footer">
+    <li class="footer">
         <div class="fixture-date"></div>
         <div class="home"></div>
         <div class="score"></div>
@@ -66,12 +82,18 @@
         </ul>
     </li>
 </ul>
+@Actions()
 
-@if (Model.Fixtures.Any(x => x.CanBeForecast))
+@helper Actions()
 {
-    <p>@Html.ActionLink("Pronostiquer", "Forecast", new { id = Model.Day.DayId })</p>
-}
-@if (Request.IsAuthenticated && User.IsInRole("Administrators"))
-{
-    <p>@Html.ActionLink("Modifier", "Edit", new { id = Model.Day.DayId })</p>
+    <div class="actions">
+        @if (Model.Fixtures.Any(x => x.CanBeForecast))
+        {
+            @Html.ActionLink("Pronostiquer", "Forecast", new { id = Model.Day.DayId }, new { @class = "btn btn-primary" })
+        }
+        @if (Request.IsAuthenticated && User.IsInRole("Administrators"))
+        {
+            @Html.ActionLink("Modifier", "Edit", new { id = Model.Day.DayId }, new { @class = "btn btn-default" })
+        }
+    </div>
 }

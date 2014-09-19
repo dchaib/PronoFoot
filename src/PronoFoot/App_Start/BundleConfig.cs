@@ -14,7 +14,7 @@ namespace PronoFoot
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"));
-            
+
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                         "~/Scripts/knockout-{version}.js",
                         "~/App/bindings/*.js"));
@@ -32,7 +32,6 @@ namespace PronoFoot
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/bootstrap-theme.css",
                       "~/Content/master.css"));
         }
     }

@@ -81,6 +81,7 @@ namespace PronoFoot.Controllers
                 {
                     EditionId = edition.EditionId,
                     Name = edition.Name,
+                    CompetitionName = competition.Name,
                     HasTeamClassification = competition.HasTeamClassification
                 },
                 PreviousDays = dayViewModels.Where(x => !x.CanBeForecast),

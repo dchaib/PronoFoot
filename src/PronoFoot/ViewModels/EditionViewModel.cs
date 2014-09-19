@@ -9,6 +9,7 @@ namespace PronoFoot.ViewModels
     {
         public int EditionId { get; set; }
         public string Name { get; set; }
+        public string CompetitionName { get; set; }
         public bool HasTeamClassification { get; set; }
     }
 }
