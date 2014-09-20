@@ -431,7 +431,7 @@ table > tbody > tr > td.stat {
             display: none;
         }
 
-        .ff-details .fixture-date, .day-form .fixture-date {
+        .day-form .fixture-date {
             display: inline-block;
             float: left;
         }
