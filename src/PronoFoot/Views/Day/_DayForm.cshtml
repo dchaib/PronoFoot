@@ -1,5 +1,5 @@
 ﻿@model PronoFoot.ViewModels.DayFormViewModel
-@using (Html.BeginForm(null, null, FormMethod.Post, new { data_bind = "submit: save" }))
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class="day-form", data_bind = "submit: save" }))
 {
     <div class="form-group">
         @Html.LabelFor(x => x.Name, "Nom", new { @class = "control-label" })

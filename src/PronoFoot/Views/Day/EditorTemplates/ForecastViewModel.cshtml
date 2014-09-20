@@ -4,13 +4,17 @@
 @Html.HiddenFor(x => x.Fixture.FixtureId)
 
 <div class="home col-sm-6">
-    @Html.TextBoxFor(x => x.HomeTeamGoals, new { @class = "form-control goals goal-input", @type = "number", min = 0 })
+    <div class="goals">
+        @Html.TextBoxFor(x => x.HomeTeamGoals, new { @class = "form-control goal-input", @type = "number", min = 0 })
+    </div>
     <div class="team">
         @Html.DisplayFor(x => x.HomeTeam, new { ShowLastResults = true })
     </div>
 </div>
 <div class="away col-sm-6">
-    @Html.TextBoxFor(x => x.AwayTeamGoals, new { @class = "form-control goals goal-input", @type = "number", min = 0 })
+    <div class="goals">
+        @Html.TextBoxFor(x => x.AwayTeamGoals, new { @class = "form-control goal-input", @type = "number", min = 0 })
+    </div>
     <div class="team">
         @Html.DisplayFor(x => x.AwayTeam, new { ShowLastResults = true })
     </div>

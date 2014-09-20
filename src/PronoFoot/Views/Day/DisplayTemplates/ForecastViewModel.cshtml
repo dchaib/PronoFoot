@@ -1,13 +1,17 @@
 ﻿@model PronoFoot.ViewModels.ForecastViewModel
 
 <div class="home col-sm-6">
-    <span class="goals">@Html.DisplayFor(x => x.HomeTeamGoals)</span>
+    <div class="goals">
+        @Html.DisplayFor(x => x.HomeTeamGoals)
+    </div>
     <div class="team">
         @Html.DisplayFor(x => x.HomeTeam, new { ShowLastResults = false })
     </div>
 </div>
 <div class="away col-sm-6">
-    <span class="goals">@Html.DisplayFor(x => x.AwayTeamGoals)</span>
+    <div class="goals">
+        @Html.DisplayFor(x => x.AwayTeamGoals)
+    </div>
     <div class="team">
         @Html.DisplayFor(x => x.AwayTeam, new { ShowLastResults = false })
     </div>

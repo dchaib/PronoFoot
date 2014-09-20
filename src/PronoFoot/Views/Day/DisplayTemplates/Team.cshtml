@@ -8,10 +8,10 @@
 { <span class="team-rank">(@Model.Standing)</span> }
 @if (showLastResults && Model.Fixtures.Any())
 {
-    <div class="team-last-results">
+    <ol class="team-results">
         @foreach (var fixture in Model.Fixtures)
         {
             @Html.DisplayFor(f => fixture.Result);
         }
-    </div>
+    </ol>
 }
