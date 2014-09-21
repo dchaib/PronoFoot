@@ -16,6 +16,96 @@ h3 {
     font-size: 1.4em;
 }
 
+.btn-default,
+.btn-primary,
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-danger {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+    .btn-default:active,
+    .btn-primary:active,
+    .btn-success:active,
+    .btn-info:active,
+    .btn-warning:active,
+    .btn-danger:active,
+    .btn-default.active,
+    .btn-primary.active,
+    .btn-success.active,
+    .btn-info.active,
+    .btn-warning.active,
+    .btn-danger.active {
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    }
+
+.btn:active,
+.btn.active {
+    background-image: none;
+}
+
+.btn-default {
+    text-shadow: 0 1px 0 #fff;
+    background-image: -webkit-linear-gradient(top, #fff 0, #e0e0e0 100%);
+    background-image: -o-linear-gradient(top, #fff 0, #e0e0e0 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e0e0e0));
+    background-image: linear-gradient(to bottom, #fff 0, #e0e0e0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #dbdbdb;
+    border-color: #ccc;
+}
+
+    .btn-default:hover,
+    .btn-default:focus {
+        background-color: #e0e0e0;
+        background-position: 0 -15px;
+    }
+
+    .btn-default:active,
+    .btn-default.active {
+        background-color: #e0e0e0;
+        border-color: #dbdbdb;
+    }
+
+    .btn-default:disabled,
+    .btn-default[disabled] {
+        background-color: #e0e0e0;
+        background-image: none;
+    }
+
+.btn-primary {
+    background-image: -webkit-linear-gradient(top, #5cb85c 0, #419641 100%);
+    background-image: -o-linear-gradient(top, #5cb85c 0, #419641 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#5cb85c), to(#419641));
+    background-image: linear-gradient(to bottom, #5cb85c 0, #419641 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5cb85c', endColorstr='#ff419641', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #3e8f3e;
+}
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: #419641;
+        background-position: 0 -15px;
+    }
+
+    .btn-primary:active,
+    .btn-primary.active {
+        background-color: #419641;
+        border-color: #3e8f3e;
+    }
+
+    .btn-primary:disabled,
+    .btn-primary[disabled] {
+        background-color: #419641;
+        background-image: none;
+    }
+
 .container-fluid {
     padding-left: 15px;
     padding-right: 15px;
@@ -306,7 +396,7 @@ table > tbody > tr > td.stat {
 }
 
 .ff-details .home, .ff-details .away, .ff-details .player {
-    width: calc(50% - 30px);
+    width: calc(50% - 29px);
 }
 
 .ff-forecast {
@@ -327,6 +417,10 @@ table > tbody > tr > td.stat {
         .ff-forecast .fixture:nth-child(2n+1) {
             background: #f9f9f9;
         }
+
+    .ff-forecast .home, .ff-forecast .away {
+        overflow: hidden;
+    }
 
     .ff-forecast .fixture-date, .ff-forecast .team, .ff-forecast .goals {
         padding: 8px;
@@ -350,10 +444,6 @@ table > tbody > tr > td.stat {
 
     .ff-details .footer .fixture-date, .ff-details .footer .home, .ff-details .footer > .score, .ff-details .footer .away {
         display: none;
-    }
-
-    .ff-details .fixture > ul {
-        border-bottom: 1px solid #ddd;
     }
 
     .ff-details .fixture .player-forecast, .ff-details .footer .player-forecast:not(:first-child) {
@@ -394,24 +484,25 @@ table > tbody > tr > td.stat {
         }
 
         .ff-details .player-forecast {
+            width: 90px;
+        }
+
+        .ff-details .fixture .player-forecast:not(:first-child) {
+            border-left: 1px solid #f3f3f3;
         }
 
         .ff-details .forecast {
             min-width: 50px;
-            padding-left: 10px;
-            padding-right: 10px;
         }
 
         .ff-details .points {
-            padding-left: 10px;
-            padding-right: 10px;
             float: none;
         }
 
         .ff-details .player {
             display: block;
             text-align: center;
-            width: 90px;
+            width: 100%;
         }
 
         .ff-details .fixture .fixture-date, .ff-details .fixture .home, .ff-details .fixture > .score, .ff-details .fixture .away {
@@ -423,24 +514,25 @@ table > tbody > tr > td.stat {
         }
 
         .ff-details .footer .points {
+            display: block;
             text-align: center;
-            width: 90px;
+            width: 100%;
         }
 
         .ff-details .fixture .player, .ff-details .footer .player {
             display: none;
         }
 
-        .day-form .fixture-date {
-            display: inline-block;
-            float: left;
-        }
+    .day-form .fixture-date {
+        display: inline-block;
+        float: left;
+    }
 
-        .ff-details .fixture, .day-form .fixture {
-            margin-left: 15px;
-            margin-bottom: 0;
-            overflow: hidden;
-        }
+    .ff-details .fixture, .day-form .fixture {
+        margin-left: 15px;
+        margin-bottom: 0;
+        overflow: hidden;
+    }
 
     .goals {
         display: block;
