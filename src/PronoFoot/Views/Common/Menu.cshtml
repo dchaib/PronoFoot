@@ -1,10 +1,10 @@
 ﻿@model PronoFoot.Models.Common.MenuModel
-<ul id="menu">
-    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-    @foreach (var competition in Model.Competitions)
-    {
-        <li>@Html.ActionLink(competition.Name, "Details", "Competition", new { id = competition.Id }, null)
-        </li>
-    }
-    <li>@Html.ActionLink("Règlement", "Rules", "Home")</li>
-</ul>
+
+@foreach (var competition in Model.Competitions)
+{
+    <li>
+        @Html.ActionLink(competition.Name, "Details", "Competition", new { id = competition.Id }, null)
+    </li>
+}
+<li>@Html.ActionLink("Règlement", "Rules", "Home")</li>
+

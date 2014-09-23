@@ -1,84 +1,69 @@
 ﻿@model PronoFoot.ViewModels.DayFormViewModel
-@using (Html.BeginForm(null, null, FormMethod.Post, new { data_bind = "submit: save" }))
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class="day-form", data_bind = "submit: save" }))
 {
-    <fieldset>
-        <div class="editor-label">
-            @Html.LabelFor(x => x.Name, "Nom")
-        </div>
-        <div class="editor-field">
-            <input data-bind="value: name" type="text" />
+    <div class="form-group">
+        @Html.LabelFor(x => x.Name, "Nom", new { @class = "control-label" })
+        <div class="">
+            <input class="form-control" data-bind="value: name" type="text" />
             @Html.ValidationMessageFor(x => x.Name)
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(x => x.Date)
-        </div>
-        <div class="editor-field">
-            <input data-bind="date: date, dateFormat: 'DD/MM/YYYY'" />
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Date, new { @class = "control-label" })
+        <div class="">
+            <input class="form-control" data-bind="date: date, dateFormat: 'DD/MM/YYYY'" />
             @Html.ValidationMessageFor(x => x.Date)
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(x => x.Coefficient)
-        </div>
-        <div class="editor-field">
-            <input class="coefficient" data-bind="value: coefficient" type="number" step="any" min="0" />
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Coefficient, new { @class = "control-label" })
+        <div class="">
+            <input class="coefficient form-control" data-bind="value: coefficient" type="number" step="any" min="0" />
             @Html.ValidationMessageFor(x => x.Coefficient)
         </div>
-        <div class="editor-label">
-            Matches
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="Matches">Matchs</label>
+        <div class="">
+            <ul class="fixtures" data-bind="foreach: fixtures">
+                <li>
+                    <div class="delete-action">
+                        <a href="#" data-bind="click: $root.removeFixture"><span class="glyphicon glyphicon-trash"></span></a>
+                    </div>
+                    <input class="form-control fixture-date" data-bind="date: date, dateFormat: 'DD/MM/YYYY HH:mm'" />
+                    <div class="fixture row">
+                        <div class="home col-sm-6">
+                            <input class="form-control goals goal-input" data-bind="value: homeTeamGoals" type="number" min="0" />
+                            <div class="team">
+                                <select class="form-control" data-bind="options: $root.teams, value: homeTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
+                            </div>
+                        </div>
+                        <div class="away col-sm-6">
+                            <input class="form-control goals goal-input" data-bind="value: awayTeamGoals" type="number" min="0" />
+                            <div class="team">
+                                <select class="form-control" data-bind="options: $root.teams, value: awayTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-        <div class="editor-field">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date
-                        </th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody data-bind="foreach: fixtures">
-                    <tr>
-                        <td>
-                            <input data-bind="date: date, dateFormat: 'DD/MM/YYYY HH:mm'" />
-                        </td>
-                        <td>
-                            <select data-bind="options: $root.teams, value: homeTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
-                        </td>
-                        <td>
-                            <input class="goal-count" data-bind="value: homeTeamGoals" type="number" min="0" />
-                        </td>
-                        <td>
-                            <input class="goal-count" data-bind="value: awayTeamGoals" type="number" min="0" />
-                        </td>
-                        <td>
-                            <select data-bind="options: $root.teams, value: awayTeamId, optionsText: 'Name', optionsValue: 'Id'"></select>
-                        </td>
-                        <td><a href="#" data-bind="click: $root.removeFixture">Supprimer</a></td>
-                    </tr>
-                </tbody>
-            </table>
-            <a href="#" data-bind="click: addFixture">Ajouter un match</a>
-        </div>
-    </fieldset>
-    <p>
-        <input type="submit" value="Enregistrer" />
-    </p>
+        <a href="#" data-bind="click: addFixture">Ajouter un match</a>
+    </div>
+    <div class="form-group actions">
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
 }
-    
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryui")
-    @Scripts.Render("~/bundles/moment")
-    @Scripts.Render("~/bundles/knockout")
-    <script type="text/javascript" src="~/App/viewmodels/DayForm.js"> </script>
-    
-    @{string initialData = Newtonsoft.Json.JsonConvert.SerializeObject(Model, new Newtonsoft.Json.Converters.IsoDateTimeConverter());}
 
-    <script>
-        var initialData = @Html.Raw(initialData);
-        var viewModel = new DayModel(initialData.Name, initialData.Date, initialData.Coefficient, initialData.Fixtures, initialData.Teams);
-        ko.applyBindings(viewModel);
-    </script>
- 
+@Scripts.Render("~/bundles/moment")
+@Scripts.Render("~/bundles/knockout")
+<script type="text/javascript" src="~/App/viewmodels/DayForm.js"> </script>
+
+@{string initialData = Newtonsoft.Json.JsonConvert.SerializeObject(Model, new Newtonsoft.Json.Converters.IsoDateTimeConverter());}
+
+<script>
+    var initialData = @Html.Raw(initialData);
+    var viewModel = new DayModel(initialData.Name, initialData.Date, initialData.Coefficient, initialData.Fixtures, initialData.Teams);
+    ko.applyBindings(viewModel);
+</script>
+

@@ -56,7 +56,7 @@ namespace PronoFoot.Controllers
                 Fixtures = fixtures.ToList(),
                 Teams = teams.ToList(),
                 Forecasts = forecasts.ToList(),
-                Users = users.ToList(),
+                Users = users.Where(u => u.UserId == CurrentUser.UserId || forecasts.Any(f => f.UserId == u.UserId)).ToList(),
                 CurrentUserId = this.CurrentUser.UserId
             });
         }

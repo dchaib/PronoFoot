@@ -1,49 +1,36 @@
 ﻿@model IEnumerable<UserScoreViewModel>
-<table>
-    <tr>
-        <th></th>
-        <th></th>
-        <th>Score </th>
-        <th>3 pts </th>
-        <th>2 pts </th>
-        <th>1.5 pts </th>
-        <th>1 pt </th>
-        <th>0 pt </th>
-        <th>% >= 1 pt </th>
-    </tr>
-    @{
-        int rank = 1;
-        foreach (var userScore in Model.OrderByDescending(x => x.Score).ThenByDescending(x => x.NumberOfExactForecasts).ThenByDescending(x => x.NumberOfCloseForecasts))
-        {
+<table class="table table-striped">
+    <thead>
         <tr>
-            <td>@rank
-            </td>
-            <td>
-                @userScore.UserName
-            </td>
-            <td>
-                @String.Format("{0:F1}", userScore.Score)
-            </td>
-            <td>
-                @String.Format("{0:N0}", userScore.NumberOfExactForecasts)
-            </td>
-            <td>
-                @String.Format("{0:N0}", userScore.NumberOfCloseForecasts)
-            </td>
-            <td>
-                @String.Format("{0:N0}", userScore.NumberOfForecastsWithExactDifference)
-            </td>
-            <td>
-                @String.Format("{0:N0}", userScore.NumberOfCorrect1N2Forecasts)
-            </td>
-            <td>
-                @String.Format("{0:N0}", userScore.NumberOfWrongForecasts)
-            </td>
-            <td>
-                @String.Format("{0:P2}", userScore.PercentageOfScoringForecasts)
-            </td>
+            <th></th>
+            <th></th>
+            <th class="points">Score</th>
+            <th class="stat">3 pts</th>
+            <th class="stat">2 pts</th>
+            <th class="stat">1.5 pts</th>
+            <th class="stat">1 pt</th>
+            <th class="stat">0 pt</th>
+            <th class="stat">% >= 1 pt</th>
         </tr>
-            rank++;
+    </thead>
+    <tbody>
+        @{
+            int rank = 1;
+            foreach (var userScore in Model.OrderByDescending(x => x.Score).ThenByDescending(x => x.NumberOfExactForecasts).ThenByDescending(x => x.NumberOfCloseForecasts))
+            {
+                <tr>
+                    <td>@rank</td>
+                    <td>@userScore.UserName</td>
+                    <td class="points">@String.Format("{0:F1}", userScore.Score)</td>
+                    <td class="stat">@String.Format("{0:N0}", userScore.NumberOfExactForecasts)</td>
+                    <td class="stat">@String.Format("{0:N0}", userScore.NumberOfCloseForecasts)</td>
+                    <td class="stat">@String.Format("{0:N0}", userScore.NumberOfForecastsWithExactDifference)</td>
+                    <td class="stat">@String.Format("{0:N0}", userScore.NumberOfCorrect1N2Forecasts)</td>
+                    <td class="stat">@String.Format("{0:N0}", userScore.NumberOfWrongForecasts)</td>
+                    <td class="stat">@String.Format("{0:P2}", userScore.PercentageOfScoringForecasts)</td>
+                </tr>
+                rank++;
+            }
         }
-    }
+    </tbody>
 </table>

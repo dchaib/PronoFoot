@@ -1,0 +1,17 @@
+﻿@model ForecastViewModel.Team
+
+@{
+    var showLastResults = (bool)ViewData["ShowLastResults"];
+}
+
+<span class="team-name">@Model.Name</span> @if (Model.Standing.HasValue)
+{ <span class="team-rank">(@Model.Standing)</span> }
+@if (showLastResults && Model.Fixtures.Any())
+{
+    <ol class="team-results">
+        @foreach (var fixture in Model.Fixtures)
+        {
+            @Html.DisplayFor(f => fixture.Result);
+        }
+    </ol>
+}

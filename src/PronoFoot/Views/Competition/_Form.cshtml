@@ -1,19 +1,16 @@
 ﻿@model PronoFoot.Models.Competition.CompetitionModel
 @Html.ValidationSummary(true)
-<fieldset>
-    @Html.HiddenFor(model => model.Id)
-    <div class="editor-label">
-        Nom
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Name)
+
+@Html.HiddenFor(model => model.Id)
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Name, "Nom", new { @class = "control-label" })
+    <div class="">
+        @Html.EditorFor(model => model.Name, new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.Name)
     </div>
-    <div class="editor-field">
-        @Html.CheckBoxFor(model => model.HasTeamClassification)
-        @Html.LabelFor(model => model.HasTeamClassification)
+    <div class="">
+        @Html.CheckBoxFor(model => model.HasTeamClassification, new { @class = "form-control" })
+        @Html.LabelFor(model => model.HasTeamClassification, "Afficher le classement des équipes", new { @class = "control-label" })
     </div>
-    <p>
-        <input type="submit" value="Enregistrer" />
-    </p>
-</fieldset>
+</div>

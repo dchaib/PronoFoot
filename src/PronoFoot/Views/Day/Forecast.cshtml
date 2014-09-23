@@ -6,39 +6,39 @@
 
 @using (Html.BeginForm())
 {
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    Date
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-            </tr>
-        </thead>
+    <ul class="ff-forecast from-group">
         @{
     int i = 0;
-    foreach (var forecast in Model.Forecasts.OrderBy(x => x.Fixture.Date))
+    foreach (var group in Model.Forecasts.GroupBy(x => x.Fixture.Date).OrderBy(x => x.Key))
     {
-        if (forecast.Fixture.CanBeForecast)
-        {
-            @Html.EditorFor(x => forecast, null, "Forecasts[" + i + "]."); i++;
-        }
-        else
-        {
-            @Html.DisplayFor(x => forecast);
-        }
+        <li class="row">
+            <div class="col-md-4">
+                <div class="fixture-date row">@group.Key.ToLongDateString() à @group.Key.ToShortTimeString()</div>
+            </div>
+            <div class="col-md-8 forecasts">
+                <ul>
+                    @foreach (var forecast in group)
+                    {
+                        <li class="fixture row">
+                            @if (forecast.Fixture.CanBeForecast)
+                            {
+                                @Html.EditorFor(x => forecast, null, "Forecasts[" + i++ + "].")
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(x => forecast)
+                            }
+                        </li>
+                    }
+                </ul>
+            </div>
+        </li>
     }
         }
-    </table>
-    <p>
-        <input type="submit" value="Sauvegarder" />
-    </p>
-    <div>@Html.ActionLink("Annuler", "Details", new { id = Model.Day.DayId })</div>
+    </ul>
+
+    <div class="form-group actions">
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        @Html.ActionLink("Annuler", "Details", new { id = Model.Day.DayId }, new { @class = "btn btn-default" })
+    </div>
 }

@@ -5,81 +5,95 @@
 <h2>@Model.Day.Name</h2>
 <p><em>@String.Format("{0:D}", Model.Day.Date)</em></p>
 <p>Coefficient : @String.Format("{0:F1}", Model.Day.Coefficient)</p>
-<table>
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+
+@Actions()
+<ul class="ff-details">
+    <li class="header">
+        <div class="fixture-date"></div>
+        <div class="home"></div>
+        <div class="score"></div>
+        <div class="away"></div>
+        <ul>
             @foreach (var user in Model.Users)
             {
-                <th colspan="2" style="min-width:70px">@user.Name</th>
+                <li class="player-forecast">
+                    <div class="player">@user.Name</div>
+                </li>
             }
-        </tr>
-    </thead>
+        </ul>
+    </li>
     @foreach (var fixture in Model.Fixtures.OrderBy(x => x.Date))
     {
-        <tr>
-            <td>@String.Format("{0:g}", fixture.Date)
-            </td>
-            <td>@Model.Teams.First(t => t.TeamId == fixture.HomeTeamId).Name
-            </td>
-            <td>
-                @if (fixture.HomeTeamGoals.HasValue)
-                {@fixture.HomeTeamGoals.Value}
-            </td>
-            <td>
-                @if (fixture.AwayTeamGoals.HasValue)
-                { @fixture.AwayTeamGoals.Value }
-            </td>
-            <td>@Model.Teams.First(t => t.TeamId == fixture.AwayTeamId).Name
-            </td>
+        <li class="fixture">
+            <div class="fixture-date">@String.Format("{0:g}", fixture.Date)</div>
+            <div class="home">@Model.Teams.First(t => t.TeamId == fixture.HomeTeamId).Name</div>
+            <div class="score">
+                @if (fixture.HomeTeamGoals.HasValue && fixture.AwayTeamGoals.HasValue)
+                {
+                    @: @fixture.HomeTeamGoals.Value - @fixture.AwayTeamGoals.Value
+                    }
+            </div>
+            <div class="away">@Model.Teams.First(t => t.TeamId == fixture.AwayTeamId).Name</div>
+            <ul>
+                @foreach (var user in Model.Users)
+                {
+                    <li class="player-forecast">
+                        @{
+                    var userForecast = Model.Forecasts.FirstOrDefault(f => f.UserId == user.UserId && f.FixtureId == fixture.FixtureId);
+                    string forecastResult = string.Empty;
+                    string forecastScore = string.Empty;
+                    if (userForecast != null)
+                    {
+                        if (user.UserId == Model.CurrentUserId || !fixture.CanBeForecast)
+                        {
+                            forecastResult = string.Format("{0} - {1}", userForecast.HomeTeamGoals, userForecast.AwayTeamGoals);
+                        }
+                        else
+                        {
+                            forecastResult = "? - ?";
+                        }
+                        if (userForecast.Score.HasValue)
+                        {
+                            forecastScore = string.Format("{0:F1}", userForecast.Score.Value);
+                        }
+                    }
+                        }
+                        <div class="player">@user.Name</div>
+                        <div class="score forecast">@forecastResult</div>
+                        <div class="points">@forecastScore</div>
+                    </li>
+                }
+            </ul>
+        </li>
+    }
+    <li class="footer">
+        <div class="fixture-date"></div>
+        <div class="home"></div>
+        <div class="score"></div>
+        <div class="away"></div>
+        <ul>
             @foreach (var user in Model.Users)
             {
-                var userForecast = Model.Forecasts.FirstOrDefault(f => f.UserId == user.UserId && f.FixtureId == fixture.FixtureId);
-                if (userForecast != null)
-                {
-                    if (user.UserId == Model.CurrentUserId || !fixture.CanBeForecast)
-                    { 
-                        <td>@userForecast.HomeTeamGoals - @userForecast.AwayTeamGoals</td>
-                    }
-                    else
-                    { 
-                        <td>? - ?</td>
-                    }
-                    if (userForecast.Score.HasValue)
-                    {
-                        <td style="width:20px;text-align:right">@String.Format("{0:F1}", userForecast.Score.Value)</td>
-                    }
-                    else
-                    {
-                        <td style="width:20px"></td>
-                    }
-                }
-                else
-                { 
-                    <td></td>
-                    <td style="width:20px"></td>
-                }
+                <li class="player-forecast">
+                    <div class="player">@user.Name</div>
+                    <div class="points">@String.Format("{0:F1}", Model.Forecasts.Where(x => x.UserId == user.UserId).Sum(x => x.Score))</div>
+                </li>
             }
-        </tr>
-    }
-    <tr>
-        <td colspan="5"></td>
-        @foreach (var user in Model.Users)
-        {
-            <td colspan="2" style="text-align:right">@String.Format("{0:F1}", Model.Forecasts.Where(x => x.UserId == user.UserId).Sum(x => x.Score))</td>
-        }
-    </tr>
-</table>
+        </ul>
+    </li>
+</ul>
+@Actions()
 
-@if (Model.Fixtures.Any(x => x.CanBeForecast))
-{ 
-    <p>@Html.ActionLink("Pronostiquer", "Forecast", new { id = Model.Day.DayId })</p>
-}
-@if (Request.IsAuthenticated && User.IsInRole("Administrators"))
+@helper Actions()
 {
-    <p>@Html.ActionLink("Modifier", "Edit", new { id = Model.Day.DayId })</p>
+    <div class="actions">
+        @if (Model.Fixtures.Any(x => x.CanBeForecast))
+        {
+            @Html.ActionLink("Pronostiquer", "Forecast", new { id = Model.Day.DayId }, new { @class = "btn btn-primary" })
+        }
+        @if (Request.IsAuthenticated && User.IsInRole("Administrators"))
+        {
+            @Html.ActionLink("Modifier", "Edit", new { id = Model.Day.DayId }, new { @class = "btn btn-default" })
+        }
+    </div>
 }
