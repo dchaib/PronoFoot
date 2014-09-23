@@ -1,31 +1,35 @@
 ﻿@model PronoFoot.Models.Edition.EditionOverviewModel
 
-<div class="current-competition-heading">
-    <h3>@Html.ActionLink(Model.CompetitionName + " " + Model.Name, "Details", "Edition", new { id = Model.Id }, null)</h3>
-</div>
-<div class="current-competition-content">
-    @if (Model.NextFixture != null)
-    {
-        @:Prochain match : @Html.ActionLink(Model.NextFixture.DateTime.ToString("g"), "Details", "Day", new { id = Model.NextFixture.DayId }, null)
-    }
-    @if(Model.Scores.Any())
-    {
-        <div class="classification">
-            <table>
-                @{
-                    int rank = 1;
-                    foreach (var userScore in Model.Scores.OrderByDescending(x => x.Score).ThenByDescending(x => x.NumberOfExactForecasts).ThenByDescending(x => x.NumberOfCloseForecasts).Take(3))
-                    {
-                        <tr>
-                            <td>@rank</td>
-                            <td>@userScore.UserName</td>
-                            <td>@String.Format("{0:F1}", userScore.Score)</td>
-                        </tr>
-                        rank++;
-                    }
-                }
-            </table>
-        </div>
-    }
-</div>
 
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">@Html.ActionLink(Model.CompetitionName + " " + Model.Name, "Details", "Edition", new { id = Model.Id }, null)</h3>
+    </div>
+    <div class="panel-body">
+        @if (Model.NextFixture != null)
+        {
+            @:Prochain match : @Html.ActionLink(Model.NextFixture.DateTime.ToString("g"), "Details", "Day", new { id = Model.NextFixture.DayId }, null)
+    }
+        @if (Model.Scores.Any())
+        {
+            <div class="classification">
+                <table class="table table-condensed table-narrow">
+                    <tbody>
+                        @{
+            int rank = 1;
+            foreach (var userScore in Model.Scores.OrderByDescending(x => x.Score).ThenByDescending(x => x.NumberOfExactForecasts).ThenByDescending(x => x.NumberOfCloseForecasts).Take(3))
+            {
+                <tr>
+                    <td>@rank</td>
+                    <td>@userScore.UserName</td>
+                    <td>@String.Format("{0:F1}", userScore.Score)</td>
+                </tr>
+                rank++;
+            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

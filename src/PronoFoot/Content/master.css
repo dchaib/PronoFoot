@@ -1,0 +1,581 @@
+﻿body {
+    background-color: #f2faf0;
+    color: #696969;
+    padding-top: 70px;
+}
+
+h1 {
+    font-size: 1.8em;
+}
+
+h2 {
+    font-size: 1.6em;
+}
+
+h3 {
+    font-size: 1.4em;
+}
+
+.btn-default,
+.btn-primary,
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-danger {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+    .btn-default:active,
+    .btn-primary:active,
+    .btn-success:active,
+    .btn-info:active,
+    .btn-warning:active,
+    .btn-danger:active,
+    .btn-default.active,
+    .btn-primary.active,
+    .btn-success.active,
+    .btn-info.active,
+    .btn-warning.active,
+    .btn-danger.active {
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    }
+
+.btn:active,
+.btn.active {
+    background-image: none;
+}
+
+.btn-default {
+    text-shadow: 0 1px 0 #fff;
+    background-image: -webkit-linear-gradient(top, #fff 0, #e0e0e0 100%);
+    background-image: -o-linear-gradient(top, #fff 0, #e0e0e0 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e0e0e0));
+    background-image: linear-gradient(to bottom, #fff 0, #e0e0e0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #dbdbdb;
+    border-color: #ccc;
+}
+
+    .btn-default:hover,
+    .btn-default:focus {
+        background-color: #e0e0e0;
+        background-position: 0 -15px;
+    }
+
+    .btn-default:active,
+    .btn-default.active {
+        background-color: #e0e0e0;
+        border-color: #dbdbdb;
+    }
+
+    .btn-default:disabled,
+    .btn-default[disabled] {
+        background-color: #e0e0e0;
+        background-image: none;
+    }
+
+.btn-primary {
+    background-image: -webkit-linear-gradient(top, #5cb85c 0, #419641 100%);
+    background-image: -o-linear-gradient(top, #5cb85c 0, #419641 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#5cb85c), to(#419641));
+    background-image: linear-gradient(to bottom, #5cb85c 0, #419641 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5cb85c', endColorstr='#ff419641', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #3e8f3e;
+}
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: #419641;
+        background-position: 0 -15px;
+    }
+
+    .btn-primary:active,
+    .btn-primary.active {
+        background-color: #419641;
+        border-color: #3e8f3e;
+    }
+
+    .btn-primary:disabled,
+    .btn-primary[disabled] {
+        background-color: #419641;
+        background-image: none;
+    }
+
+.container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar-brand {
+    color: #dff6df;
+    text-align: center;
+    width: 100%;
+}
+
+    .navbar-brand a {
+        color: #dff6df;
+        margin: 0 auto;
+        text-decoration: none;
+    }
+
+.navbar-toggle {
+    right: 0;
+    position: absolute;
+}
+
+.navbar-inverse {
+    background-color: #1a7306;
+    background-image: linear-gradient(to bottom, #1f7c10 0, #1a7306 100%);
+    border-color: #186e06;
+}
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: #dff6df;
+    }
+
+    .navbar-inverse .navbar-text {
+        color: #dff6df;
+    }
+
+    .navbar-inverse .navbar-link {
+        color: #dff6df;
+    }
+
+    .navbar-inverse .navbar-nav > .open > a,
+    .navbar-inverse .navbar-nav > .open > a:hover,
+    .navbar-inverse .navbar-nav > .open > a:focus {
+        background-color: #155505;
+        color: #ffffff;
+    }
+
+    .navbar-inverse .navbar-toggle {
+        border-color: #155505;
+    }
+
+        .navbar-inverse .navbar-toggle:hover,
+        .navbar-inverse .navbar-toggle:focus {
+            background-color: #155505;
+        }
+
+    .navbar-inverse .navbar-collapse {
+        border-color: #155505;
+    }
+
+    .navbar-inverse .dropdown-menu {
+        background-color: #1a7306;
+    }
+
+        .navbar-inverse .dropdown-menu > li > a {
+            color: #dff6df;
+        }
+
+    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
+        background-color: #1a7306;
+        background-image: none;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .navbar-inverse .dropdown-menu .divider {
+        background-color: #155505;
+    }
+
+    .navbar-inverse .navbar-nav > .dropdown > a .caret {
+        border-bottom-color: #dff6df;
+        border-top-color: #dff6df;
+    }
+
+@media (max-width: 767px) {
+    .navbar-inverse .navbar-nav .open .dropdown-menu > .dropdown-header {
+        border-color: #155505;
+    }
+
+    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+        color: #dff6df;
+    }
+}
+
+.jumbotron {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    padding: 15px;
+}
+
+    .jumbotron p {
+        font-size: 1em;
+    }
+
+    .jumbotron h1 {
+        font-size: 1.7em;
+    }
+
+
+.panel-default > .panel-heading {
+    background-color: #498C3A;
+    padding: 12px 15px;
+}
+
+.panel-title {
+    color: #d9f7d2;
+    font-weight: bold;
+}
+
+table {
+    background-color: white;
+}
+
+.table-narrow {
+    width: auto;
+}
+
+.header, .footer {
+    font-weight: bold;
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.actions .btn {
+    margin: 10px 5px 10px 0;
+}
+
+.competitions h2 {
+    font-size: 1.4em;
+}
+
+.current-competition {
+    margin: 1.25em 0 3em;
+}
+
+    .current-competition table {
+        margin: 0;
+    }
+
+    .current-competition .classification {
+        margin-top: 1em;
+    }
+
+        .current-competition .classification table {
+            border: 0;
+        }
+
+            .current-competition .classification table td {
+                border: 0;
+            }
+
+.fixture {
+    min-height: 50px;
+    vertical-align: middle;
+    margin-bottom: 20px;
+}
+
+.ff-details .fixture-date, .day-form .fixture-date {
+    width: 140px;
+}
+
+div.team {
+    overflow: hidden;
+}
+
+.team-rank {
+    font-size: 0.8em;
+}
+
+.goals {
+    display: inline-block;
+    width: 3em;
+    text-align: center;
+    float: right;
+}
+
+.home .goals {
+    margin-left: 5px;
+}
+
+.away .goals {
+    margin-left: 5px;
+}
+
+.delete-action {
+    float: right;
+    padding-top: 10px;
+    text-align: center;
+    width: 30px;
+}
+
+.goal-input {
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    text-align: center;
+}
+
+.result {
+    display: inline-block;
+    vertical-align: middle;
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    margin-right: 3px;
+}
+
+.win {
+    background-color: green;
+}
+
+.draw {
+    background-color: orange;
+}
+
+.loss {
+    background-color: red;
+}
+
+.score {
+    text-align: center;
+    white-space: nowrap;
+    width: 50px;
+}
+
+th.points, th.stat {
+    text-align: center;
+}
+
+table > tbody > tr > td.points {
+    font-weight: bold;
+    text-align: center;
+}
+
+table > tbody > tr > td.stat {
+    text-align: center;
+}
+
+.ff-details .header {
+    display: none;
+}
+
+.ff-details .header, .ff-details .fixture, .ff-details .footer {
+    background-color: #fff;
+}
+
+.ff-details .home {
+    text-align: right;
+}
+
+.ff-details .points {
+    float: right;
+    text-align: right;
+}
+
+.ff-details .header .fixture-date, .ff-details .header .home, .ff-details .header > .score, .ff-details .header .away, .ff-details .header > ul {
+    border-bottom: 1px solid #ddd;
+}
+
+.ff-details .fixture > ul {
+    border-top: 1px solid #ddd;
+}
+
+.ff-details .fixture-date, .ff-details .home, .ff-details .score, .ff-details .away, .ff-details .player, .ff-details .points {
+    padding: 8px;
+}
+
+.ff-details .home, .ff-details .score, .ff-details .away, .ff-details .player, .ff-details .points {
+    display: inline-block;
+}
+
+.ff-details .home, .ff-details .away, .ff-details .player {
+    width: calc(50% - 29px);
+}
+
+.ff-forecast {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+    .ff-forecast > .row {
+        background: #fff;
+        margin-bottom: 20px;
+    }
+
+    .ff-forecast .fixture {
+        border-top: 1px solid #ddd;
+        margin-bottom: 0;
+    }
+
+        .ff-forecast .fixture:nth-child(2n+1) {
+            background: #f9f9f9;
+        }
+
+    .ff-forecast .home, .ff-forecast .away {
+        overflow: hidden;
+    }
+
+    .ff-forecast .fixture-date, .ff-forecast .team, .ff-forecast .goals {
+        padding: 8px;
+    }
+
+    .ff-forecast .fixture-date {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .ff-forecast .goals {
+        width: 4em;
+    }
+
+
+@media screen and (max-width: 767px) {
+    .ff-details .fixture-date {
+        font-style: italic;
+        padding: 4px;
+        width: auto;
+    }
+
+    .ff-details .footer .fixture-date, .ff-details .footer .home, .ff-details .footer > .score, .ff-details .footer .away {
+        display: none;
+    }
+
+    .ff-details .fixture .player-forecast, .ff-details .footer .player-forecast:not(:first-child) {
+        border-top: 1px solid #ddd;
+    }
+
+        .ff-details .fixture .player-forecast:nth-child(2n+1), .ff-details .footer .player-forecast:nth-child(2n+1) {
+            background-color: #f9f9f9;
+        }
+
+    .ff-forecast .home .team, .ff-forecast .home .goals {
+        padding-bottom: 4px;
+    }
+
+    .ff-forecast .away .team, .ff-forecast .away .goals {
+        padding-top: 4px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .ff-details {
+        display: table;
+        width: 100%;
+    }
+
+        .ff-details .header, .ff-details .fixture, .ff-details .footer {
+            display: table-row;
+        }
+
+        .ff-details > .fixture:nth-child(2n) {
+            background-color: #f9f9f9;
+        }
+
+        .ff-details .fixture-date, .ff-details .home, .ff-details .score, .ff-details .away, .ff-details .player-forecast, .ff-details .points {
+            display: table-cell;
+            float: none;
+            vertical-align: bottom;
+        }
+
+        .ff-details .player-forecast {
+            width: 90px;
+        }
+
+        .ff-details .fixture .player-forecast:not(:first-child) {
+            border-left: 1px solid #f3f3f3;
+        }
+
+        .ff-details .forecast {
+            min-width: 50px;
+        }
+
+        .ff-details .points {
+            float: none;
+        }
+
+        .ff-details .player {
+            display: block;
+            text-align: center;
+            width: 100%;
+        }
+
+        .ff-details .fixture .fixture-date, .ff-details .fixture .home, .ff-details .fixture > .score, .ff-details .fixture .away {
+            border-top: 1px solid #ddd;
+        }
+
+        .ff-details .footer .fixture-date, .ff-details .footer .home, .ff-details .footer > .score, .ff-details .footer .away, .ff-details .footer > ul {
+            border-top: 2px solid #ddd;
+        }
+
+        .ff-details .footer .points {
+            display: block;
+            text-align: center;
+            width: 100%;
+        }
+
+        .ff-details .fixture .player, .ff-details .footer .player {
+            display: none;
+        }
+
+    .day-form .fixture-date {
+        display: inline-block;
+        float: left;
+    }
+
+    .ff-details .fixture, .day-form .fixture {
+        margin-left: 15px;
+        margin-bottom: 0;
+        overflow: hidden;
+    }
+
+    .goals {
+        display: block;
+    }
+
+    .home, .away {
+        margin-top: 0;
+    }
+
+    .home {
+        text-align: right;
+    }
+
+        .home .goals {
+            margin-left: 15px;
+        }
+
+    .away .goals {
+        float: left;
+        margin-left: 0;
+        margin-right: 15px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .ff-forecast .fixture:nth-child(2n) {
+        background: #f9f9f9;
+    }
+
+    .ff-forecast .fixture:nth-child(2n+1) {
+        background: none;
+    }
+
+    .ff-forecast .fixture-date {
+        border-bottom: none;
+        text-align: right;
+    }
+
+    .ff-forecast .fixture:first-child {
+        border-top: none;
+    }
+
+    .ff-forecast .forecasts {
+        border-left: 2px solid #ddd;
+    }
+}

@@ -27,8 +27,9 @@ namespace PronoFoot.Controllers
         //
         // GET: /Account/LogOn
 
-        public ActionResult LogOn()
+        public ActionResult LogOn(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -36,6 +37,7 @@ namespace PronoFoot.Controllers
         // POST: /Account/LogOn
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -77,8 +79,9 @@ namespace PronoFoot.Controllers
         //
         // GET: /Account/Register
 
-        public ActionResult Register()
+        public ActionResult Register(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -86,6 +89,7 @@ namespace PronoFoot.Controllers
         //// POST: /Account/Register
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
@@ -123,6 +127,7 @@ namespace PronoFoot.Controllers
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ChangePassword(ChangePasswordModel model)
         {
             if (ModelState.IsValid)
@@ -170,6 +175,7 @@ namespace PronoFoot.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult RequestPasswordReset(string username)
         {
             if (!membershipService.PasswordResetEnabled)
@@ -198,6 +204,7 @@ namespace PronoFoot.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ResetPassword(string nonce, ResetPasswordModel model)
         {
             string userName = membershipService.ValidateResetPassword(nonce);

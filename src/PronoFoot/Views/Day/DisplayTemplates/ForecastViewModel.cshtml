@@ -1,14 +1,18 @@
 ﻿@model PronoFoot.ViewModels.ForecastViewModel
-           
-<tr>
-    <td>@String.Format("{0:g}", Model.Fixture.Date)
-    </td>
-    <td>@Model.HomeTeam.Name @if(Model.HomeTeam.Standing.HasValue) { <span class="rank">(@Model.HomeTeam.Standing)</span> }
-    </td>
-    <td>@Model.HomeTeamGoals
-    </td>
-    <td>@Model.AwayTeamGoals
-    </td>
-    <td>@Model.AwayTeam.Name @if (Model.AwayTeam.Standing.HasValue) { <span class="rank">(@Model.AwayTeam.Standing)</span> }
-</td>
-</tr>
+
+<div class="home col-sm-6">
+    <div class="goals">
+        @Html.DisplayFor(x => x.HomeTeamGoals)
+    </div>
+    <div class="team">
+        @Html.DisplayFor(x => x.HomeTeam, new { ShowLastResults = false })
+    </div>
+</div>
+<div class="away col-sm-6">
+    <div class="goals">
+        @Html.DisplayFor(x => x.AwayTeamGoals)
+    </div>
+    <div class="team">
+        @Html.DisplayFor(x => x.AwayTeam, new { ShowLastResults = false })
+    </div>
+</div>
