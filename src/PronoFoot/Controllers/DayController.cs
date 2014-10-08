@@ -141,6 +141,10 @@ namespace PronoFoot.Controllers
         [HttpPost]
         public ActionResult Edit(int id, [FromJson]DayFormViewModel dayForm)
         {
+            //HACK: convert back to French time, because the dates in the database are not UTC!!!
+            if (dayForm.Date.Kind == DateTimeKind.Utc)
+                dayForm.Date = TimeZoneInfo.ConvertTimeFromUtc(dayForm.Date, TimeZoneInfo.FindSystemTimeZoneById("Romance Standard Time"));
+
             var day = new DayModel
             {
                 DayId = id,
