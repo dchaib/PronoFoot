@@ -55,8 +55,8 @@
     </div>
 }
 
-@Scripts.Render("~/bundles/moment")
-@Scripts.Render("~/bundles/knockout")
+@Scripts.Render("~/Scripts/dist/moment-bundle.min.js")
+@Scripts.Render("~/Scripts/dist/knockout-bundle.min.js")
 <script type="text/javascript" src="~/App/viewmodels/DayForm.js"> </script>
 
 @{string initialData = Newtonsoft.Json.JsonConvert.SerializeObject(Model, new Newtonsoft.Json.Converters.IsoDateTimeConverter());}

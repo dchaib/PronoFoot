@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewBag.Title - PronoFoot</title>
-    @Styles.Render("~/Content/css")
-    @*@Scripts.Render("~/bundles/modernizr")*@
+    @Styles.Render("~/Content/css/app.min.css")
     @if (ViewBag.UseAnalytics)
     {
         <script>
@@ -49,8 +48,8 @@
         @RenderBody()
     </div>
     <footer></footer>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/dist/jquery-bundle.min.js")
+    @Scripts.Render("~/Scripts/dist/bootstrap-bundle.min.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>
