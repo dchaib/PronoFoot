@@ -178,7 +178,6 @@ h3 {
 
     .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,
     .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
-        background-color: #1a7306;
         background-image: none;
         color: #ffffff;
         text-decoration: none;
@@ -200,6 +199,19 @@ h3 {
 
     .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
         color: #dff6df;
+    }
+}
+
+.navbar-secondary {
+    margin-top: -20px;
+}
+
+ @media (min-width: 768px) {
+    .navbar-nav .caret {
+        display: none;
+    }
+    .navbar-nav .open ul {
+        display: none
     }
 }
 
