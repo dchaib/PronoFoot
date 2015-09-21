@@ -2,8 +2,15 @@
 
 @foreach (var competition in Model.Competitions)
 {
-    <li>
-        @Html.ActionLink(competition.Name, "Details", "Competition", new { id = competition.Id }, null)
+    <li class="dropdown">
+        <a href="@Url.Action("Details", "Competition", new { id = competition.Id })" class="dropdown-toggle" data-toggle="dropdown" role="button">
+            @competition.Name <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#">Calendrier / résultats</a></li>
+            <li><a href="#">Classement des joueurs</a></li>
+            <li><a href="#">Classement des équipes</a></li>
+        </ul>
     </li>
 }
 <li>@Html.ActionLink("Règlement", "Rules", "Home")</li>
